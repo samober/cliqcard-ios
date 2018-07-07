@@ -14,5 +14,7 @@ target 'CliqCard' do
   pod 'SwiftIcons'
   pod 'SwiftyJSON'
   pod 'UIColor_Hex_Swift'
+  pod 'Kingfisher'
+  pod 'SimpleImageViewer'
 
 end

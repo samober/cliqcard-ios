@@ -14,8 +14,8 @@ class SubHeaderCell: UITableViewCell {
     lazy var label: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 14)
-        view.textColor = UIColor.lightGray
+        view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.textColor = Colors.darkGray
 //        view.textAlignment = .center
         
         return view
@@ -24,6 +24,8 @@ class SubHeaderCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.backgroundColor = UIColor.clear
+        
         self.selectionStyle = .none
         
         self.addSubview(label)
@@ -31,7 +33,7 @@ class SubHeaderCell: UITableViewCell {
             make.height.equalTo(20)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview().offset(-12)
         }
     }
     

@@ -60,6 +60,8 @@ class EditPhoneNumberController: UITableViewController {
                     self.editPhoneNumberCell.countryCode = data.code
                     self.editPhoneNumberCell.region = data.shortName
                 }
+                
+                self.editPhoneNumberCell.phoneNumberField.becomeFirstResponder()
             })
             // create a new navigation controller
             let navigationController = UINavigationController(rootViewController: controller)

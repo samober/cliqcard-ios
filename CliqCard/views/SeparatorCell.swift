@@ -47,4 +47,18 @@ class SeparatorCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        let color = self.topSeparator.backgroundColor
+        super.setSelected(selected, animated: animated)
+        self.topSeparator.backgroundColor = color
+        self.bottomSeparator.backgroundColor = color
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let color = self.topSeparator.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        self.topSeparator.backgroundColor = color
+        self.bottomSeparator.backgroundColor = color
+    }
+    
 }

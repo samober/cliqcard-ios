@@ -8,21 +8,59 @@
 
 import UIKit
 import SnapKit
+import SwiftIcons
 
 class HomeController: UITableViewController {
     
     var groups: [CCGroup] = []
+    
+    lazy var profileButton: UIButton! = {
+        let view = UIButton(type: UIButtonType.custom)
+        view.backgroundColor = Colors.lightGray
+        view.layer.cornerRadius = 4
+        view.layer.masksToBounds = true
+        view.layer.borderColor = Colors.lightGray.cgColor
+        view.layer.borderWidth = 1.0
+        view.imageView?.contentMode = .scaleAspectFill
+        view.snp.makeConstraints({ make in
+            make.width.height.equalTo(30)
+        })
+        
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = Colors.lightestGray
+        
+        // register custom cells for this view
         self.tableView.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
+        // remove default separators
+        self.tableView.separatorStyle = .none
         
         self.title = "CliqCard"
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Contacts", style: .plain, target: self, action: #selector(viewContacts))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(viewProfile))
+        // remove back button titles
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        // create an empty bar button item for contacts
+        let contactsButton = UIBarButtonItem()
+        // set the icon and add a target to open up the contacts view
+        contactsButton.setIcon(icon: .fontAwesome(.listUl), iconSize: 24, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 2, width: 24, height: 24), target: self, action: #selector(viewContacts))
+        // add it the left
+        self.navigationItem.leftBarButtonItem = contactsButton
+        
+        // load the user image for the profile button
+        self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
+        // hook up the profile button to open the profile page
+        self.profileButton.addTarget(self, action: #selector(viewProfile), for: .touchUpInside)
+        // wrap it in a bar button item
+        let profileBarButton = UIBarButtonItem(customView: self.profileButton)
+        // assign it the right spot
+        self.navigationItem.rightBarButtonItem = profileBarButton
+        
+        // setup a refresh control
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.refreshControl = refreshControl
@@ -63,7 +101,7 @@ class HomeController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return 96
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -9,13 +9,14 @@
 import UIKit
 import SnapKit
 
-class GroupCell: UITableViewCell {
+class GroupCell: SeparatorCell {
     
     lazy var groupImageView: UIImageView! = {
         let view = UIImageView()
         view.backgroundColor = UIColor.lightGray
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
+        view.layer.zPosition = 1
         
         return view
     }()
@@ -44,19 +45,19 @@ class GroupCell: UITableViewCell {
         groupImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(40)
+            make.width.height.equalTo(64)
         }
         
         self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(groupImageView.snp.right).offset(12)
+            make.left.equalTo(groupImageView.snp.right).offset(16)
             make.right.equalToSuperview().offset(-16)
-            make.centerY.equalToSuperview().offset(-12)
+            make.centerY.equalToSuperview().offset(-11)
         }
         
         self.addSubview(membersLabel)
         membersLabel.snp.makeConstraints { make in
-            make.left.equalTo(groupImageView.snp.right).offset(12)
+            make.left.equalTo(groupImageView.snp.right).offset(16)
             make.right.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview().offset(12)
         }
@@ -64,6 +65,18 @@ class GroupCell: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        let groupImageViewColor = self.groupImageView.backgroundColor
+        super.setSelected(selected, animated: animated)
+        self.groupImageView.backgroundColor = groupImageViewColor
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let groupImageViewColor = self.groupImageView.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        self.groupImageView.backgroundColor = groupImageViewColor
     }
 
 }

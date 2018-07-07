@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class ContactCell: UITableViewCell {
+class ContactCell: SeparatorCell {
 
     lazy var profileImageView: UIImageView! = {
         let view = UIImageView()
@@ -48,6 +48,18 @@ class ContactCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        let color = self.profileImageView.backgroundColor
+        super.setSelected(selected, animated: animated)
+        self.profileImageView.backgroundColor = color
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let color = self.profileImageView.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        self.profileImageView.backgroundColor = color
     }
 
 }

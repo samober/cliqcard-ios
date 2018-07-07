@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class InlineDataCell: UITableViewCell {
+class InlineDataCell: SeparatorCell {
     
     var key: String? {
         get {
@@ -67,14 +67,16 @@ class InlineDataCell: UITableViewCell {
     
     private lazy var topSeparator: UIView! = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = Colors.lightGray
+        view.layer.zPosition = 1
         
         return view
     }()
     
     private lazy var bottomSeparator: UIView! = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = Colors.lightGray
+        view.layer.zPosition = 1
         
         return view
     }()
@@ -104,20 +106,20 @@ class InlineDataCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
         
-        self.addSubview(topSeparator)
-        topSeparator.snp.makeConstraints { make in
-            make.top.right.equalToSuperview()
-            make.height.equalTo(0.5)
-            make.left.equalToSuperview().offset(96)
-        }
-        
-        self.addSubview(bottomSeparator)
-        bottomSeparator.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(0.5)
-            make.height.equalTo(0.5)
-            make.left.equalToSuperview().offset(96)
-        }
+//        self.addSubview(topSeparator)
+//        topSeparator.snp.makeConstraints { make in
+//            make.top.right.equalToSuperview()
+//            make.height.equalTo(0.5)
+//            make.left.equalToSuperview().offset(96)
+//        }
+//
+//        self.addSubview(bottomSeparator)
+//        bottomSeparator.snp.makeConstraints { make in
+//            make.right.equalToSuperview()
+//            make.bottom.equalToSuperview().offset(0.5)
+//            make.height.equalTo(0.5)
+//            make.left.equalToSuperview().offset(96)
+//        }
         
         placeholderLabel.isHidden = true
     }

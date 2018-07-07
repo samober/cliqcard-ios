@@ -15,8 +15,13 @@ class ContactsController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = Colors.lightestGray
 
         self.tableView.register(ContactCell.self, forCellReuseIdentifier: "ContactCell")
+        self.tableView.separatorStyle = .none
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         self.title = "Contacts"
         

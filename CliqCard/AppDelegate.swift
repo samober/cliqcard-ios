@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // register date value transformer for parsing server date time strings
         ValueTransformer.setValueTransformer(ISO8601DateValueTransformer(), forName: NSValueTransformerName.init(kPlankDateValueTransformerKey))
         
+        // look and feel
+        UINavigationBar.appearance().tintColor = Colors.darkestGray
+        
         // initialize the window
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white

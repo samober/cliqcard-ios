@@ -15,9 +15,7 @@
 		797F0EAD20F0BFC3002E516D /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EAC20F0BFC3002E516D /* ProfileController.swift */; };
 		797F0EAF20F0C05D002E516D /* UIViewController+ErrorDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EAE20F0C05D002E516D /* UIViewController+ErrorDialogs.swift */; };
 		797F0EB120F0C0D7002E516D /* ProfileHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB020F0C0D7002E516D /* ProfileHeaderCell.swift */; };
-		797F0EB320F0C38E002E516D /* InlineTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB220F0C38E002E516D /* InlineTextFieldCell.swift */; };
 		797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB420F0C655002E516D /* SubHeaderCell.swift */; };
-		797F0EB720F0CF85002E516D /* InlinePhoneTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB620F0CF85002E516D /* InlinePhoneTextFieldCell.swift */; };
 		797F0EB920F0D18A002E516D /* EditPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */; };
 		797F0EBB20F0D354002E516D /* InlineDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EBA20F0D354002E516D /* InlineDataCell.swift */; };
 		797F0EBE20F0E140002E516D /* phoneCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0EBD20F0E140002E516D /* phoneCodes.json */; };
@@ -27,6 +25,8 @@
 		797F0EC620F0F0AD002E516D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EC520F0F0AD002E516D /* Colors.swift */; };
 		797F0EC820F0F629002E516D /* CountryCodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EC720F0F629002E516D /* CountryCodeCell.swift */; };
 		797F0ECA20F1074A002E516D /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EC920F1074A002E516D /* SeparatorCell.swift */; };
+		797F0ECC20F1090C002E516D /* EditEmailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ECB20F1090C002E516D /* EditEmailCell.swift */; };
+		797F0ECE20F109F0002E516D /* EditEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ECD20F109F0002E516D /* EditEmailController.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309620D20B3500EABAAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309420D20B3500EABAAF /* Main.storyboard */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
@@ -66,9 +66,7 @@
 		797F0EAC20F0BFC3002E516D /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		797F0EAE20F0C05D002E516D /* UIViewController+ErrorDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ErrorDialogs.swift"; sourceTree = "<group>"; };
 		797F0EB020F0C0D7002E516D /* ProfileHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCell.swift; sourceTree = "<group>"; };
-		797F0EB220F0C38E002E516D /* InlineTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTextFieldCell.swift; sourceTree = "<group>"; };
 		797F0EB420F0C655002E516D /* SubHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubHeaderCell.swift; sourceTree = "<group>"; };
-		797F0EB620F0CF85002E516D /* InlinePhoneTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlinePhoneTextFieldCell.swift; sourceTree = "<group>"; };
 		797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhoneNumberController.swift; sourceTree = "<group>"; };
 		797F0EBA20F0D354002E516D /* InlineDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineDataCell.swift; sourceTree = "<group>"; };
 		797F0EBD20F0E140002E516D /* phoneCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = phoneCodes.json; sourceTree = "<group>"; };
@@ -78,6 +76,8 @@
 		797F0EC520F0F0AD002E516D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		797F0EC720F0F629002E516D /* CountryCodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeCell.swift; sourceTree = "<group>"; };
 		797F0EC920F1074A002E516D /* SeparatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorCell.swift; sourceTree = "<group>"; };
+		797F0ECB20F1090C002E516D /* EditEmailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmailCell.swift; sourceTree = "<group>"; };
+		797F0ECD20F109F0002E516D /* EditEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmailController.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309520D20B3500EABAAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -139,14 +139,13 @@
 				797F0EA620F0A520002E516D /* GroupCell.swift */,
 				797F0EAA20F0AA58002E516D /* ContactCell.swift */,
 				797F0EB020F0C0D7002E516D /* ProfileHeaderCell.swift */,
-				797F0EB220F0C38E002E516D /* InlineTextFieldCell.swift */,
 				797F0EB420F0C655002E516D /* SubHeaderCell.swift */,
-				797F0EB620F0CF85002E516D /* InlinePhoneTextFieldCell.swift */,
 				797F0EBA20F0D354002E516D /* InlineDataCell.swift */,
 				797F0EC120F0E73B002E516D /* EditPhoneNumberCell.swift */,
 				797F0EC320F0EF47002E516D /* EmptyCell.swift */,
 				797F0EC720F0F629002E516D /* CountryCodeCell.swift */,
 				797F0EC920F1074A002E516D /* SeparatorCell.swift */,
+				797F0ECB20F1090C002E516D /* EditEmailCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -200,6 +199,7 @@
 				797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */,
 				797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */,
 				797F0EC520F0F0AD002E516D /* Colors.swift */,
+				797F0ECD20F109F0002E516D /* EditEmailController.swift */,
 			);
 			path = CliqCard;
 			sourceTree = "<group>";
@@ -370,7 +370,9 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
@@ -380,7 +382,9 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
@@ -405,7 +409,6 @@
 				797F0EB920F0D18A002E516D /* EditPhoneNumberController.swift in Sources */,
 				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
 				797F0EC820F0F629002E516D /* CountryCodeCell.swift in Sources */,
-				797F0EB320F0C38E002E516D /* InlineTextFieldCell.swift in Sources */,
 				799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */,
 				799530B020D24F1D00EABAAF /* HomeController.swift in Sources */,
 				797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */,
@@ -415,6 +418,7 @@
 				797F0EBB20F0D354002E516D /* InlineDataCell.swift in Sources */,
 				797F0EC220F0E73B002E516D /* EditPhoneNumberCell.swift in Sources */,
 				797F0EA920F0AA47002E516D /* ContactsController.swift in Sources */,
+				797F0ECC20F1090C002E516D /* EditEmailCell.swift in Sources */,
 				797F0EB120F0C0D7002E516D /* ProfileHeaderCell.swift in Sources */,
 				799530E120D2C43100EABAAF /* CCAddress.m in Sources */,
 				797F0EA720F0A520002E516D /* GroupCell.swift in Sources */,
@@ -430,8 +434,8 @@
 				797F0EA420F08534002E516D /* NewAccountController.swift in Sources */,
 				797F0ECA20F1074A002E516D /* SeparatorCell.swift in Sources */,
 				799530C920D2B89B00EABAAF /* CCGroup.m in Sources */,
-				797F0EB720F0CF85002E516D /* InlinePhoneTextFieldCell.swift in Sources */,
 				7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */,
+				797F0ECE20F109F0002E516D /* EditEmailController.swift in Sources */,
 				799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
