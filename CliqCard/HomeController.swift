@@ -9,82 +9,81 @@
 import UIKit
 import SnapKit
 
-class HomeController: UIViewController {
+class HomeController: UITableViewController {
     
-    lazy var welcomeLabel: UILabel! = {
-        let view = UILabel()
-        view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 20)
-        view.textAlignment = .center
-        view.numberOfLines = 0
-        
-        return view
-    }()
-    
-    lazy var logoutButton: UIButton! = {
-        let view = UIButton(type: .custom)
-        view.backgroundColor = UIColor.red
-        view.layer.cornerRadius = 4
-        view.setTitle("Logout", for: .normal)
-        view.setTitleColor(UIColor.white, for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        
-        return view
-    }()
+    var groups: [CCGroup] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        welcomeLabel.text = "Welcome \(CliqCardAPI.shared.currentUser!.firstName)!"
+        self.tableView.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
+        
+        self.title = "CliqCard"
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Contacts", style: .plain, target: self, action: #selector(viewContacts))
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.refreshControl = refreshControl
 
-        self.view.addSubview(welcomeLabel)
-        self.view.addSubview(logoutButton)
-        
-        welcomeLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(64)
-            make.right.equalToSuperview().offset(-64)
-            make.centerY.equalToSuperview().offset(-120)
-        }
-        
-        logoutButton.snp.makeConstraints { make in
-            make.width.equalTo(160)
-            make.height.equalTo(40)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(welcomeLabel.snp.bottom).offset(32)
-        }
-        
-        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        
-//        self.loadGroups()
-        self.loadContacts()
-    }
-
-    @objc func logout() {
-        CliqCardAPI.shared.logout()
+        self.loadGroups()
     }
     
     func loadGroups() {
         CliqCardAPI.shared.getGroups { (groups, error) in
-            if let groups = groups {
-                for group in groups {
-                    print(group.createdAt)
-                }
-            } else if let error = error {
-                print(error)
+            if error != nil {
+                self.showError(title: "Error", message: "Unable to load groups at this time. Please try again later.")
+            } else if let groups = groups {
+                self.groups = groups
+                self.tableView.reloadData()
             }
+            
+            // stop refreshing
+            self.refreshControl?.endRefreshing()
         }
     }
     
-    func loadContacts() {
-        CliqCardAPI.shared.getContacts { (contacts, error) in
-            if let contacts = contacts {
-                for contact in contacts {
-                    print(contact.fullName)
-                }
-            } else if let error = error {
-                print(error)
-            }
-        }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.groups.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupCell
+        
+        let group = self.groups[indexPath.row]
+        cell.nameLabel.text = group.name
+        cell.membersLabel.text = "\(group.memberCount) member\(group.memberCount == 1 ? "" : "s")"
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func showError(title: String, message: String) {
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    @objc func refresh() {
+        self.loadGroups()
+    }
+    
+    @objc func viewContacts() {
+        // create a new contacts controller
+        let controller = ContactsController()
+        // push
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 
 }

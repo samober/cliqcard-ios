@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1E0B3AF7ED1D741F4F5AE0A0 /* Pods_CliqCard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDC09CD9B4C1653A16E65E /* Pods_CliqCard.framework */; };
 		797F0EA420F08534002E516D /* NewAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EA320F08534002E516D /* NewAccountController.swift */; };
+		797F0EA720F0A520002E516D /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EA620F0A520002E516D /* GroupCell.swift */; };
+		797F0EA920F0AA47002E516D /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EA820F0AA47002E516D /* ContactsController.swift */; };
+		797F0EAB20F0AA58002E516D /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EAA20F0AA58002E516D /* ContactCell.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309620D20B3500EABAAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309420D20B3500EABAAF /* Main.storyboard */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
@@ -42,6 +45,9 @@
 		0D626E4BF563EBFE41010A8B /* Pods-CliqCard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CliqCard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard.debug.xcconfig"; sourceTree = "<group>"; };
 		4DDDC09CD9B4C1653A16E65E /* Pods_CliqCard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CliqCard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		797F0EA320F08534002E516D /* NewAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountController.swift; sourceTree = "<group>"; };
+		797F0EA620F0A520002E516D /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
+		797F0EA820F0AA47002E516D /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
+		797F0EAA20F0AA58002E516D /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309520D20B3500EABAAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -97,6 +103,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		797F0EA520F0A4F3002E516D /* views */ = {
+			isa = PBXGroup;
+			children = (
+				797F0EA620F0A520002E516D /* GroupCell.swift */,
+				797F0EAA20F0AA58002E516D /* ContactCell.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		7995308420D20B3500EABAAF = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +133,7 @@
 		7995308F20D20B3500EABAAF /* CliqCard */ = {
 			isa = PBXGroup;
 			children = (
+				797F0EA520F0A4F3002E516D /* views */,
 				799530A620D22F7200EABAAF /* models */,
 				7995309020D20B3500EABAAF /* AppDelegate.swift */,
 				7995309420D20B3500EABAAF /* Main.storyboard */,
@@ -130,6 +146,7 @@
 				799530AD20D240B300EABAAF /* CliqCardAPI.swift */,
 				799530AF20D24F1D00EABAAF /* HomeController.swift */,
 				797F0EA320F08534002E516D /* NewAccountController.swift */,
+				797F0EA820F0AA47002E516D /* ContactsController.swift */,
 			);
 			path = CliqCard;
 			sourceTree = "<group>";
@@ -322,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797F0EAB20F0AA58002E516D /* ContactCell.swift in Sources */,
 				799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */,
 				799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */,
 				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
@@ -330,7 +348,9 @@
 				799530C320D2A96D00EABAAF /* PlankModelRuntime.m in Sources */,
 				799530E220D2C43100EABAAF /* CCWorkCard.m in Sources */,
 				799530E320D2C43100EABAAF /* CCContact.m in Sources */,
+				797F0EA920F0AA47002E516D /* ContactsController.swift in Sources */,
 				799530E120D2C43100EABAAF /* CCAddress.m in Sources */,
+				797F0EA720F0A520002E516D /* GroupCell.swift in Sources */,
 				799530C220D2A96D00EABAAF /* CCAccount.m in Sources */,
 				799530AC20D23DED00EABAAF /* DateFormatter+ISO8601.swift in Sources */,
 				799530A320D2111C00EABAAF /* StartController.swift in Sources */,

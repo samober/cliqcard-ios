@@ -87,7 +87,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // create a new navigation controller
         let navigationController = UINavigationController(rootViewController: homeController)
-        navigationController.isNavigationBarHidden = true
         
         // set as root view controller
         window!.rootViewController = navigationController

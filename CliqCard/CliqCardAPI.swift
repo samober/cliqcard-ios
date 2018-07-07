@@ -100,6 +100,8 @@ final class CliqCardAPI {
             headers["Authorization"] = "\(token.tokenType) \(token.accessToken)"
         }
         
+        print(headers)
+        
         return headers
     }
     
@@ -471,11 +473,16 @@ final class CliqCardAPI {
         }
     }
     
-    func getGroupMembers(id: Int, responseHandler: @escaping ([CCUser]?, APIError?) -> Void) {
+    func getGroupMembers(id: Int, responseHandler: @escaping ([CCContact]?, APIError?) -> Void) {
         self._request("/groups/\(id)/members", method: .get, parameters: nil) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [[String: AnyObject]] {
                 if statusCode == 200 {
-                    
+                    // serialize the members
+                    let members = json.map({ memberJson -> CCContact in
+                        return CCContact(modelDictionary: memberJson)
+                    })
+                    // send back the member list
+                    responseHandler(members, nil)
                 } else {
                     // send back an unknown error
                     responseHandler(nil, APIError.UnknownError())
@@ -511,7 +518,7 @@ final class CliqCardAPI {
     }
     
     func getContacts(responseHandler: @escaping ([CCContact]?, APIError?) -> Void) {
-        self._request("/contacts", method: .get, parameters: nil) { (statusCode, json, error) in
+        self._request("/contacts/", method: .get, parameters: nil) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [[String: AnyObject]] {
                 if statusCode == 200 {
                     // serialize the contacts
