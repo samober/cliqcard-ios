@@ -1,0 +1,15 @@
+{
+    "id": "work_card.json",
+    "title": "work_card",
+    "description": "Schema definition of a Work Card",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "office_phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "$ref": "address.json" }
+    }
+}
+
+
+

@@ -1,0 +1,16 @@
+{
+    "id": "user.json",
+    "title": "user",
+    "description": "Schema definition of a User",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "full_name": { "type": "string" }
+    },
+    "required": [ "id", "created_at", "updated_at", "first_name", "last_name", "full_name" ]
+}

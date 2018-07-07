@@ -1,0 +1,16 @@
+{
+    "id": "group.json",
+    "title": "group",
+    "description": "Schema definition of a Group",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "name": { "type": "string" },
+        "member_count": { "type": "integer" }
+    },
+    "required": [ "id", "created_at", "updated_at", "name", "member_count" ]
+}
+

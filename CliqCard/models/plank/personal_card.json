@@ -1,0 +1,15 @@
+{
+    "id": "personal_card.json",
+    "title": "personal_card",
+    "description": "Schema definition of a Personal Card",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "cell_phone": { "type": "string" },
+        "home_phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "$ref": "address.json" }
+    }
+}
+
+

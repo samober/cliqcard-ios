@@ -7,21 +7,80 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0B3AF7ED1D741F4F5AE0A0 /* Pods_CliqCard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDC09CD9B4C1653A16E65E /* Pods_CliqCard.framework */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
-		7995309320D20B3500EABAAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309220D20B3500EABAAF /* ViewController.swift */; };
 		7995309620D20B3500EABAAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309420D20B3500EABAAF /* Main.storyboard */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
+		799530A320D2111C00EABAAF /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530A220D2111C00EABAAF /* StartController.swift */; };
+		799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530A420D21BE700EABAAF /* PhoneVerificationController.swift */; };
+		799530AC20D23DED00EABAAF /* DateFormatter+ISO8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */; };
+		799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530AD20D240B300EABAAF /* CliqCardAPI.swift */; };
+		799530B020D24F1D00EABAAF /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530AF20D24F1D00EABAAF /* HomeController.swift */; };
+		799530B320D2A74600EABAAF /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530B220D2A74600EABAAF /* user.json */; };
+		799530B520D2A85000EABAAF /* account.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530B420D2A85000EABAAF /* account.json */; };
+		799530B720D2A89100EABAAF /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530B620D2A89100EABAAF /* token.json */; };
+		799530C120D2A96D00EABAAF /* CCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530B920D2A96D00EABAAF /* CCUser.m */; };
+		799530C220D2A96D00EABAAF /* CCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530BC20D2A96D00EABAAF /* CCAccount.m */; };
+		799530C320D2A96D00EABAAF /* PlankModelRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530BE20D2A96D00EABAAF /* PlankModelRuntime.m */; };
+		799530C420D2A96D00EABAAF /* CCToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530BF20D2A96D00EABAAF /* CCToken.m */; };
+		799530C620D2B81000EABAAF /* group.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530C520D2B81000EABAAF /* group.json */; };
+		799530C920D2B89B00EABAAF /* CCGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530C720D2B89B00EABAAF /* CCGroup.m */; };
+		799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530CC20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m */; };
+		799530D020D2C0D400EABAAF /* personal_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530CF20D2C0D400EABAAF /* personal_card.json */; };
+		799530D220D2C17900EABAAF /* work_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530D120D2C17900EABAAF /* work_card.json */; };
+		799530D420D2C1A800EABAAF /* address.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530D320D2C1A800EABAAF /* address.json */; };
+		799530D820D2C23A00EABAAF /* contact.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530D720D2C23A00EABAAF /* contact.json */; };
+		799530E120D2C43100EABAAF /* CCAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530D920D2C43000EABAAF /* CCAddress.m */; };
+		799530E220D2C43100EABAAF /* CCWorkCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530DB20D2C43000EABAAF /* CCWorkCard.m */; };
+		799530E320D2C43100EABAAF /* CCContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530DC20D2C43000EABAAF /* CCContact.m */; };
+		799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530DE20D2C43000EABAAF /* CCPersonalCard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D626E4BF563EBFE41010A8B /* Pods-CliqCard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CliqCard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard.debug.xcconfig"; sourceTree = "<group>"; };
+		4DDDC09CD9B4C1653A16E65E /* Pods_CliqCard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CliqCard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7995309220D20B3500EABAAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7995309520D20B3500EABAAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7995309A20D20B3700EABAAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7995309C20D20B3800EABAAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		799530A220D2111C00EABAAF /* StartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
+		799530A420D21BE700EABAAF /* PhoneVerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationController.swift; sourceTree = "<group>"; };
+		799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+ISO8601.swift"; sourceTree = "<group>"; };
+		799530AD20D240B300EABAAF /* CliqCardAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CliqCardAPI.swift; sourceTree = "<group>"; };
+		799530AF20D24F1D00EABAAF /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		799530B220D2A74600EABAAF /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
+		799530B420D2A85000EABAAF /* account.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account.json; sourceTree = "<group>"; };
+		799530B620D2A89100EABAAF /* token.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
+		799530B820D2A96C00EABAAF /* CliqCard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CliqCard-Bridging-Header.h"; sourceTree = "<group>"; };
+		799530B920D2A96D00EABAAF /* CCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCUser.m; sourceTree = "<group>"; };
+		799530BA20D2A96D00EABAAF /* CCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccount.h; sourceTree = "<group>"; };
+		799530BB20D2A96D00EABAAF /* CCToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCToken.h; sourceTree = "<group>"; };
+		799530BC20D2A96D00EABAAF /* CCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAccount.m; sourceTree = "<group>"; };
+		799530BD20D2A96D00EABAAF /* PlankModelRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlankModelRuntime.h; sourceTree = "<group>"; };
+		799530BE20D2A96D00EABAAF /* PlankModelRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlankModelRuntime.m; sourceTree = "<group>"; };
+		799530BF20D2A96D00EABAAF /* CCToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCToken.m; sourceTree = "<group>"; };
+		799530C020D2A96D00EABAAF /* CCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUser.h; sourceTree = "<group>"; };
+		799530C520D2B81000EABAAF /* group.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = group.json; sourceTree = "<group>"; };
+		799530C720D2B89B00EABAAF /* CCGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGroup.m; sourceTree = "<group>"; };
+		799530C820D2B89B00EABAAF /* CCGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGroup.h; sourceTree = "<group>"; };
+		799530CC20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateValueTransformer.m; sourceTree = "<group>"; };
+		799530CE20D2BC0D00EABAAF /* ISO8601DateValueTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601DateValueTransformer.h; sourceTree = "<group>"; };
+		799530CF20D2C0D400EABAAF /* personal_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = personal_card.json; sourceTree = "<group>"; };
+		799530D120D2C17900EABAAF /* work_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = work_card.json; sourceTree = "<group>"; };
+		799530D320D2C1A800EABAAF /* address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = address.json; sourceTree = "<group>"; };
+		799530D720D2C23A00EABAAF /* contact.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contact.json; sourceTree = "<group>"; };
+		799530D920D2C43000EABAAF /* CCAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAddress.m; sourceTree = "<group>"; };
+		799530DA20D2C43000EABAAF /* CCContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCContact.h; sourceTree = "<group>"; };
+		799530DB20D2C43000EABAAF /* CCWorkCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCWorkCard.m; sourceTree = "<group>"; };
+		799530DC20D2C43000EABAAF /* CCContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCContact.m; sourceTree = "<group>"; };
+		799530DD20D2C43000EABAAF /* CCWorkCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCWorkCard.h; sourceTree = "<group>"; };
+		799530DE20D2C43000EABAAF /* CCPersonalCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPersonalCard.m; sourceTree = "<group>"; };
+		799530DF20D2C43100EABAAF /* CCAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAddress.h; sourceTree = "<group>"; };
+		799530E020D2C43100EABAAF /* CCPersonalCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPersonalCard.h; sourceTree = "<group>"; };
+		EB85AA872B20CD226AD70874 /* Pods-CliqCard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CliqCard.release.xcconfig"; path = "Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E0B3AF7ED1D741F4F5AE0A0 /* Pods_CliqCard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +100,8 @@
 			children = (
 				7995308F20D20B3500EABAAF /* CliqCard */,
 				7995308E20D20B3500EABAAF /* Products */,
+				EEFAD794910888D5809AD23D /* Pods */,
+				9CA7832F1EB6454F561921FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +116,80 @@
 		7995308F20D20B3500EABAAF /* CliqCard */ = {
 			isa = PBXGroup;
 			children = (
+				799530A620D22F7200EABAAF /* models */,
 				7995309020D20B3500EABAAF /* AppDelegate.swift */,
-				7995309220D20B3500EABAAF /* ViewController.swift */,
 				7995309420D20B3500EABAAF /* Main.storyboard */,
 				7995309720D20B3700EABAAF /* Assets.xcassets */,
 				7995309920D20B3700EABAAF /* LaunchScreen.storyboard */,
 				7995309C20D20B3800EABAAF /* Info.plist */,
+				799530A220D2111C00EABAAF /* StartController.swift */,
+				799530A420D21BE700EABAAF /* PhoneVerificationController.swift */,
+				799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */,
+				799530AD20D240B300EABAAF /* CliqCardAPI.swift */,
+				799530AF20D24F1D00EABAAF /* HomeController.swift */,
 			);
 			path = CliqCard;
+			sourceTree = "<group>";
+		};
+		799530A620D22F7200EABAAF /* models */ = {
+			isa = PBXGroup;
+			children = (
+				799530DF20D2C43100EABAAF /* CCAddress.h */,
+				799530D920D2C43000EABAAF /* CCAddress.m */,
+				799530DA20D2C43000EABAAF /* CCContact.h */,
+				799530DC20D2C43000EABAAF /* CCContact.m */,
+				799530E020D2C43100EABAAF /* CCPersonalCard.h */,
+				799530DE20D2C43000EABAAF /* CCPersonalCard.m */,
+				799530DD20D2C43000EABAAF /* CCWorkCard.h */,
+				799530DB20D2C43000EABAAF /* CCWorkCard.m */,
+				799530C820D2B89B00EABAAF /* CCGroup.h */,
+				799530C720D2B89B00EABAAF /* CCGroup.m */,
+				799530BA20D2A96D00EABAAF /* CCAccount.h */,
+				799530BC20D2A96D00EABAAF /* CCAccount.m */,
+				799530BB20D2A96D00EABAAF /* CCToken.h */,
+				799530BF20D2A96D00EABAAF /* CCToken.m */,
+				799530C020D2A96D00EABAAF /* CCUser.h */,
+				799530B920D2A96D00EABAAF /* CCUser.m */,
+				799530BD20D2A96D00EABAAF /* PlankModelRuntime.h */,
+				799530BE20D2A96D00EABAAF /* PlankModelRuntime.m */,
+				799530B120D2A72B00EABAAF /* plank */,
+				799530B820D2A96C00EABAAF /* CliqCard-Bridging-Header.h */,
+				799530CE20D2BC0D00EABAAF /* ISO8601DateValueTransformer.h */,
+				799530CC20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		799530B120D2A72B00EABAAF /* plank */ = {
+			isa = PBXGroup;
+			children = (
+				799530B220D2A74600EABAAF /* user.json */,
+				799530B420D2A85000EABAAF /* account.json */,
+				799530B620D2A89100EABAAF /* token.json */,
+				799530C520D2B81000EABAAF /* group.json */,
+				799530CF20D2C0D400EABAAF /* personal_card.json */,
+				799530D120D2C17900EABAAF /* work_card.json */,
+				799530D320D2C1A800EABAAF /* address.json */,
+				799530D720D2C23A00EABAAF /* contact.json */,
+			);
+			path = plank;
+			sourceTree = "<group>";
+		};
+		9CA7832F1EB6454F561921FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DDDC09CD9B4C1653A16E65E /* Pods_CliqCard.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EEFAD794910888D5809AD23D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0D626E4BF563EBFE41010A8B /* Pods-CliqCard.debug.xcconfig */,
+				EB85AA872B20CD226AD70874 /* Pods-CliqCard.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +199,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7995309F20D20B3800EABAAF /* Build configuration list for PBXNativeTarget "CliqCard" */;
 			buildPhases = (
+				0F31A2FB1A5A94E412D8EBB6 /* [CP] Check Pods Manifest.lock */,
 				7995308920D20B3500EABAAF /* Sources */,
 				7995308A20D20B3500EABAAF /* Frameworks */,
 				7995308B20D20B3500EABAAF /* Resources */,
+				B56527A97B4941CB70934F7E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +226,7 @@
 				TargetAttributes = {
 					7995308C20D20B3500EABAAF = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 0940;
 					};
 				};
 			};
@@ -122,21 +253,88 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799530B320D2A74600EABAAF /* user.json in Resources */,
+				799530C620D2B81000EABAAF /* group.json in Resources */,
 				7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */,
 				7995309820D20B3700EABAAF /* Assets.xcassets in Resources */,
+				799530D220D2C17900EABAAF /* work_card.json in Resources */,
 				7995309620D20B3500EABAAF /* Main.storyboard in Resources */,
+				799530D420D2C1A800EABAAF /* address.json in Resources */,
+				799530B520D2A85000EABAAF /* account.json in Resources */,
+				799530B720D2A89100EABAAF /* token.json in Resources */,
+				799530D820D2C23A00EABAAF /* contact.json in Resources */,
+				799530D020D2C0D400EABAAF /* personal_card.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F31A2FB1A5A94E412D8EBB6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CliqCard-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B56527A97B4941CB70934F7E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7995308920D20B3500EABAAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7995309320D20B3500EABAAF /* ViewController.swift in Sources */,
+				799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */,
+				799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */,
+				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
+				799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */,
+				799530B020D24F1D00EABAAF /* HomeController.swift in Sources */,
+				799530C320D2A96D00EABAAF /* PlankModelRuntime.m in Sources */,
+				799530E220D2C43100EABAAF /* CCWorkCard.m in Sources */,
+				799530E320D2C43100EABAAF /* CCContact.m in Sources */,
+				799530E120D2C43100EABAAF /* CCAddress.m in Sources */,
+				799530C220D2A96D00EABAAF /* CCAccount.m in Sources */,
+				799530AC20D23DED00EABAAF /* DateFormatter+ISO8601.swift in Sources */,
+				799530A320D2111C00EABAAF /* StartController.swift in Sources */,
+				799530C120D2A96D00EABAAF /* CCUser.m in Sources */,
+				799530C920D2B89B00EABAAF /* CCGroup.m in Sources */,
 				7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */,
+				799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,8 +476,10 @@
 		};
 		799530A020D20B3800EABAAF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D626E4BF563EBFE41010A8B /* Pods-CliqCard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4Y26G245WT;
 				INFOPLIST_FILE = CliqCard/Info.plist;
@@ -289,6 +489,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ober.CliqCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CliqCard/models/CliqCard-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -296,8 +498,10 @@
 		};
 		799530A120D20B3800EABAAF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB85AA872B20CD226AD70874 /* Pods-CliqCard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4Y26G245WT;
 				INFOPLIST_FILE = CliqCard/Info.plist;
@@ -307,6 +511,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ober.CliqCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CliqCard/models/CliqCard-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

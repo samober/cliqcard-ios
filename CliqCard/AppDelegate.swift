@@ -16,6 +16,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // register date value transformer for parsing server date time strings
+        ValueTransformer.setValueTransformer(ISO8601DateValueTransformer(), forName: NSValueTransformerName.init(kPlankDateValueTransformerKey))
+        
+        // initialize the window
+        window = UIWindow.init(frame: UIScreen.main.bounds)
+        window?.backgroundColor = UIColor.white
+        
+        // check to see whether or not a user is logged in and direct
+        // them to the correct screen
+        if CliqCardAPI.shared.isLoggedIn() {
+            self.showHomeController()
+        } else {
+            self.showStartController()
+        }
+        
+        // make window visible
+        window!.makeKeyAndVisible()
+        
+        // register for login/logout notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLoginNotification(notification:)), name: .kCliqCardAPILoggedInNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogoutNotification(notification:)), name: .kCliqCardAPILoggedOutNotification, object: nil)
+        
         return true
     }
 
@@ -39,6 +62,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        // unregister for notifications
+        NotificationCenter.default.removeObserver(self, name: .kCliqCardAPILoggedInNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .kCliqCardAPILoggedOutNotification, object: nil)
+    }
+    
+    
+    func showStartController() {
+        // create a new start controller
+        let startController = StartController()
+        
+        // create a new navigation controller
+        let navigationController = UINavigationController(rootViewController: startController)
+        navigationController.isNavigationBarHidden = true
+        
+        // set as root view controller
+        window!.rootViewController = navigationController
+    }
+    
+    func showHomeController() {
+        // create a new home controller
+        let homeController = HomeController()
+        
+        // create a new navigation controller
+        let navigationController = UINavigationController(rootViewController: homeController)
+        navigationController.isNavigationBarHidden = true
+        
+        // set as root view controller
+        window!.rootViewController = navigationController
+    }
+    
+    
+    @objc func didReceiveLoginNotification(notification: Notification) {
+        self.showHomeController()
+    }
+    
+    @objc func didReceiveLogoutNotification(notification: Notification) {
+        self.showStartController()
     }
 
 

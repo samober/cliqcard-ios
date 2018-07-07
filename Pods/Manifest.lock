@@ -1,0 +1,33 @@
+PODS:
+  - Alamofire (4.7.2)
+  - PhoneNumberKit (2.1.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
+    - PhoneNumberKit/UIKit (= 2.1.0)
+  - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
+  - PhoneNumberKit/UIKit (2.1.0):
+    - PhoneNumberKit/PhoneNumberKitCore
+  - SnapKit (4.0.0)
+  - SwiftKeychainWrapper (3.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - PhoneNumberKit (~> 2.1)
+  - SnapKit (~> 4.0.0)
+  - SwiftKeychainWrapper
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - PhoneNumberKit
+    - SnapKit
+    - SwiftKeychainWrapper
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
+
+PODFILE CHECKSUM: 14b61a42ba81b03d3daed287bfd062373bf3a7a4
+
+COCOAPODS: 1.5.3

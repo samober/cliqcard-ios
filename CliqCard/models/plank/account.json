@@ -1,0 +1,19 @@
+{
+    "id": "account.json",
+    "title": "account",
+    "description": "Schema definition of an Account",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "email": { "type": "string" },
+        "phone_number": { "type": "string" },
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "full_name": { "type": "string" }
+    },
+    "required": [ "id", "created_at", "updated_at", "phone_number", "first_name", "last_name", "full_name" ]
+}
+
