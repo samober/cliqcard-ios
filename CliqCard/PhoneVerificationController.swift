@@ -123,12 +123,9 @@ class PhoneVerificationController: UIViewController {
         CliqCardAPI.shared.verifyPhone(phoneNumber: phoneNumber) { (firstName, error) in
             if let _ = error {
                 // go back to the previous screen
-                let alertController = UIAlertController(title: "Error", message: "An unknown error occurred. Please try again later.", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                    // pop back to the phone number controller
+                self.showError(title: "Error", message: "An unknown error occurred. Please try again later.", completionHandler: {
                     self.navigationController?.popViewController(animated: true)
-                }))
-                self.present(alertController, animated: true, completion: nil)
+                })
             } else {
                 // determine message based on whether user info is present
                 if let firstName = firstName {
@@ -152,27 +149,45 @@ class PhoneVerificationController: UIViewController {
     
     @objc func submit() {
         if let validationCode = verificationCodeField.text {
+            // show the loading animation
             self.showLoader()
             
             if self.newUser {
-                
+                // request a registration token
+                CliqCardAPI.shared.register(phoneNumber: phoneNumber, code: validationCode) { (registrationToken, error) in
+                    if let registrationToken = registrationToken {
+                        // create a new account controller
+                        let controller = NewAccountController(phoneNumber: self.phoneNumber, registrationToken: registrationToken)
+                        // push the controller
+                        self.navigationController?.pushViewController(controller, animated: true)
+                    } else if let error = error {
+                        switch error {
+                        case .UnauthorizedError():
+                            // display an error message for the wrong token
+                            self.showError(title: "Invalid Token", message: "This token does not match the one sent to this phone number.")
+                        default:
+                            // display an error message
+                            self.showError(title: "Error", message: "An unknown error occurred. Please try again later.")
+                        }
+                        
+                        // show the form again
+                        self.hideLoader()
+                    }
+                }
             } else {
                 // login to the existing account
                 CliqCardAPI.shared.login(phoneNumber: phoneNumber, validationCode: validationCode) { (user, error) in
                     if let _ = user {
+                        // hide the loading screen
                         self.hideLoader()
                     } else if let error = error {
                         switch error {
                         case .UnauthorizedError():
                             // display an error message for the wrong token
-                            let alertController = UIAlertController(title: "Invalid Token", message: "This token does not match the one sent to this phone number.", preferredStyle: .alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alertController, animated: true, completion: nil)
+                            self.showError(title: "Invalid Token", message: "This token does not match the one sent to this phone number.")
                         default:
                             // display an error message
-                            let alertController = UIAlertController(title: "Error", message: "An unknown error occurred. Please try again later.", preferredStyle: .alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alertController, animated: true, completion: nil)
+                            self.showError(title: "Error", message: "An unknown error occurred. Please try again later.")
                         }
                         
                         // show the form again
@@ -182,10 +197,20 @@ class PhoneVerificationController: UIViewController {
             }
         } else {
             // display an error message
-            let alertController = UIAlertController(title: "Error", message: "You did not enter a phone number", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
+            self.showError(title: "Error", message: "You did not enter a phone number.")
         }
+    }
+    
+    func showError(title: String, message: String) {
+        self.showError(title: title, message: message, completionHandler: nil)
+    }
+    
+    func showError(title: String, message: String, completionHandler: (() -> Void)?) {
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            completionHandler?()
+        }))
+        self.present(controller, animated: true, completion: nil)
     }
 
 }

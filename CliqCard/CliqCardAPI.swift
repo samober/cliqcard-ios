@@ -22,9 +22,12 @@ final class CliqCardAPI {
     static let shared = CliqCardAPI()
     
     let host = "https://api.getcliqcard.com"
+    let clientId = "ai8fg37aorshflawehoiufhadaiowhuf"
+    let clientSecret = "awfkiuhuosrgfliusdhfisuherugyhasdkljfhawoieufaklsd"
     
-    let clientId = "woi4mrxiucariymowryx4uyrcsgfrium"
-    let clientSecret = "dy4w78c7nraayowr7mcgrwahimaxhimckmrxwlcu4cwatukmawx3gxna"
+//    let host = "http://192.168.1.229:5000"
+//    let clientId = "784awhflkusdfhoawhpwjcwo4hf"
+//    let clientSecret = "afhow874afhoirsujcauowh47hrvldfkjaow4hgasroiiasuhddfhiusaow47h"
     
     let clientCredentials: String
     
@@ -37,7 +40,6 @@ final class CliqCardAPI {
         }
         set {
             if let newValue = newValue {
-                print(newValue)
                 // encode and save in user defaults
                 let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
                 UserDefaults.standard.set(data, forKey: "api_current_user")
@@ -182,7 +184,7 @@ final class CliqCardAPI {
                 }
             }
         } else {
-            callback?(APIError.NullTokenError())
+            callback?(APIError.UnauthorizedError())
         }
     }
     
@@ -327,14 +329,14 @@ final class CliqCardAPI {
             "last_name": lastName
         ]
         
-        if let email = email {
+        if let email = email, email.count > 0 {
             parameters["email"] = email
         }
         
         self._request("/account", method: .post, parameters: parameters) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [String: AnyObject] {
                 switch statusCode {
-                case 200:
+                case 201:
                     // extract the token and user json
                     guard let tokenJson = json["token"] as? [String: AnyObject] else { return responseHandler(nil, APIError.UnknownError()) }
                     guard let accountJson = json["user"] as? [String: AnyObject] else { return responseHandler(nil, APIError.UnknownError()) }
@@ -350,6 +352,9 @@ final class CliqCardAPI {
                     guard let message = json["message"] as? String else { return responseHandler(nil, APIError.UnknownError()) }
                     // return an invalid request error
                     responseHandler(nil, APIError.InvalidRequestError(message: message))
+                case 401:
+                    // return an unauthorized error
+                    responseHandler(nil, APIError.UnauthorizedError())
                 default:
                     // return an unknown error
                     responseHandler(nil, APIError.UnknownError())
