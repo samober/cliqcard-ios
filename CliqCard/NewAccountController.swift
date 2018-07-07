@@ -181,12 +181,6 @@ class NewAccountController: UIViewController, UITextFieldDelegate {
         self.lastActive.becomeFirstResponder()
     }
     
-    func showError(title: String, message: String) {
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(controller, animated: true, completion: nil)
-    }
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.lastActive = textField
     }

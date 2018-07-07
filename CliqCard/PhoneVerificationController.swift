@@ -200,17 +200,5 @@ class PhoneVerificationController: UIViewController {
             self.showError(title: "Error", message: "You did not enter a phone number.")
         }
     }
-    
-    func showError(title: String, message: String) {
-        self.showError(title: title, message: message, completionHandler: nil)
-    }
-    
-    func showError(title: String, message: String, completionHandler: (() -> Void)?) {
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            completionHandler?()
-        }))
-        self.present(controller, animated: true, completion: nil)
-    }
 
 }

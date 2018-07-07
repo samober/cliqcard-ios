@@ -100,8 +100,6 @@ final class CliqCardAPI {
             headers["Authorization"] = "\(token.tokenType) \(token.accessToken)"
         }
         
-        print(headers)
-        
         return headers
     }
     

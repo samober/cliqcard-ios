@@ -11,5 +11,8 @@ target 'CliqCard' do
   pod 'SnapKit', '~> 4.0.0'
   pod 'PhoneNumberKit', '~> 2.1'
   pod 'SwiftKeychainWrapper'
+  pod 'SwiftIcons'
+  pod 'SwiftyJSON'
+  pod 'UIColor_Hex_Swift'
 
 end

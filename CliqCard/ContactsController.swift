@@ -41,12 +41,6 @@ class ContactsController: UITableViewController {
         }
     }
     
-    func showError(title: String, message: String) {
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(controller, animated: true, completion: nil)
-    }
-    
     @objc func refresh() {
         self.loadContacts()
     }

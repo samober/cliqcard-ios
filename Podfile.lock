@@ -7,27 +7,39 @@ PODS:
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - SnapKit (4.0.0)
+  - SwiftIcons (2.0.1)
   - SwiftKeychainWrapper (3.0.1)
+  - SwiftyJSON (4.1.0)
+  - UIColor_Hex_Swift (4.0.1)
 
 DEPENDENCIES:
   - Alamofire
   - PhoneNumberKit (~> 2.1)
   - SnapKit (~> 4.0.0)
+  - SwiftIcons
   - SwiftKeychainWrapper
+  - SwiftyJSON
+  - UIColor_Hex_Swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - PhoneNumberKit
     - SnapKit
+    - SwiftIcons
     - SwiftKeychainWrapper
+    - SwiftyJSON
+    - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftIcons: e475a56ae2c2da40672dbf16061ca5dd5cee7dbb
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  UIColor_Hex_Swift: c5ff88470499383b8fd85302d59344bb24ba9436
 
-PODFILE CHECKSUM: 14b61a42ba81b03d3daed287bfd062373bf3a7a4
+PODFILE CHECKSUM: ef1f80acbe50fec5e8e99f4e860fcf5b108ac0f4
 
 COCOAPODS: 1.5.3

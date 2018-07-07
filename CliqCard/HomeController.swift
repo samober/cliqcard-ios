@@ -21,6 +21,7 @@ class HomeController: UITableViewController {
         self.title = "CliqCard"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Contacts", style: .plain, target: self, action: #selector(viewContacts))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: #selector(viewProfile))
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -69,12 +70,6 @@ class HomeController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func showError(title: String, message: String) {
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(controller, animated: true, completion: nil)
-    }
-    
     @objc func refresh() {
         self.loadGroups()
     }
@@ -82,6 +77,13 @@ class HomeController: UITableViewController {
     @objc func viewContacts() {
         // create a new contacts controller
         let controller = ContactsController()
+        // push
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    @objc func viewProfile() {
+        // create a new profile controller
+        let controller = ProfileController()
         // push
         self.navigationController?.pushViewController(controller, animated: true)
     }
