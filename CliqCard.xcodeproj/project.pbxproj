@@ -27,8 +27,27 @@
 		797F0ECA20F1074A002E516D /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EC920F1074A002E516D /* SeparatorCell.swift */; };
 		797F0ECC20F1090C002E516D /* EditEmailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ECB20F1090C002E516D /* EditEmailCell.swift */; };
 		797F0ECE20F109F0002E516D /* EditEmailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ECD20F109F0002E516D /* EditEmailController.swift */; };
+		797F0ED020F124F4002E516D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ECF20F124F4002E516D /* SettingsController.swift */; };
+		797F0ED320F125EC002E516D /* UITextField+Placeholders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED220F125EC002E516D /* UITextField+Placeholders.swift */; };
+		797F0ED520F1281A002E516D /* PhoneNumberTextField+Placeholders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED420F1281A002E516D /* PhoneNumberTextField+Placeholders.swift */; };
+		797F0ED820F12C9F002E516D /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED720F12C9F002E516D /* GroupController.swift */; };
+		797F0EDA20F12DA1002E516D /* GroupHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED920F12DA1002E516D /* GroupHeaderCell.swift */; };
+		797F0EDC20F12F8B002E516D /* SingleLineLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EDB20F12F8B002E516D /* SingleLineLinkCell.swift */; };
+		797F0EDE20F13365002E516D /* SingleLineIconLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EDD20F13365002E516D /* SingleLineIconLinkCell.swift */; };
+		797F0EE020F13647002E516D /* SingleLineToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EDF20F13647002E516D /* SingleLineToggleCell.swift */; };
+		797F0EE220F137F5002E516D /* GroupMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EE120F137F5002E516D /* GroupMembersController.swift */; };
+		797F0EE420F13A78002E516D /* GroupSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EE320F13A78002E516D /* GroupSettingsController.swift */; };
+		797F0EE620F13B7E002E516D /* ContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EE520F13B7E002E516D /* ContactController.swift */; };
+		797F0EE820F14380002E516D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EE720F14380002E516D /* Utils.swift */; };
+		797F0EEA20F14522002E516D /* EditNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EE920F14522002E516D /* EditNameCell.swift */; };
+		797F0EEC20F1458B002E516D /* EditNameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EEB20F1458B002E516D /* EditNameController.swift */; };
+		797F0EEE20F1487B002E516D /* SJONavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EED20F1487B002E516D /* SJONavigationController.swift */; };
+		797F0EF020F15509002E516D /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EEF20F15509002E516D /* APIError.swift */; };
+		797F0EF220F15EC9002E516D /* LargeActionButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF120F15EC9002E516D /* LargeActionButtonCell.swift */; };
+		797F0EF420F15F4D002E516D /* UIImage+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF320F15F4D002E516D /* UIImage+UIColor.swift */; };
+		797F0EF620F182A7002E516D /* profile_picture.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0EF520F182A7002E516D /* profile_picture.json */; };
+		797F0EF920F18389002E516D /* CCProfilePicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF720F18388002E516D /* CCProfilePicture.m */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
-		7995309620D20B3500EABAAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309420D20B3500EABAAF /* Main.storyboard */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
 		799530A320D2111C00EABAAF /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530A220D2111C00EABAAF /* StartController.swift */; };
@@ -78,9 +97,29 @@
 		797F0EC920F1074A002E516D /* SeparatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorCell.swift; sourceTree = "<group>"; };
 		797F0ECB20F1090C002E516D /* EditEmailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmailCell.swift; sourceTree = "<group>"; };
 		797F0ECD20F109F0002E516D /* EditEmailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEmailController.swift; sourceTree = "<group>"; };
+		797F0ECF20F124F4002E516D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		797F0ED220F125EC002E516D /* UITextField+Placeholders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Placeholders.swift"; sourceTree = "<group>"; };
+		797F0ED420F1281A002E516D /* PhoneNumberTextField+Placeholders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhoneNumberTextField+Placeholders.swift"; sourceTree = "<group>"; };
+		797F0ED720F12C9F002E516D /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
+		797F0ED920F12DA1002E516D /* GroupHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupHeaderCell.swift; sourceTree = "<group>"; };
+		797F0EDB20F12F8B002E516D /* SingleLineLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineLinkCell.swift; sourceTree = "<group>"; };
+		797F0EDD20F13365002E516D /* SingleLineIconLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineIconLinkCell.swift; sourceTree = "<group>"; };
+		797F0EDF20F13647002E516D /* SingleLineToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineToggleCell.swift; sourceTree = "<group>"; };
+		797F0EE120F137F5002E516D /* GroupMembersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMembersController.swift; sourceTree = "<group>"; };
+		797F0EE320F13A78002E516D /* GroupSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsController.swift; sourceTree = "<group>"; };
+		797F0EE520F13B7E002E516D /* ContactController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactController.swift; sourceTree = "<group>"; };
+		797F0EE720F14380002E516D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		797F0EE920F14522002E516D /* EditNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameCell.swift; sourceTree = "<group>"; };
+		797F0EEB20F1458B002E516D /* EditNameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameController.swift; sourceTree = "<group>"; };
+		797F0EED20F1487B002E516D /* SJONavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJONavigationController.swift; sourceTree = "<group>"; };
+		797F0EEF20F15509002E516D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		797F0EF120F15EC9002E516D /* LargeActionButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeActionButtonCell.swift; sourceTree = "<group>"; };
+		797F0EF320F15F4D002E516D /* UIImage+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+UIColor.swift"; sourceTree = "<group>"; };
+		797F0EF520F182A7002E516D /* profile_picture.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profile_picture.json; sourceTree = "<group>"; };
+		797F0EF720F18388002E516D /* CCProfilePicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfilePicture.m; sourceTree = "<group>"; };
+		797F0EF820F18389002E516D /* CCProfilePicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfilePicture.h; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7995309520D20B3500EABAAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7995309A20D20B3700EABAAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7995309C20D20B3800EABAAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,16 +175,22 @@
 		797F0EA520F0A4F3002E516D /* views */ = {
 			isa = PBXGroup;
 			children = (
+				797F0EC320F0EF47002E516D /* EmptyCell.swift */,
+				797F0EC920F1074A002E516D /* SeparatorCell.swift */,
+				797F0EB420F0C655002E516D /* SubHeaderCell.swift */,
+				797F0EBA20F0D354002E516D /* InlineDataCell.swift */,
+				797F0EC720F0F629002E516D /* CountryCodeCell.swift */,
 				797F0EA620F0A520002E516D /* GroupCell.swift */,
 				797F0EAA20F0AA58002E516D /* ContactCell.swift */,
 				797F0EB020F0C0D7002E516D /* ProfileHeaderCell.swift */,
-				797F0EB420F0C655002E516D /* SubHeaderCell.swift */,
-				797F0EBA20F0D354002E516D /* InlineDataCell.swift */,
 				797F0EC120F0E73B002E516D /* EditPhoneNumberCell.swift */,
-				797F0EC320F0EF47002E516D /* EmptyCell.swift */,
-				797F0EC720F0F629002E516D /* CountryCodeCell.swift */,
-				797F0EC920F1074A002E516D /* SeparatorCell.swift */,
 				797F0ECB20F1090C002E516D /* EditEmailCell.swift */,
+				797F0ED920F12DA1002E516D /* GroupHeaderCell.swift */,
+				797F0EDB20F12F8B002E516D /* SingleLineLinkCell.swift */,
+				797F0EDD20F13365002E516D /* SingleLineIconLinkCell.swift */,
+				797F0EDF20F13647002E516D /* SingleLineToggleCell.swift */,
+				797F0EE920F14522002E516D /* EditNameCell.swift */,
+				797F0EF120F15EC9002E516D /* LargeActionButtonCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -156,6 +201,42 @@
 				797F0EBD20F0E140002E516D /* phoneCodes.json */,
 			);
 			path = data;
+			sourceTree = "<group>";
+		};
+		797F0ED120F125D5002E516D /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				797F0EED20F1487B002E516D /* SJONavigationController.swift */,
+				799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */,
+				797F0EAE20F0C05D002E516D /* UIViewController+ErrorDialogs.swift */,
+				797F0ED220F125EC002E516D /* UITextField+Placeholders.swift */,
+				797F0ED420F1281A002E516D /* PhoneNumberTextField+Placeholders.swift */,
+				797F0EE720F14380002E516D /* Utils.swift */,
+				797F0EF320F15F4D002E516D /* UIImage+UIColor.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		797F0ED620F12960002E516D /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				799530A220D2111C00EABAAF /* StartController.swift */,
+				799530A420D21BE700EABAAF /* PhoneVerificationController.swift */,
+				797F0EA320F08534002E516D /* NewAccountController.swift */,
+				799530AF20D24F1D00EABAAF /* HomeController.swift */,
+				797F0EA820F0AA47002E516D /* ContactsController.swift */,
+				797F0EAC20F0BFC3002E516D /* ProfileController.swift */,
+				797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */,
+				797F0ECD20F109F0002E516D /* EditEmailController.swift */,
+				797F0EEB20F1458B002E516D /* EditNameController.swift */,
+				797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */,
+				797F0ECF20F124F4002E516D /* SettingsController.swift */,
+				797F0ED720F12C9F002E516D /* GroupController.swift */,
+				797F0EE120F137F5002E516D /* GroupMembersController.swift */,
+				797F0EE320F13A78002E516D /* GroupSettingsController.swift */,
+				797F0EE520F13B7E002E516D /* ContactController.swift */,
+			);
+			path = controllers;
 			sourceTree = "<group>";
 		};
 		7995308420D20B3500EABAAF = {
@@ -179,27 +260,18 @@
 		7995308F20D20B3500EABAAF /* CliqCard */ = {
 			isa = PBXGroup;
 			children = (
+				797F0ED620F12960002E516D /* controllers */,
+				797F0ED120F125D5002E516D /* utils */,
 				797F0EBC20F0E112002E516D /* data */,
 				797F0EA520F0A4F3002E516D /* views */,
 				799530A620D22F7200EABAAF /* models */,
 				7995309020D20B3500EABAAF /* AppDelegate.swift */,
-				7995309420D20B3500EABAAF /* Main.storyboard */,
 				7995309720D20B3700EABAAF /* Assets.xcassets */,
 				7995309920D20B3700EABAAF /* LaunchScreen.storyboard */,
 				7995309C20D20B3800EABAAF /* Info.plist */,
-				799530A220D2111C00EABAAF /* StartController.swift */,
-				799530A420D21BE700EABAAF /* PhoneVerificationController.swift */,
-				799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */,
 				799530AD20D240B300EABAAF /* CliqCardAPI.swift */,
-				799530AF20D24F1D00EABAAF /* HomeController.swift */,
-				797F0EA320F08534002E516D /* NewAccountController.swift */,
-				797F0EA820F0AA47002E516D /* ContactsController.swift */,
-				797F0EAC20F0BFC3002E516D /* ProfileController.swift */,
-				797F0EAE20F0C05D002E516D /* UIViewController+ErrorDialogs.swift */,
-				797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */,
-				797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */,
 				797F0EC520F0F0AD002E516D /* Colors.swift */,
-				797F0ECD20F109F0002E516D /* EditEmailController.swift */,
+				797F0EEF20F15509002E516D /* APIError.swift */,
 			);
 			path = CliqCard;
 			sourceTree = "<group>";
@@ -207,6 +279,8 @@
 		799530A620D22F7200EABAAF /* models */ = {
 			isa = PBXGroup;
 			children = (
+				797F0EF820F18389002E516D /* CCProfilePicture.h */,
+				797F0EF720F18388002E516D /* CCProfilePicture.m */,
 				799530DF20D2C43100EABAAF /* CCAddress.h */,
 				799530D920D2C43000EABAAF /* CCAddress.m */,
 				799530DA20D2C43000EABAAF /* CCContact.h */,
@@ -244,6 +318,7 @@
 				799530D120D2C17900EABAAF /* work_card.json */,
 				799530D320D2C1A800EABAAF /* address.json */,
 				799530D720D2C23A00EABAAF /* contact.json */,
+				797F0EF520F182A7002E516D /* profile_picture.json */,
 			);
 			path = plank;
 			sourceTree = "<group>";
@@ -326,12 +401,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797F0EF620F182A7002E516D /* profile_picture.json in Resources */,
 				799530B320D2A74600EABAAF /* user.json in Resources */,
 				799530C620D2B81000EABAAF /* group.json in Resources */,
 				7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */,
 				7995309820D20B3700EABAAF /* Assets.xcassets in Resources */,
 				799530D220D2C17900EABAAF /* work_card.json in Resources */,
-				7995309620D20B3500EABAAF /* Main.storyboard in Resources */,
 				799530D420D2C1A800EABAAF /* address.json in Resources */,
 				799530B520D2A85000EABAAF /* account.json in Resources */,
 				799530B720D2A89100EABAAF /* token.json in Resources */,
@@ -406,34 +481,53 @@
 				797F0EAB20F0AA58002E516D /* ContactCell.swift in Sources */,
 				799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */,
 				799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */,
+				797F0EEE20F1487B002E516D /* SJONavigationController.swift in Sources */,
 				797F0EB920F0D18A002E516D /* EditPhoneNumberController.swift in Sources */,
 				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
 				797F0EC820F0F629002E516D /* CountryCodeCell.swift in Sources */,
 				799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */,
+				797F0ED820F12C9F002E516D /* GroupController.swift in Sources */,
+				797F0EDA20F12DA1002E516D /* GroupHeaderCell.swift in Sources */,
 				799530B020D24F1D00EABAAF /* HomeController.swift in Sources */,
+				797F0EE420F13A78002E516D /* GroupSettingsController.swift in Sources */,
 				797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */,
+				797F0ED320F125EC002E516D /* UITextField+Placeholders.swift in Sources */,
 				799530C320D2A96D00EABAAF /* PlankModelRuntime.m in Sources */,
+				797F0EEC20F1458B002E516D /* EditNameController.swift in Sources */,
 				799530E220D2C43100EABAAF /* CCWorkCard.m in Sources */,
+				797F0EF420F15F4D002E516D /* UIImage+UIColor.swift in Sources */,
+				797F0EE820F14380002E516D /* Utils.swift in Sources */,
 				799530E320D2C43100EABAAF /* CCContact.m in Sources */,
 				797F0EBB20F0D354002E516D /* InlineDataCell.swift in Sources */,
 				797F0EC220F0E73B002E516D /* EditPhoneNumberCell.swift in Sources */,
 				797F0EA920F0AA47002E516D /* ContactsController.swift in Sources */,
 				797F0ECC20F1090C002E516D /* EditEmailCell.swift in Sources */,
+				797F0EF020F15509002E516D /* APIError.swift in Sources */,
 				797F0EB120F0C0D7002E516D /* ProfileHeaderCell.swift in Sources */,
+				797F0EDE20F13365002E516D /* SingleLineIconLinkCell.swift in Sources */,
 				799530E120D2C43100EABAAF /* CCAddress.m in Sources */,
 				797F0EA720F0A520002E516D /* GroupCell.swift in Sources */,
+				797F0EF920F18389002E516D /* CCProfilePicture.m in Sources */,
 				799530C220D2A96D00EABAAF /* CCAccount.m in Sources */,
 				799530AC20D23DED00EABAAF /* DateFormatter+ISO8601.swift in Sources */,
+				797F0EE620F13B7E002E516D /* ContactController.swift in Sources */,
 				797F0EAD20F0BFC3002E516D /* ProfileController.swift in Sources */,
 				799530A320D2111C00EABAAF /* StartController.swift in Sources */,
 				799530C120D2A96D00EABAAF /* CCUser.m in Sources */,
+				797F0EE220F137F5002E516D /* GroupMembersController.swift in Sources */,
+				797F0EF220F15EC9002E516D /* LargeActionButtonCell.swift in Sources */,
+				797F0EDC20F12F8B002E516D /* SingleLineLinkCell.swift in Sources */,
+				797F0EE020F13647002E516D /* SingleLineToggleCell.swift in Sources */,
 				797F0EAF20F0C05D002E516D /* UIViewController+ErrorDialogs.swift in Sources */,
 				797F0EC020F0E1A8002E516D /* PhoneCodePickerController.swift in Sources */,
 				797F0EC620F0F0AD002E516D /* Colors.swift in Sources */,
 				797F0EC420F0EF47002E516D /* EmptyCell.swift in Sources */,
 				797F0EA420F08534002E516D /* NewAccountController.swift in Sources */,
 				797F0ECA20F1074A002E516D /* SeparatorCell.swift in Sources */,
+				797F0EEA20F14522002E516D /* EditNameCell.swift in Sources */,
 				799530C920D2B89B00EABAAF /* CCGroup.m in Sources */,
+				797F0ED020F124F4002E516D /* SettingsController.swift in Sources */,
+				797F0ED520F1281A002E516D /* PhoneNumberTextField+Placeholders.swift in Sources */,
 				7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */,
 				797F0ECE20F109F0002E516D /* EditEmailController.swift in Sources */,
 				799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */,
@@ -443,14 +537,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7995309420D20B3500EABAAF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7995309520D20B3500EABAAF /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7995309920D20B3700EABAAF /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -594,7 +680,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "CliqCard/models/CliqCard-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -615,7 +701,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CliqCard/models/CliqCard-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

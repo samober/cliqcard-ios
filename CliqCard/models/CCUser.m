@@ -6,6 +6,7 @@
 //  @generated
 //
 
+#import "CCProfilePicture.h"
 #import "CCUser.h"
 
 struct CCUserDirtyProperties {
@@ -14,6 +15,7 @@ struct CCUserDirtyProperties {
     unsigned int CCUserDirtyPropertyFullName:1;
     unsigned int CCUserDirtyPropertyIdentifier:1;
     unsigned int CCUserDirtyPropertyLastName:1;
+    unsigned int CCUserDirtyPropertyProfilePicture:1;
     unsigned int CCUserDirtyPropertyUpdatedAt:1;
 };
 
@@ -97,6 +99,15 @@ struct CCUserDirtyProperties {
             }
         }
         {
+            __unsafe_unretained id value = modelDictionary[@"profile_picture"]; // Collection will retain.
+            if (value != nil) {
+                if (value != (id)kCFNull) {
+                    self->_profilePicture = [CCProfilePicture modelObjectWithDictionary:value];
+                }
+                self->_userDirtyProperties.CCUserDirtyPropertyProfilePicture = 1;
+            }
+        }
+        {
             __unsafe_unretained id value = modelDictionary[@"updated_at"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
@@ -126,6 +137,7 @@ struct CCUserDirtyProperties {
     _fullName = builder.fullName;
     _identifier = builder.identifier;
     _lastName = builder.lastName;
+    _profilePicture = builder.profilePicture;
     _updatedAt = builder.updatedAt;
     _userDirtyProperties = builder.userDirtyProperties;
     if ([self class] == [CCUser class]) {
@@ -136,7 +148,7 @@ struct CCUserDirtyProperties {
 - (NSString *)debugDescription
 {
     NSArray<NSString *> *parentDebugDescription = [[super debugDescription] componentsSeparatedByString:@"\n"];
-    NSMutableArray *descriptionFields = [NSMutableArray arrayWithCapacity:6];
+    NSMutableArray *descriptionFields = [NSMutableArray arrayWithCapacity:7];
     [descriptionFields addObject:parentDebugDescription];
     struct CCUserDirtyProperties props = _userDirtyProperties;
     if (props.CCUserDirtyPropertyCreatedAt) {
@@ -153,6 +165,9 @@ struct CCUserDirtyProperties {
     }
     if (props.CCUserDirtyPropertyLastName) {
         [descriptionFields addObject:[@"_lastName = " stringByAppendingFormat:@"%@", _lastName]];
+    }
+    if (props.CCUserDirtyPropertyProfilePicture) {
+        [descriptionFields addObject:[@"_profilePicture = " stringByAppendingFormat:@"%@", _profilePicture]];
     }
     if (props.CCUserDirtyPropertyUpdatedAt) {
         [descriptionFields addObject:[@"_updatedAt = " stringByAppendingFormat:@"%@", _updatedAt]];
@@ -185,6 +200,7 @@ struct CCUserDirtyProperties {
         (_firstName == anObject.firstName || [_firstName isEqualToString:anObject.firstName]) &&
         (_fullName == anObject.fullName || [_fullName isEqualToString:anObject.fullName]) &&
         (_lastName == anObject.lastName || [_lastName isEqualToString:anObject.lastName]) &&
+        (_profilePicture == anObject.profilePicture || [_profilePicture isEqual:anObject.profilePicture]) &&
         (_updatedAt == anObject.updatedAt || [_updatedAt isEqualToDate:anObject.updatedAt])
     );
 }
@@ -197,6 +213,7 @@ struct CCUserDirtyProperties {
         [_fullName hash],
         (NSUInteger)_identifier,
         [_lastName hash],
+        [_profilePicture hash],
         [_updatedAt hash]
     };
     return PINIntegerArrayHash(subhashes, sizeof(subhashes) / sizeof(subhashes[0]));
@@ -214,7 +231,7 @@ struct CCUserDirtyProperties {
 }
 - (NSDictionary *)dictionaryObjectRepresentation
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:6];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:7];
     if (_userDirtyProperties.CCUserDirtyPropertyCreatedAt) {
         if (_createdAt != (id)kCFNull) {
             NSValueTransformer *valueTransformer = [NSValueTransformer valueTransformerForName:kPlankDateValueTransformerKey];
@@ -251,6 +268,13 @@ struct CCUserDirtyProperties {
             [dict setObject:[NSNull null] forKey:@"last_name"];
         }
     }
+    if (_userDirtyProperties.CCUserDirtyPropertyProfilePicture) {
+        if (_profilePicture != (id)kCFNull) {
+            [dict setObject:[_profilePicture dictionaryObjectRepresentation] forKey:@"profile_picture"];
+        } else {
+            [dict setObject:[NSNull null] forKey:@"profile_picture"];
+        }
+    }
     if (_userDirtyProperties.CCUserDirtyPropertyUpdatedAt) {
         if (_updatedAt != (id)kCFNull) {
             NSValueTransformer *valueTransformer = [NSValueTransformer valueTransformerForName:kPlankDateValueTransformerKey];
@@ -285,12 +309,14 @@ struct CCUserDirtyProperties {
     _fullName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"full_name"];
     _identifier = [aDecoder decodeIntegerForKey:@"id"];
     _lastName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"last_name"];
+    _profilePicture = [aDecoder decodeObjectOfClass:[CCProfilePicture class] forKey:@"profile_picture"];
     _updatedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"updated_at"];
     _userDirtyProperties.CCUserDirtyPropertyCreatedAt = [aDecoder decodeIntForKey:@"created_at_dirty_property"] & 0x1;
     _userDirtyProperties.CCUserDirtyPropertyFirstName = [aDecoder decodeIntForKey:@"first_name_dirty_property"] & 0x1;
     _userDirtyProperties.CCUserDirtyPropertyFullName = [aDecoder decodeIntForKey:@"full_name_dirty_property"] & 0x1;
     _userDirtyProperties.CCUserDirtyPropertyIdentifier = [aDecoder decodeIntForKey:@"id_dirty_property"] & 0x1;
     _userDirtyProperties.CCUserDirtyPropertyLastName = [aDecoder decodeIntForKey:@"last_name_dirty_property"] & 0x1;
+    _userDirtyProperties.CCUserDirtyPropertyProfilePicture = [aDecoder decodeIntForKey:@"profile_picture_dirty_property"] & 0x1;
     _userDirtyProperties.CCUserDirtyPropertyUpdatedAt = [aDecoder decodeIntForKey:@"updated_at_dirty_property"] & 0x1;
     if ([self class] == [CCUser class]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPlankDidInitializeNotification object:self userInfo:@{ kPlankInitTypeKey : @(PlankModelInitTypeDefault) }];
@@ -304,12 +330,14 @@ struct CCUserDirtyProperties {
     [aCoder encodeObject:self.fullName forKey:@"full_name"];
     [aCoder encodeInteger:self.identifier forKey:@"id"];
     [aCoder encodeObject:self.lastName forKey:@"last_name"];
+    [aCoder encodeObject:self.profilePicture forKey:@"profile_picture"];
     [aCoder encodeObject:self.updatedAt forKey:@"updated_at"];
     [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyCreatedAt forKey:@"created_at_dirty_property"];
     [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyFirstName forKey:@"first_name_dirty_property"];
     [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyFullName forKey:@"full_name_dirty_property"];
     [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyIdentifier forKey:@"id_dirty_property"];
     [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyLastName forKey:@"last_name_dirty_property"];
+    [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyProfilePicture forKey:@"profile_picture_dirty_property"];
     [aCoder encodeInt:_userDirtyProperties.CCUserDirtyPropertyUpdatedAt forKey:@"updated_at_dirty_property"];
 }
 @end
@@ -336,6 +364,9 @@ struct CCUserDirtyProperties {
     }
     if (userDirtyProperties.CCUserDirtyPropertyLastName) {
         _lastName = modelObject.lastName;
+    }
+    if (userDirtyProperties.CCUserDirtyPropertyProfilePicture) {
+        _profilePicture = modelObject.profilePicture;
     }
     if (userDirtyProperties.CCUserDirtyPropertyUpdatedAt) {
         _updatedAt = modelObject.updatedAt;
@@ -366,6 +397,18 @@ struct CCUserDirtyProperties {
     if (modelObject.userDirtyProperties.CCUserDirtyPropertyLastName) {
         builder.lastName = modelObject.lastName;
     }
+    if (modelObject.userDirtyProperties.CCUserDirtyPropertyProfilePicture) {
+        id value = modelObject.profilePicture;
+        if (value != nil) {
+            if (builder.profilePicture) {
+                builder.profilePicture = [builder.profilePicture mergeWithModel:value initType:PlankModelInitTypeFromSubmerge];
+            } else {
+                builder.profilePicture = value;
+            }
+        } else {
+            builder.profilePicture = nil;
+        }
+    }
     if (modelObject.userDirtyProperties.CCUserDirtyPropertyUpdatedAt) {
         builder.updatedAt = modelObject.updatedAt;
     }
@@ -394,6 +437,11 @@ struct CCUserDirtyProperties {
 {
     _lastName = [lastName copy];
     _userDirtyProperties.CCUserDirtyPropertyLastName = 1;
+}
+- (void)setProfilePicture:(CCProfilePicture *)profilePicture
+{
+    _profilePicture = profilePicture;
+    _userDirtyProperties.CCUserDirtyPropertyProfilePicture = 1;
 }
 - (void)setUpdatedAt:(NSDate *)updatedAt
 {

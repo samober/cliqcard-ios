@@ -12,7 +12,8 @@
         "last_name": { "type": "string" },
         "full_name": { "type": "string" },
         "personal_card": { "$ref": "personal_card.json" },
-        "work_card": { "$ref": "work_card.json" }
+        "work_card": { "$ref": "work_card.json" },
+        "profile_picture": { "$ref": "profile_picture.json" }
     },
     "required": [ "id", "created_at", "updated_at", "first_name", "last_name", "full_name" ]
 }

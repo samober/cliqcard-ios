@@ -83,13 +83,14 @@ class EditPhoneNumberCell: UITableViewCell {
         return view
     }()
     
-    lazy var phoneNumberField: PhoneNumberTextField! = {
-        let view = PhoneNumberTextField()
+    lazy var phoneNumberField: SJOPhoneNumberTextField! = {
+        let view = SJOPhoneNumberTextField()
         view.font = UIFont.systemFont(ofSize: 17)
         view.textColor = Colors.darkestGray
         view.borderStyle = .none
         view.keyboardType = .numberPad
         view.placeholder = "Phone"
+        view.placeholderColor = Colors.gray
 //        view.clearButtonMode = .whileEditing
         
         return view

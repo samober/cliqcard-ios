@@ -12,7 +12,8 @@
         "phone_number": { "type": "string" },
         "first_name": { "type": "string" },
         "last_name": { "type": "string" },
-        "full_name": { "type": "string" }
+        "full_name": { "type": "string" },
+        "profile_picture": { "$ref": "profile_picture.json" }
     },
     "required": [ "id", "created_at", "updated_at", "phone_number", "first_name", "last_name", "full_name" ]
 }

@@ -14,6 +14,7 @@ class EmptyCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = UIColor.clear
+        self.selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

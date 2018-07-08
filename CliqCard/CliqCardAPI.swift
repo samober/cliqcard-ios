@@ -12,13 +12,6 @@ import SwiftKeychainWrapper
 
 final class CliqCardAPI {
     
-    enum APIError: Error {
-        case UnauthorizedError()
-        case UnknownError()
-        case NullTokenError()
-        case InvalidRequestError(message: String)
-    }
-    
     static let shared = CliqCardAPI()
     
     let host = "https://api.getcliqcard.com"
@@ -363,12 +356,12 @@ final class CliqCardAPI {
         }
     }
     
-    func updateAccount(firstName: String, lastName: String, email: String?, phoneNumber: String, responseHandler: @escaping (CCAccount?, APIError?) -> Void) {
+    func updateAccount(account: CCAccount, responseHandler: @escaping (CCAccount?, APIError?) -> Void) {
         let parameters: Parameters = [
-            "first_name": firstName,
-            "last_name": lastName,
-            "email": email ?? NSNull(),
-            "phone_number": phoneNumber
+            "first_name": account.firstName,
+            "last_name": account.lastName,
+            "email": account.email ?? NSNull(),
+            "phone_number": account.phoneNumber
         ]
         
         self._request("/account", method: .put, parameters: parameters) { (statusCode, json, error) in
@@ -387,6 +380,71 @@ final class CliqCardAPI {
             } else {
                 // send back the error
                 responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func uploadProfilePicture(image: UIImage, responseHandler: @escaping (CCAccount?, APIError?) -> Void) {
+        // make sure we have an access token
+        guard let accessToken = self._token?.accessToken else {
+            responseHandler(nil, APIError.NullTokenError())
+            return
+        }
+        
+        // get image data as jpeg
+        guard let imageData = UIImageJPEGRepresentation(image, 0.4) else {
+            responseHandler(nil, APIError.UnknownError())
+            return
+        }
+        
+        // specify the upload url and headers
+        let url = "\(host)/account/picture"
+        let headers: HTTPHeaders = [
+            "Content-Type": "multipart/form-data",
+            "Accept": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
+        
+        // upload
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            // append the image data with the name 'file'
+            multipartFormData.append(imageData, withName: "file", fileName: "file.jpg", mimeType: "image/jpeg")
+        }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { result in
+            switch result {
+            case .success(let upload, _, _):
+                upload.responseJSON(completionHandler: { response in
+                    // get the status code and json data
+                    if let statusCode = response.response?.statusCode, let json = response.value as? [String: AnyObject], statusCode == 200 {
+                        // serialize the new account
+                        let account = CCAccount(modelDictionary: json)
+                        // set the current user
+                        self._currentUser = account
+                        // execute the callback
+                        responseHandler(account, nil)
+                    } else {
+                        // send back an unknown error
+                        responseHandler(nil, APIError.UnknownError())
+                    }
+                })
+            case .failure(_):
+                // send back an unknown error
+                responseHandler(nil, APIError.UnknownError())
+            }
+        }
+    }
+    
+    func removeProfilePicture(responseHandler: @escaping (CCAccount?, APIError?) -> Void) {
+        self._request("/account/picture", method: .delete, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject], statusCode == 200 {
+                // serialize the new account
+                let account = CCAccount(modelDictionary: json)
+                // set the current user
+                self._currentUser = account
+                // execute the callback
+                responseHandler(account, nil)
+            } else {
+                // send back an unknown error
+                responseHandler(nil, APIError.UnknownError())
             }
         }
     }
@@ -529,6 +587,38 @@ final class CliqCardAPI {
                 case 200:
                     // serialize the group
                     let group = CCGroup(modelDictionary: json)
+                    // return the group
+                    responseHandler(group, nil)
+                case 404:
+                    // send back an unauthorized error
+                    responseHandler(nil, APIError.UnauthorizedError())
+                default:
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func updateGroup(group: CCGroup, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+        let parameters: Parameters = [
+            "name": group.name
+        ]
+        
+        self._request("/groups/\(group.identifier)", method: .put, parameters: parameters) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: [String: AnyObject]] {
+                switch statusCode {
+                case 200:
+                    // extract the group json
+                    guard let groupJson = json["group"] else {
+                        responseHandler(nil, APIError.UnknownError())
+                        return
+                    }
+                    // serialize the group
+                    let group = CCGroup(modelDictionary: groupJson)
                     // return the group
                     responseHandler(group, nil)
                 case 404:

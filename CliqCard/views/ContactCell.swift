@@ -13,9 +13,12 @@ class ContactCell: SeparatorCell {
 
     lazy var profileImageView: UIImageView! = {
         let view = UIImageView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = Colors.lightGray
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
+        view.layer.borderColor = Colors.lightGray.cgColor
+        view.layer.borderWidth = 1.0
+        view.contentMode = .scaleAspectFill
         
         return view
     }()
@@ -23,7 +26,7 @@ class ContactCell: SeparatorCell {
     lazy var nameLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 18)
+        view.font = UIFont.boldSystemFont(ofSize: 17)
         
         return view
     }()
@@ -35,12 +38,12 @@ class ContactCell: SeparatorCell {
         profileImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(40)
+            make.width.height.equalTo(44)
         }
         
         self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(profileImageView.snp.right).offset(12)
+            make.left.equalTo(profileImageView.snp.right).offset(16)
             make.right.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview()
         }

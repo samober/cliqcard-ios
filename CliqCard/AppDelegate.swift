@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let startController = StartController()
         
         // create a new navigation controller
-        let navigationController = UINavigationController(rootViewController: startController)
+        let navigationController = SJONavigationController(rootViewController: startController)
         navigationController.isNavigationBarHidden = true
         
         // set as root view controller
@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let homeController = HomeController()
         
         // create a new navigation controller
-        let navigationController = UINavigationController(rootViewController: homeController)
+        let navigationController = SJONavigationController(rootViewController: homeController)
         
         // set as root view controller
         window!.rootViewController = navigationController

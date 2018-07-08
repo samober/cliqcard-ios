@@ -10,7 +10,8 @@
         "updated_at": { "type": "string", "format": "date-time" },
         "first_name": { "type": "string" },
         "last_name": { "type": "string" },
-        "full_name": { "type": "string" }
+        "full_name": { "type": "string" },
+        "profile_picture": { "$ref": "profile_picture.json" }
     },
     "required": [ "id", "created_at", "updated_at", "first_name", "last_name", "full_name" ]
 }

@@ -10,4 +10,5 @@
 #import "CCContact.h"
 #import "CCPersonalCard.h"
 #import "CCWorkCard.h"
+#import "CCProfilePicture.h"
 #import "ISO8601DateValueTransformer.h"

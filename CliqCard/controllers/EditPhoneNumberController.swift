@@ -64,7 +64,7 @@ class EditPhoneNumberController: UITableViewController {
                 self.editPhoneNumberCell.phoneNumberField.becomeFirstResponder()
             })
             // create a new navigation controller
-            let navigationController = UINavigationController(rootViewController: controller)
+            let navigationController = SJONavigationController(rootViewController: controller)
             // present it as a modal
             self.present(navigationController, animated: true, completion: nil)
         }
@@ -86,7 +86,6 @@ class EditPhoneNumberController: UITableViewController {
         // get the national number from the text field
         guard let nationalNumber = self.editPhoneNumberCell.phoneNumber, nationalNumber.count > 0 else {
             self.callback(nil)
-            self.navigationController?.popViewController(animated: true)
             return
         }
         
@@ -101,7 +100,6 @@ class EditPhoneNumberController: UITableViewController {
         
         // send it through the callback
         self.callback(e164Number)
-        self.navigationController?.popViewController(animated: true)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -34,6 +34,7 @@ class PhoneCodePickerController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.register(CountryCodeCell.self, forCellReuseIdentifier: "CountryCodeCell")
+        self.tableView.register(SubHeaderCell.self, forCellReuseIdentifier: "SubHeaderCell")
         self.tableView.separatorStyle = .none
         
         self.view.backgroundColor = Colors.lightestGray
@@ -72,13 +73,19 @@ class PhoneCodePickerController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countries.count
+        return self.countries.count + 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
+            cell.label.text = "Countries"
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CountryCodeCell", for: indexPath) as! CountryCodeCell
 
-        let countryData = self.countries[indexPath.row]
+        let countryData = self.countries[indexPath.row - 1]
         cell.country = countryData.name
         cell.code = countryData.code
 
@@ -86,15 +93,20 @@ class PhoneCodePickerController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
+        if indexPath.row == 0 {
+            return 64
+        }
+        return 44
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let countryData = self.countries[indexPath.row]
-        self.callback(countryData)
-        self.dismiss(animated: true, completion: nil)
+        if indexPath.row > 0 {
+            let countryData = self.countries[indexPath.row - 1]
+            self.callback(countryData)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
 }

@@ -1,0 +1,16 @@
+{
+    "id": "profile_picture.json",
+    "title": "profile_picture",
+    "description": "Schema definition of a ProfilePicture",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "original": { "type": "string", "format": "uri" },
+        "thumb_big": { "type": "string", "format": "uri" },
+        "thumb_normal": { "type": "string", "format": "uri" },
+        "thumb_small": { "type": "string", "format": "uri" },
+        "thumb_mini": { "type": "string", "format": "uri" }
+    },
+    "required": [ "original", "thumb_big", "thumb_normal", "thumb_small", "thumb_mini" ]
+}
+

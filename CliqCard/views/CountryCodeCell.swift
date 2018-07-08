@@ -41,7 +41,7 @@ class CountryCodeCell: SeparatorCell {
     private lazy var codeLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 15)
+        view.font = UIFont.systemFont(ofSize: 17)
         view.textColor = Colors.darkGray
         view.textAlignment = .right
         

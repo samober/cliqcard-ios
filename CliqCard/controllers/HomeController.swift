@@ -9,8 +9,9 @@
 import UIKit
 import SnapKit
 import SwiftIcons
+import Kingfisher
 
-class HomeController: UITableViewController {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var groups: [CCGroup] = []
     
@@ -28,16 +29,25 @@ class HomeController: UITableViewController {
         
         return view
     }()
+    
+    lazy var tableView: UITableView! = {
+        let view = UITableView()
+        view.backgroundColor = Colors.lightestGray
+        view.separatorStyle = .none
+        view.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
+        
+        return view
+    }()
+    
+    let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        // register for model update notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(modelDidUpdate(notification:)), name: Notification.Name(rawValue: kPlankDidInitializeNotification), object: nil)
         
-        // register custom cells for this view
-        self.tableView.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
-        // remove default separators
-        self.tableView.separatorStyle = .none
+        self.view.backgroundColor = Colors.lightestGray
         
         self.title = "CliqCard"
         
@@ -52,7 +62,11 @@ class HomeController: UITableViewController {
         self.navigationItem.leftBarButtonItem = contactsButton
         
         // load the user image for the profile button
-        self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
+        if let currentUser = CliqCardAPI.shared.currentUser, let profilePicture = currentUser.profilePicture {
+            self.profileButton.kf.setImage(with: profilePicture.thumbSmall, for: .normal)
+        } else {
+            self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
+        }
         // hook up the profile button to open the profile page
         self.profileButton.addTarget(self, action: #selector(viewProfile), for: .touchUpInside)
         // wrap it in a bar button item
@@ -61,9 +75,18 @@ class HomeController: UITableViewController {
         self.navigationItem.rightBarButtonItem = profileBarButton
         
         // setup a refresh control
-        let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        self.refreshControl = refreshControl
+        self.tableView.refreshControl = refreshControl
+        
+        // hook up the table view
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        // position the table view
+        self.view.addSubview(self.tableView)
+        self.tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
         self.loadGroups()
     }
@@ -78,34 +101,42 @@ class HomeController: UITableViewController {
             }
             
             // stop refreshing
-            self.refreshControl?.endRefreshing()
+            self.refreshControl.endRefreshing()
         }
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.groups.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupCell
         
         let group = self.groups[indexPath.row]
+        cell.groupImageView.image = UIImage(named: "DefaultGroupProfile")
         cell.nameLabel.text = group.name
         cell.membersLabel.text = "\(group.memberCount) member\(group.memberCount == 1 ? "" : "s")"
         
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 96
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        // get the group
+        let group = self.groups[indexPath.row]
+        // create a new group controller
+        let controller = GroupController(group: group)
+        // push the controller
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func refresh() {
@@ -124,6 +155,34 @@ class HomeController: UITableViewController {
         let controller = ProfileController()
         // push
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    @objc func modelDidUpdate(notification: Notification) {
+        // check for new group
+        if let newGroup = notification.object as? CCGroup {
+            let index = self.groups.index { group -> Bool in
+                return newGroup.identifier == group.identifier
+            }
+            if let index = index {
+                self.groups.remove(at: index)
+                self.groups.insert(newGroup, at: index)
+                self.tableView.reloadData()
+            }
+        }
+        // check for new account
+        else if let newAccount = notification.object as? CCAccount {
+            // load the user image for the profile button
+            if let profilePicture = newAccount.profilePicture {
+                self.profileButton.kf.setImage(with: profilePicture.thumbSmall, for: .normal)
+            } else {
+                self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
+            }
+        }
+    }
+    
+    deinit {
+        // remove observer
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

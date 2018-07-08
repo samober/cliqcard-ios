@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PlankModelRuntime.h"
 @class CCAccountBuilder;
+@class CCProfilePicture;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonnull, nonatomic, copy, readonly) NSDate * createdAt;
 @property (nonnull, nonatomic, copy, readonly) NSString * firstName;
 @property (nonnull, nonatomic, copy, readonly) NSString * phoneNumber;
+@property (nullable, nonatomic, strong, readonly) CCProfilePicture * profilePicture;
 + (NSString *)className;
 + (NSString *)polymorphicTypeIdentifier;
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dictionary;
@@ -43,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonnull, nonatomic, copy, readwrite) NSDate * createdAt;
 @property (nonnull, nonatomic, copy, readwrite) NSString * firstName;
 @property (nonnull, nonatomic, copy, readwrite) NSString * phoneNumber;
+@property (nullable, nonatomic, strong, readwrite) CCProfilePicture * profilePicture;
 - (instancetype)initWithModel:(CCAccount *)modelObject;
 - (CCAccount *)build;
 - (void)mergeWithModel:(CCAccount *)modelObject;

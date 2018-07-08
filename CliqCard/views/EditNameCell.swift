@@ -1,5 +1,5 @@
 //
-//  EditEmailCell.swift
+//  EditNameCell.swift
 //  CliqCard
 //
 //  Created by Sam Ober on 7/7/18.
@@ -10,24 +10,23 @@ import UIKit
 import SnapKit
 import SwiftIcons
 
-class EditEmailCell: SeparatorCell {
+class EditNameCell: SeparatorCell {
 
     private lazy var iconImageView: UIImageView! = {
         let view = UIImageView()
         view.contentMode = .center
-        view.setIcon(icon: .ionicons(.email), textColor: Colors.darkGray, backgroundColor: UIColor.clear, size: CGSize(width: 40, height: 40))
+        view.setIcon(icon: .fontAwesome(.user), textColor: Colors.darkGray, backgroundColor: UIColor.clear, size: CGSize(width: 40, height: 40))
         view.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: UILayoutConstraintAxis.horizontal)
         
         return view
     }()
     
-    lazy var emailField: SJOTextField! = {
+    lazy var nameField: SJOTextField! = {
         let view = SJOTextField()
         view.font = UIFont.systemFont(ofSize: 17)
         view.textColor = Colors.darkestGray
         view.borderStyle = .none
-        view.keyboardType = .emailAddress
-        view.placeholder = "Email"
+        view.placeholder = "Name"
         view.placeholderColor = Colors.gray
         //        view.clearButtonMode = .whileEditing
         
@@ -45,8 +44,8 @@ class EditEmailCell: SeparatorCell {
             make.centerY.equalToSuperview()
         }
         
-        self.addSubview(emailField)
-        emailField.snp.makeConstraints { make in
+        self.addSubview(nameField)
+        nameField.snp.makeConstraints { make in
             make.left.equalTo(iconImageView.snp.right).offset(8)
             make.right.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview()
@@ -56,5 +55,5 @@ class EditEmailCell: SeparatorCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class ContactsController: UITableViewController {
     
@@ -62,17 +63,29 @@ class ContactsController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactCell
 
         let contact = self.contacts[indexPath.row]
+        if let profilePicture = contact.profilePicture {
+            cell.profileImageView.kf.setImage(with: profilePicture.thumbSmall)
+        } else {
+            cell.profileImageView.image = UIImage(named: "DefaultUserProfile")
+        }
         cell.nameLabel.text = contact.fullName
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return 64
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        // get the contact
+        let contact = self.contacts[indexPath.row]
+        // create a contact controller
+        let controller = ContactController(contact: contact)
+        // push the controller
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 
 }

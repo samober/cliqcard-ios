@@ -13,10 +13,12 @@ class GroupCell: SeparatorCell {
     
     lazy var groupImageView: UIImageView! = {
         let view = UIImageView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = Colors.lightGray
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
-        view.layer.zPosition = 1
+        view.layer.borderColor = Colors.lightGray.cgColor
+        view.layer.borderWidth = 1.0
+        view.contentMode = .scaleAspectFill
         
         return view
     }()
@@ -24,7 +26,7 @@ class GroupCell: SeparatorCell {
     lazy var nameLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 18)
+        view.font = UIFont.boldSystemFont(ofSize: 17)
         
         return view
     }()
@@ -32,7 +34,7 @@ class GroupCell: SeparatorCell {
     lazy var membersLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 15)
+        view.font = UIFont.systemFont(ofSize: 16)
         view.textColor = UIColor.lightGray
         
         return view
@@ -45,7 +47,7 @@ class GroupCell: SeparatorCell {
         groupImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(64)
+            make.width.height.equalTo(56)
         }
         
         self.addSubview(nameLabel)
@@ -68,15 +70,15 @@ class GroupCell: SeparatorCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        let groupImageViewColor = self.groupImageView.backgroundColor
+        let color = self.groupImageView.backgroundColor
         super.setSelected(selected, animated: animated)
-        self.groupImageView.backgroundColor = groupImageViewColor
+        self.groupImageView.backgroundColor = color
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        let groupImageViewColor = self.groupImageView.backgroundColor
+        let color = self.groupImageView.backgroundColor
         super.setHighlighted(highlighted, animated: animated)
-        self.groupImageView.backgroundColor = groupImageViewColor
+        self.groupImageView.backgroundColor = color
     }
 
 }

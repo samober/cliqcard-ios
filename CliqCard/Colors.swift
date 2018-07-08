@@ -14,9 +14,11 @@ public struct Colors {
 //    static let lightestGray = UIColor("#F7F9F9")
     static let lightestGray = UIColor("#F9FCFC")
     static let lightGray = UIColor("#DEE4E5")
+    static let gray = UIColor("#C6C6C6")
     static let darkGray = UIColor("#828282")
     static let darkestGray = UIColor("#212121")
     
     static let bondiBlue = UIColor("#0092BF")
+    static let carminePink = UIColor("#E04F47")
     
 }

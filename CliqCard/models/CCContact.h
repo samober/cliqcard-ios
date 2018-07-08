@@ -10,6 +10,7 @@
 #import "PlankModelRuntime.h"
 @class CCContactBuilder;
 @class CCPersonalCard;
+@class CCProfilePicture;
 @class CCWorkCard;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonnull, nonatomic, copy, readonly) NSString * fullName;
 @property (nonnull, nonatomic, copy, readonly) NSDate * createdAt;
 @property (nonnull, nonatomic, copy, readonly) NSString * firstName;
+@property (nullable, nonatomic, strong, readonly) CCProfilePicture * profilePicture;
 @property (nullable, nonatomic, strong, readonly) CCPersonalCard * personalCard;
 + (NSString *)className;
 + (NSString *)polymorphicTypeIdentifier;
@@ -44,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonnull, nonatomic, copy, readwrite) NSString * fullName;
 @property (nonnull, nonatomic, copy, readwrite) NSDate * createdAt;
 @property (nonnull, nonatomic, copy, readwrite) NSString * firstName;
+@property (nullable, nonatomic, strong, readwrite) CCProfilePicture * profilePicture;
 @property (nullable, nonatomic, strong, readwrite) CCPersonalCard * personalCard;
 - (instancetype)initWithModel:(CCContact *)modelObject;
 - (CCContact *)build;

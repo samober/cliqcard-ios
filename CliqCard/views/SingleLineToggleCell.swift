@@ -1,5 +1,5 @@
 //
-//  SubHeaderCell.swift
+//  SingleLineToggleCell.swift
 //  CliqCard
 //
 //  Created by Sam Ober on 7/7/18.
@@ -9,14 +9,20 @@
 import UIKit
 import SnapKit
 
-class SubHeaderCell: UITableViewCell {
+class SingleLineToggleCell: SeparatorCell {
 
-    lazy var label: UILabel! = {
+    lazy var titleLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 15)
-        view.textColor = Colors.darkGray
-//        view.textAlignment = .center
+        view.font = UIFont.systemFont(ofSize: 17)
+        view.textColor = Colors.darkestGray
+        
+        return view
+    }()
+    
+    lazy var toggleView: UISwitch! = {
+        let view = UISwitch()
+        
         
         return view
     }()
@@ -24,20 +30,23 @@ class SubHeaderCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.backgroundColor = UIColor.clear
         self.selectionStyle = .none
         
-        self.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.height.equalTo(20)
+        self.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
+            make.top.bottom.equalToSuperview()
+        }
+        
+        self.addSubview(toggleView)
+        toggleView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-12)
+            make.centerY.equalToSuperview()
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

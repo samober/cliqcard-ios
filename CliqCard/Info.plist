@@ -25,10 +25,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We use your photo library for choosing new profile and group pictures.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to take new profile pictures and group pictures.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
