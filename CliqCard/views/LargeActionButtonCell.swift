@@ -10,20 +10,28 @@ import UIKit
 import SnapKit
 
 class LargeActionButtonCell: UITableViewCell {
+    
+    var buttonColor: UIColor! {
+        didSet {
+            self.actionButton.setBackgroundImage(UIImage(color: self.buttonColor), for: .normal)
+        }
+    }
 
     lazy var actionButton: UIButton! = {
         let view = UIButton(type: .custom)
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
-        view.setBackgroundImage(UIImage(color: Colors.carminePink), for: .normal)
+        view.setBackgroundImage(UIImage(color: UIColor.black), for: .normal)
         view.setTitleColor(UIColor.white, for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         
         return view
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.buttonColor = Colors.carminePink
         
         self.selectionStyle = .none
         self.backgroundColor = UIColor.clear

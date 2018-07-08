@@ -36,6 +36,8 @@ class GroupController: UITableViewController {
         self.tableView.register(SingleLineLinkCell.self, forCellReuseIdentifier: "SingleLineLinkCell")
         self.tableView.register(SingleLineIconLinkCell.self, forCellReuseIdentifier: "SingleLineIconLinkCell")
         self.tableView.register(SingleLineToggleCell.self, forCellReuseIdentifier: "SingleLineToggleCell")
+        self.tableView.register(LargeActionButtonCell.self, forCellReuseIdentifier: "LargeActionButtonCell")
+        self.tableView.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
         self.tableView.separatorStyle = .none
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -48,7 +50,7 @@ class GroupController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -63,16 +65,24 @@ class GroupController: UITableViewController {
             cell.imageButton.addTarget(self, action: #selector(openImage(sender:)), for: .touchUpInside)
             return cell
         case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
+            cell.actionButton.setTitle("Share Join Code", for: .normal)
+            cell.buttonColor = Colors.bondiBlue
+            cell.actionButton.addTarget(self, action: #selector(shareCode), for: .touchUpInside)
+            return cell
+        case 2:
+            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
+        case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineToggleCell", for: indexPath) as! SingleLineToggleCell
             cell.titleLabel.text = "Notifications"
             cell.toggleView.isOn = true
             return cell
-        case 2:
+        case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineIconLinkCell", for: indexPath) as! SingleLineIconLinkCell
             cell.iconImageView.setIcon(icon: .fontAwesome(.users), textColor: Colors.darkGray, backgroundColor: UIColor.clear, size: CGSize(width: 28, height: 28))
             cell.titleLabel.text = "\(self.group.memberCount) member\(self.group.memberCount == 1 ? "" : "s")"
             return cell
-        case 3:
+        case 5:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineIconLinkCell", for: indexPath) as! SingleLineIconLinkCell
             cell.iconImageView.setIcon(icon: .fontAwesome(.cog), textColor: Colors.darkGray, backgroundColor: UIColor.clear, size: CGSize(width: 32, height: 32))
             cell.titleLabel.text = "Settings"
@@ -83,22 +93,28 @@ class GroupController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             return 280
+        case 1:
+            return 64
+        case 2:
+            return 32
+        default:
+            return 56
         }
-        return 56
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         switch indexPath.row {
-        case 2:
+        case 4:
             // create a new group members controller
             let controller = GroupMembersController(group: self.group)
             // push the controller
             self.navigationController?.pushViewController(controller, animated: true)
-        case 3:
+        case 5:
             // create a new group settings controller
             let controller = GroupSettingsController(group: self.group)
             // push the controller
@@ -115,6 +131,23 @@ class GroupController: UITableViewController {
         
         let controller = ImageViewerController(configuration: configuration)
         self.present(controller, animated: true, completion: nil)
+    }
+    
+    @objc func shareCode() {
+        // get the code
+        CliqCardAPI.shared.getGroupCode(id: self.group.identifier) { (code, error) in
+            if let code = code {
+                // create a new share code controller
+                let controller = ShareJoinCodeController(code: code)
+                // create a new navigation controller
+                let navigationController = SJONavigationController(rootViewController: controller)
+                // present as modal
+                self.present(navigationController, animated: true, completion: nil)
+            } else {
+                // present error message
+                self.showError(title: "Error", message: "An error occurred while retrieving the join code. Please try again later.")
+            }
+        }
     }
     
     @objc func modelDidUpdate(notification: Notification) {

@@ -7,6 +7,7 @@ PODS:
   - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
+  - QRCode (2.0)
   - SimpleImageViewer (1.1.1)
   - SnapKit (4.0.0)
   - SwiftIcons (2.0.1)
@@ -18,6 +19,7 @@ DEPENDENCIES:
   - Alamofire
   - Kingfisher
   - PhoneNumberKit (~> 2.1)
+  - QRCode
   - SimpleImageViewer
   - SnapKit (~> 4.0.0)
   - SwiftIcons
@@ -30,6 +32,7 @@ SPEC REPOS:
     - Alamofire
     - Kingfisher
     - PhoneNumberKit
+    - QRCode
     - SimpleImageViewer
     - SnapKit
     - SwiftIcons
@@ -41,6 +44,7 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
+  QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftIcons: e475a56ae2c2da40672dbf16061ca5dd5cee7dbb
@@ -48,6 +52,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   UIColor_Hex_Swift: c5ff88470499383b8fd85302d59344bb24ba9436
 
-PODFILE CHECKSUM: bf16210d18b85d271d1537516f09ee6a7c052b71
+PODFILE CHECKSUM: b8a546a2b8f2bea06ee2138d55425857e305d264
 
 COCOAPODS: 1.5.3

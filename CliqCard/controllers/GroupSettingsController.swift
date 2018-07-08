@@ -81,6 +81,7 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
             cell.actionButton.setTitle("Leave Group", for: .normal)
+            cell.buttonColor = Colors.carminePink
             cell.actionButton.addTarget(self, action: #selector(leaveGroup), for: .touchUpInside)
             return cell
         default:

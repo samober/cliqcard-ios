@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftKeychainWrapper
+import SwiftyJSON
 
 final class CliqCardAPI {
     
@@ -714,8 +715,8 @@ final class CliqCardAPI {
                     responseHandler(nil, APIError.UnknownError())
                 }
             } else {
-                // send back an unknown error
-                responseHandler(nil, APIError.UnknownError())
+                // send back the error
+                responseHandler(nil, error)
             }
         }
     }
@@ -743,16 +744,53 @@ final class CliqCardAPI {
     
     func getGroupCode(id: Int, responseHandler: @escaping (String?, APIError?) -> Void) {
         self._request("/groups/\(id)/code", method: .get, parameters: nil) { (statusCode, json, error) in
-            if let statusCode = statusCode, let json = json as? [String: [String: String]] {
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
                 switch statusCode {
                 case 200:
+                    // convert the json
+                    let result = JSON(json)
                     // get the code
-                    guard let code = json["join_code"]?["code"] else { return responseHandler(nil, APIError.UnknownError()) }
+                    guard let code = result["join_code"]["code"].string else { return responseHandler(nil, APIError.UnknownError()) }
                     // send back the code
                     responseHandler(code, nil)
                 case 404:
                     // send back an unauthorized error
                     responseHandler(nil, APIError.UnauthorizedError())
+                default:
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func joinGroup(code: String, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+        let parameters: Parameters = [
+            "join_code": code,
+            "share_personal_card": true,
+            "share_work_card": true
+        ]
+        
+        self._request("/groups/join", method: .post, parameters: parameters) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                switch statusCode {
+                case 200:
+                    // extract the group json
+                    guard let groupJson = json["group"] as? [String: AnyObject] else {
+                        // send back an unknown error
+                        responseHandler(nil, APIError.UnknownError())
+                        return
+                    }
+                    // serialize the group
+                    let group = CCGroup(modelDictionary: groupJson)
+                    // call the response handler
+                    responseHandler(group, nil)
+                case 400:
+                    // send back an invalid request error
+                    responseHandler(nil, APIError.InvalidRequestError(message: "Invalid join code"))
                 default:
                     // send back an unknown error
                     responseHandler(nil, APIError.UnknownError())

@@ -39,6 +39,16 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return view
     }()
     
+    lazy var addGroupButton: UIButton! = {
+        let view = UIButton(type: .custom)
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
+        view.setBackgroundImage(UIImage(color: Colors.bondiBlue), for: .normal)
+        view.setIcon(icon: .fontAwesome(.plus), iconSize: 24, color: UIColor.white, backgroundColor: UIColor.clear, forState: .normal)
+        
+        return view
+    }()
+    
     let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -87,6 +97,17 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        // position the add button
+        self.view.addSubview(self.addGroupButton)
+        self.addGroupButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview().offset(-24)
+            make.height.equalTo(56)
+        }
+        
+        self.addGroupButton.addTarget(self, action: #selector(addGroup), for: .touchUpInside)
 
         self.loadGroups()
     }
@@ -159,6 +180,22 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let controller = ProfileController()
         // push
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    @objc func addGroup() {
+        // enter manually or scan
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        controller.addAction(UIAlertAction(title: "Create Group", style: .default, handler: { action in
+            
+        }))
+        controller.addAction(UIAlertAction(title: "Enter Code", style: .default, handler: { action in
+            
+        }))
+        controller.addAction(UIAlertAction(title: "Scan QR Code", style: .default, handler: { action in
+            
+        }))
+        controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(controller, animated: true, completion: nil)
     }
     
     @objc func modelDidUpdate(notification: Notification) {
