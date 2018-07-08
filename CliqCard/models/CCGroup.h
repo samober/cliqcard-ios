@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "PlankModelRuntime.h"
 @class CCGroupBuilder;
+@class CCGroupPicture;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CCGroup : NSObject<NSCopying, NSSecureCoding>
+@property (nullable, nonatomic, strong, readonly) CCGroupPicture * picture;
 @property (nonnull, nonatomic, copy, readonly) NSString * name;
 @property (nonnull, nonatomic, copy, readonly) NSDate * updatedAt;
 @property (nonatomic, assign, readonly) NSInteger identifier;
@@ -32,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface CCGroupBuilder : NSObject
+@property (nullable, nonatomic, strong, readwrite) CCGroupPicture * picture;
 @property (nonnull, nonatomic, copy, readwrite) NSString * name;
 @property (nonnull, nonatomic, copy, readwrite) NSDate * updatedAt;
 @property (nonatomic, assign, readwrite) NSInteger identifier;

@@ -55,7 +55,11 @@ class GroupController: UITableViewController {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "GroupHeaderCell", for: indexPath) as! GroupHeaderCell
-            cell.imageButton.setImage(UIImage(named: "DefaultGroupProfile"), for: .normal)
+            if let picture = self.group.picture {
+                cell.imageButton.kf.setImage(with: picture.original, for: .normal)
+            } else {
+                cell.imageButton.setImage(UIImage(named: "DefaultGroupProfile"), for: .normal)
+            }
             cell.imageButton.addTarget(self, action: #selector(openImage(sender:)), for: .touchUpInside)
             return cell
         case 1:

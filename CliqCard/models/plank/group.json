@@ -9,7 +9,8 @@
         "created_at": { "type": "string", "format": "date-time" },
         "updated_at": { "type": "string", "format": "date-time" },
         "name": { "type": "string" },
-        "member_count": { "type": "integer" }
+        "member_count": { "type": "integer" },
+        "picture": { "$ref": "group_picture.json" }
     },
     "required": [ "id", "created_at", "updated_at", "name", "member_count" ]
 }

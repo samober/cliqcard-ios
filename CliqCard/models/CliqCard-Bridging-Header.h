@@ -11,4 +11,5 @@
 #import "CCPersonalCard.h"
 #import "CCWorkCard.h"
 #import "CCProfilePicture.h"
+#import "CCGroupPicture.h"
 #import "ISO8601DateValueTransformer.h"

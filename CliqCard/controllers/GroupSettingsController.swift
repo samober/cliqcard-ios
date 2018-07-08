@@ -8,10 +8,13 @@
 
 import UIKit
 
-class GroupSettingsController: UITableViewController {
+class GroupSettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var group: CCGroup!
     var groupBuilder: CCGroupBuilder!
+    
+    // image picker
+    let imagePicker = UIImagePickerController()
     
     init(group: CCGroup) {
         // save the group
@@ -32,6 +35,7 @@ class GroupSettingsController: UITableViewController {
         self.view.backgroundColor = Colors.lightestGray
         
         self.tableView.register(InlineDataCell.self, forCellReuseIdentifier: "InlineDataCell")
+        self.tableView.register(UpdatePictureCell.self, forCellReuseIdentifier: "UpdatePictureCell")
         self.tableView.register(LargeActionButtonCell.self, forCellReuseIdentifier: "LargeActionButtonCell")
         self.tableView.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
         self.tableView.separatorStyle = .none
@@ -39,6 +43,8 @@ class GroupSettingsController: UITableViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         self.title = "\(self.group.name) Settings"
+        
+        self.imagePicker.delegate = self
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -46,7 +52,7 @@ class GroupSettingsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,15 +60,25 @@ class GroupSettingsController: UITableViewController {
         case 0:
             return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
         case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UpdatePictureCell", for: indexPath) as! UpdatePictureCell
+            if let picture = self.group.picture {
+                cell.descriptionLabel.text = "Change group picture"
+                cell.pictureView.kf.setImage(with: picture.thumbBig)
+            } else {
+                cell.descriptionLabel.text = "Upload a group picture"
+                cell.pictureView.image = UIImage(named: "DefaultGroupProfile")
+            }
+            return cell
+        case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = "Name"
             cell.valueLabel.text = self.group.name
             cell.valueLabel.isHidden = false
             cell.placeholderLabel.isHidden = true
             return cell
-        case 2:
-            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
         case 3:
+            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
+        case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
             cell.actionButton.setTitle("Leave Group", for: .normal)
             cell.actionButton.addTarget(self, action: #selector(leaveGroup), for: .touchUpInside)
@@ -77,10 +93,12 @@ class GroupSettingsController: UITableViewController {
         case 0:
             return 32
         case 1:
-            return 48
+            return 112
         case 2:
-            return 104
+            return 48
         case 3:
+            return 104
+        case 4:
             return 72
         default:
             return 0
@@ -92,6 +110,41 @@ class GroupSettingsController: UITableViewController {
         
         switch indexPath.row {
         case 1:
+            // present image options
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+                self.imagePicker.allowsEditing = false
+                self.imagePicker.sourceType = .camera
+                
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }))
+            controller.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { action in
+                self.imagePicker.allowsEditing = false
+                self.imagePicker.sourceType = .photoLibrary
+                
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }))
+            // only add remove option if there is an image
+            if self.group.picture != nil {
+                controller.addAction(UIAlertAction(title: "Remove Image", style: .destructive, handler: { action in
+                    // remove the group image
+                    CliqCardAPI.shared.removeGroupPicture(groupId: self.group.identifier, responseHandler: { (group, error) in
+                        if let group = group {
+                            // update the UI
+                            self.group = group
+                            self.groupBuilder = CCGroupBuilder.init(model: group)
+                            self.title = "\(group.name) Settings"
+                            self.tableView.reloadData()
+                        } else {
+                            // display error message
+                            self.showError(title: "Error", message: "An unknown error occured removing this group's image. Please try again later.")
+                        }
+                    })
+                }))
+            }
+            controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(controller, animated: true, completion: nil)
+        case 2:
             let controller = EditNameController(name: self.group.name, placeholder: "Name") { name in
                 self.groupBuilder.name = name
                 // save
@@ -109,6 +162,30 @@ class GroupSettingsController: UITableViewController {
         default:
             break
         }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            // upload the new image
+            CliqCardAPI.shared.uploadGroupPicture(groupId: self.group.identifier, image: pickedImage) { (group, error) in
+                if let group = group {
+                    // update the UI
+                    self.group = group
+                    self.groupBuilder = CCGroupBuilder.init(model: group)
+                    self.title = "\(group.name) Settings"
+                    self.tableView.reloadData()
+                } else {
+                    // display error message
+                    self.showError(title: "Error", message: "An unknown error occured uploading this group's new image. Please try again later.")
+                }
+            }
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func save(callback: @escaping (APIError?) -> Void) {

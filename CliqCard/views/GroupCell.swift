@@ -27,6 +27,7 @@ class GroupCell: SeparatorCell {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
         view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.textColor = Colors.darkestGray
         
         return view
     }()
@@ -34,7 +35,7 @@ class GroupCell: SeparatorCell {
     lazy var membersLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 16)
+        view.font = UIFont.systemFont(ofSize: 15)
         view.textColor = UIColor.lightGray
         
         return view
@@ -47,19 +48,19 @@ class GroupCell: SeparatorCell {
         groupImageView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(56)
+            make.width.height.equalTo(64)
         }
         
         self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(groupImageView.snp.right).offset(16)
+            make.left.equalTo(groupImageView.snp.right).offset(12)
             make.right.equalToSuperview().offset(-16)
-            make.centerY.equalToSuperview().offset(-11)
+            make.centerY.equalToSuperview().offset(-10)
         }
         
         self.addSubview(membersLabel)
         membersLabel.snp.makeConstraints { make in
-            make.left.equalTo(groupImageView.snp.right).offset(16)
+            make.left.equalTo(groupImageView.snp.right).offset(12)
             make.right.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview().offset(12)
         }

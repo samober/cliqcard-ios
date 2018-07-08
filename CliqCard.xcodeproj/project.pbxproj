@@ -47,6 +47,9 @@
 		797F0EF420F15F4D002E516D /* UIImage+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF320F15F4D002E516D /* UIImage+UIColor.swift */; };
 		797F0EF620F182A7002E516D /* profile_picture.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0EF520F182A7002E516D /* profile_picture.json */; };
 		797F0EF920F18389002E516D /* CCProfilePicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EF720F18388002E516D /* CCProfilePicture.m */; };
+		797F0EFB20F296FC002E516D /* group_picture.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0EFA20F296FC002E516D /* group_picture.json */; };
+		797F0EFE20F2973F002E516D /* CCGroupPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFD20F2973E002E516D /* CCGroupPicture.m */; };
+		797F0F0020F29A48002E516D /* UpdatePictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
@@ -118,6 +121,10 @@
 		797F0EF520F182A7002E516D /* profile_picture.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = profile_picture.json; sourceTree = "<group>"; };
 		797F0EF720F18388002E516D /* CCProfilePicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfilePicture.m; sourceTree = "<group>"; };
 		797F0EF820F18389002E516D /* CCProfilePicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfilePicture.h; sourceTree = "<group>"; };
+		797F0EFA20F296FC002E516D /* group_picture.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = group_picture.json; sourceTree = "<group>"; };
+		797F0EFC20F2973E002E516D /* CCGroupPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGroupPicture.h; sourceTree = "<group>"; };
+		797F0EFD20F2973E002E516D /* CCGroupPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGroupPicture.m; sourceTree = "<group>"; };
+		797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePictureCell.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -191,6 +198,7 @@
 				797F0EDF20F13647002E516D /* SingleLineToggleCell.swift */,
 				797F0EE920F14522002E516D /* EditNameCell.swift */,
 				797F0EF120F15EC9002E516D /* LargeActionButtonCell.swift */,
+				797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -279,6 +287,8 @@
 		799530A620D22F7200EABAAF /* models */ = {
 			isa = PBXGroup;
 			children = (
+				797F0EFC20F2973E002E516D /* CCGroupPicture.h */,
+				797F0EFD20F2973E002E516D /* CCGroupPicture.m */,
 				797F0EF820F18389002E516D /* CCProfilePicture.h */,
 				797F0EF720F18388002E516D /* CCProfilePicture.m */,
 				799530DF20D2C43100EABAAF /* CCAddress.h */,
@@ -319,6 +329,7 @@
 				799530D320D2C1A800EABAAF /* address.json */,
 				799530D720D2C23A00EABAAF /* contact.json */,
 				797F0EF520F182A7002E516D /* profile_picture.json */,
+				797F0EFA20F296FC002E516D /* group_picture.json */,
 			);
 			path = plank;
 			sourceTree = "<group>";
@@ -413,6 +424,7 @@
 				799530D820D2C23A00EABAAF /* contact.json in Resources */,
 				799530D020D2C0D400EABAAF /* personal_card.json in Resources */,
 				797F0EBE20F0E140002E516D /* phoneCodes.json in Resources */,
+				797F0EFB20F296FC002E516D /* group_picture.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +502,7 @@
 				797F0EDA20F12DA1002E516D /* GroupHeaderCell.swift in Sources */,
 				799530B020D24F1D00EABAAF /* HomeController.swift in Sources */,
 				797F0EE420F13A78002E516D /* GroupSettingsController.swift in Sources */,
+				797F0EFE20F2973F002E516D /* CCGroupPicture.m in Sources */,
 				797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */,
 				797F0ED320F125EC002E516D /* UITextField+Placeholders.swift in Sources */,
 				799530C320D2A96D00EABAAF /* PlankModelRuntime.m in Sources */,
@@ -504,6 +517,7 @@
 				797F0ECC20F1090C002E516D /* EditEmailCell.swift in Sources */,
 				797F0EF020F15509002E516D /* APIError.swift in Sources */,
 				797F0EB120F0C0D7002E516D /* ProfileHeaderCell.swift in Sources */,
+				797F0F0020F29A48002E516D /* UpdatePictureCell.swift in Sources */,
 				797F0EDE20F13365002E516D /* SingleLineIconLinkCell.swift in Sources */,
 				799530E120D2C43100EABAAF /* CCAddress.m in Sources */,
 				797F0EA720F0A520002E516D /* GroupCell.swift in Sources */,

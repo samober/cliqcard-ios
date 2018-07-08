@@ -1,0 +1,17 @@
+{
+    "id": "group_picture.json",
+    "title": "group_picture",
+    "description": "Schema definition of a GroupPicture",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "original": { "type": "string", "format": "uri" },
+        "thumb_big": { "type": "string", "format": "uri" },
+        "thumb_normal": { "type": "string", "format": "uri" },
+        "thumb_small": { "type": "string", "format": "uri" },
+        "thumb_mini": { "type": "string", "format": "uri" }
+    },
+    "required": [ "original", "thumb_big", "thumb_normal", "thumb_small", "thumb_mini" ]
+}
+
+

@@ -635,6 +635,91 @@ final class CliqCardAPI {
         }
     }
     
+    func uploadGroupPicture(groupId: Int, image: UIImage, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+        // make sure we have an access token
+        guard let accessToken = self._token?.accessToken else {
+            responseHandler(nil, APIError.NullTokenError())
+            return
+        }
+        
+        // get image data as jpeg
+        guard let imageData = UIImageJPEGRepresentation(image, 0.4) else {
+            responseHandler(nil, APIError.UnknownError())
+            return
+        }
+        
+        // specify the upload url and headers
+        let url = "\(host)/groups/\(groupId)/picture"
+        let headers: HTTPHeaders = [
+            "Content-Type": "multipart/form-data",
+            "Accept": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
+        
+        // upload
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            // append the image data with the name 'file'
+            multipartFormData.append(imageData, withName: "file", fileName: "file.jpg", mimeType: "image/jpeg")
+        }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { result in
+            switch result {
+            case .success(let upload, _, _):
+                upload.responseJSON(completionHandler: { response in
+                    // get the status code and json data
+                    if let statusCode = response.response?.statusCode, let json = response.value as? [String: AnyObject] {
+                        switch statusCode {
+                        case 200:
+                            // serialize the new group
+                            let group = CCGroup(modelDictionary: json)
+                            // execute the callback
+                            responseHandler(group, nil)
+                        case 404:
+                            // send back an unauthorized error
+                            responseHandler(nil, APIError.UnauthorizedError())
+                        case 401:
+                            // send back an unauthorized error
+                            responseHandler(nil, APIError.UnauthorizedError())
+                        default:
+                            // send back an unknown error
+                            responseHandler(nil, APIError.UnknownError())
+                        }
+                    } else {
+                        // send back an unknown error
+                        responseHandler(nil, APIError.UnknownError())
+                    }
+                })
+            case .failure(_):
+                // send back an unknown error
+                responseHandler(nil, APIError.UnknownError())
+            }
+        }
+    }
+    
+    func removeGroupPicture(groupId: Int, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+        self._request("/groups/\(groupId)/picture", method: .delete, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                switch statusCode {
+                case 200:
+                    // serialize the new group
+                    let group = CCGroup(modelDictionary: json)
+                    // execute the callback
+                    responseHandler(group, nil)
+                case 401:
+                    // send back an unauthorized error
+                    responseHandler(nil, APIError.UnauthorizedError())
+                case 404:
+                    // send back an unauthorized error
+                    responseHandler(nil, APIError.UnauthorizedError())
+                default:
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back an unknown error
+                responseHandler(nil, APIError.UnknownError())
+            }
+        }
+    }
+    
     func getGroupMembers(id: Int, responseHandler: @escaping ([CCContact]?, APIError?) -> Void) {
         self._request("/groups/\(id)/members", method: .get, parameters: nil) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [[String: AnyObject]] {

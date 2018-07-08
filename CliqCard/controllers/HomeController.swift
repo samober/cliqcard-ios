@@ -24,7 +24,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.layer.borderWidth = 1.0
         view.imageView?.contentMode = .scaleAspectFill
         view.snp.makeConstraints({ make in
-            make.width.height.equalTo(30)
+            make.width.height.equalTo(32)
         })
         
         return view
@@ -117,7 +117,11 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupCell
         
         let group = self.groups[indexPath.row]
-        cell.groupImageView.image = UIImage(named: "DefaultGroupProfile")
+        if let picture = group.picture {
+            cell.groupImageView.kf.setImage(with: picture.thumbBig)
+        } else {
+            cell.groupImageView.image = UIImage(named: "DefaultGroupProfile")
+        }
         cell.nameLabel.text = group.name
         cell.membersLabel.text = "\(group.memberCount) member\(group.memberCount == 1 ? "" : "s")"
         

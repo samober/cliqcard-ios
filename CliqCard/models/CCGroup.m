@@ -7,12 +7,14 @@
 //
 
 #import "CCGroup.h"
+#import "CCGroupPicture.h"
 
 struct CCGroupDirtyProperties {
     unsigned int CCGroupDirtyPropertyCreatedAt:1;
     unsigned int CCGroupDirtyPropertyIdentifier:1;
     unsigned int CCGroupDirtyPropertyMemberCount:1;
     unsigned int CCGroupDirtyPropertyName:1;
+    unsigned int CCGroupDirtyPropertyPicture:1;
     unsigned int CCGroupDirtyPropertyUpdatedAt:1;
 };
 
@@ -87,6 +89,15 @@ struct CCGroupDirtyProperties {
             }
         }
         {
+            __unsafe_unretained id value = modelDictionary[@"picture"]; // Collection will retain.
+            if (value != nil) {
+                if (value != (id)kCFNull) {
+                    self->_picture = [CCGroupPicture modelObjectWithDictionary:value];
+                }
+                self->_groupDirtyProperties.CCGroupDirtyPropertyPicture = 1;
+            }
+        }
+        {
             __unsafe_unretained id value = modelDictionary[@"updated_at"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
@@ -115,6 +126,7 @@ struct CCGroupDirtyProperties {
     _identifier = builder.identifier;
     _memberCount = builder.memberCount;
     _name = builder.name;
+    _picture = builder.picture;
     _updatedAt = builder.updatedAt;
     _groupDirtyProperties = builder.groupDirtyProperties;
     if ([self class] == [CCGroup class]) {
@@ -125,7 +137,7 @@ struct CCGroupDirtyProperties {
 - (NSString *)debugDescription
 {
     NSArray<NSString *> *parentDebugDescription = [[super debugDescription] componentsSeparatedByString:@"\n"];
-    NSMutableArray *descriptionFields = [NSMutableArray arrayWithCapacity:5];
+    NSMutableArray *descriptionFields = [NSMutableArray arrayWithCapacity:6];
     [descriptionFields addObject:parentDebugDescription];
     struct CCGroupDirtyProperties props = _groupDirtyProperties;
     if (props.CCGroupDirtyPropertyCreatedAt) {
@@ -139,6 +151,9 @@ struct CCGroupDirtyProperties {
     }
     if (props.CCGroupDirtyPropertyName) {
         [descriptionFields addObject:[@"_name = " stringByAppendingFormat:@"%@", _name]];
+    }
+    if (props.CCGroupDirtyPropertyPicture) {
+        [descriptionFields addObject:[@"_picture = " stringByAppendingFormat:@"%@", _picture]];
     }
     if (props.CCGroupDirtyPropertyUpdatedAt) {
         [descriptionFields addObject:[@"_updatedAt = " stringByAppendingFormat:@"%@", _updatedAt]];
@@ -170,6 +185,7 @@ struct CCGroupDirtyProperties {
         (_identifier == anObject.identifier) &&
         (_createdAt == anObject.createdAt || [_createdAt isEqualToDate:anObject.createdAt]) &&
         (_name == anObject.name || [_name isEqualToString:anObject.name]) &&
+        (_picture == anObject.picture || [_picture isEqual:anObject.picture]) &&
         (_updatedAt == anObject.updatedAt || [_updatedAt isEqualToDate:anObject.updatedAt])
     );
 }
@@ -181,6 +197,7 @@ struct CCGroupDirtyProperties {
         (NSUInteger)_identifier,
         (NSUInteger)_memberCount,
         [_name hash],
+        [_picture hash],
         [_updatedAt hash]
     };
     return PINIntegerArrayHash(subhashes, sizeof(subhashes) / sizeof(subhashes[0]));
@@ -198,7 +215,7 @@ struct CCGroupDirtyProperties {
 }
 - (NSDictionary *)dictionaryObjectRepresentation
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:5];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:6];
     if (_groupDirtyProperties.CCGroupDirtyPropertyCreatedAt) {
         if (_createdAt != (id)kCFNull) {
             NSValueTransformer *valueTransformer = [NSValueTransformer valueTransformerForName:kPlankDateValueTransformerKey];
@@ -222,6 +239,13 @@ struct CCGroupDirtyProperties {
             [dict setObject:_name forKey:@"name"];
         } else {
             [dict setObject:[NSNull null] forKey:@"name"];
+        }
+    }
+    if (_groupDirtyProperties.CCGroupDirtyPropertyPicture) {
+        if (_picture != (id)kCFNull) {
+            [dict setObject:[_picture dictionaryObjectRepresentation] forKey:@"picture"];
+        } else {
+            [dict setObject:[NSNull null] forKey:@"picture"];
         }
     }
     if (_groupDirtyProperties.CCGroupDirtyPropertyUpdatedAt) {
@@ -257,11 +281,13 @@ struct CCGroupDirtyProperties {
     _identifier = [aDecoder decodeIntegerForKey:@"id"];
     _memberCount = [aDecoder decodeIntegerForKey:@"member_count"];
     _name = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"name"];
+    _picture = [aDecoder decodeObjectOfClass:[CCGroupPicture class] forKey:@"picture"];
     _updatedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"updated_at"];
     _groupDirtyProperties.CCGroupDirtyPropertyCreatedAt = [aDecoder decodeIntForKey:@"created_at_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyIdentifier = [aDecoder decodeIntForKey:@"id_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyMemberCount = [aDecoder decodeIntForKey:@"member_count_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyName = [aDecoder decodeIntForKey:@"name_dirty_property"] & 0x1;
+    _groupDirtyProperties.CCGroupDirtyPropertyPicture = [aDecoder decodeIntForKey:@"picture_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyUpdatedAt = [aDecoder decodeIntForKey:@"updated_at_dirty_property"] & 0x1;
     if ([self class] == [CCGroup class]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPlankDidInitializeNotification object:self userInfo:@{ kPlankInitTypeKey : @(PlankModelInitTypeDefault) }];
@@ -274,11 +300,13 @@ struct CCGroupDirtyProperties {
     [aCoder encodeInteger:self.identifier forKey:@"id"];
     [aCoder encodeInteger:self.memberCount forKey:@"member_count"];
     [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.picture forKey:@"picture"];
     [aCoder encodeObject:self.updatedAt forKey:@"updated_at"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyCreatedAt forKey:@"created_at_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyIdentifier forKey:@"id_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyMemberCount forKey:@"member_count_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyName forKey:@"name_dirty_property"];
+    [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyPicture forKey:@"picture_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyUpdatedAt forKey:@"updated_at_dirty_property"];
 }
 @end
@@ -302,6 +330,9 @@ struct CCGroupDirtyProperties {
     }
     if (groupDirtyProperties.CCGroupDirtyPropertyName) {
         _name = modelObject.name;
+    }
+    if (groupDirtyProperties.CCGroupDirtyPropertyPicture) {
+        _picture = modelObject.picture;
     }
     if (groupDirtyProperties.CCGroupDirtyPropertyUpdatedAt) {
         _updatedAt = modelObject.updatedAt;
@@ -329,6 +360,18 @@ struct CCGroupDirtyProperties {
     if (modelObject.groupDirtyProperties.CCGroupDirtyPropertyName) {
         builder.name = modelObject.name;
     }
+    if (modelObject.groupDirtyProperties.CCGroupDirtyPropertyPicture) {
+        id value = modelObject.picture;
+        if (value != nil) {
+            if (builder.picture) {
+                builder.picture = [builder.picture mergeWithModel:value initType:PlankModelInitTypeFromSubmerge];
+            } else {
+                builder.picture = value;
+            }
+        } else {
+            builder.picture = nil;
+        }
+    }
     if (modelObject.groupDirtyProperties.CCGroupDirtyPropertyUpdatedAt) {
         builder.updatedAt = modelObject.updatedAt;
     }
@@ -352,6 +395,11 @@ struct CCGroupDirtyProperties {
 {
     _name = [name copy];
     _groupDirtyProperties.CCGroupDirtyPropertyName = 1;
+}
+- (void)setPicture:(CCGroupPicture *)picture
+{
+    _picture = picture;
+    _groupDirtyProperties.CCGroupDirtyPropertyPicture = 1;
 }
 - (void)setUpdatedAt:(NSDate *)updatedAt
 {
