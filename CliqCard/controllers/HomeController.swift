@@ -112,6 +112,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.loadGroups()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.refresh()
+    }
+    
     func loadGroups() {
         CliqCardAPI.shared.getGroups { (groups, error) in
             if error != nil {
@@ -189,7 +195,18 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         }))
         controller.addAction(UIAlertAction(title: "Enter Code", style: .default, handler: { action in
-            
+            // create a new enter join code controller
+            let controller = EnterJoinCodeController(callback: { group in
+                // refresh our group list
+                self.refresh()
+                // push a group controller
+                let controller = GroupController(group: group)
+                self.navigationController?.pushViewController(controller, animated: true)
+            })
+            // create a new navigation controller
+            let navigationController = SJONavigationController(rootViewController: controller)
+            // present modal
+            self.present(navigationController, animated: true, completion: nil)
         }))
         controller.addAction(UIAlertAction(title: "Scan QR Code", style: .default, handler: { action in
             

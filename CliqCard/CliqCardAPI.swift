@@ -769,7 +769,7 @@ final class CliqCardAPI {
     
     func joinGroup(code: String, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
         let parameters: Parameters = [
-            "join_code": code,
+            "join_code": code.uppercased(),
             "share_personal_card": true,
             "share_work_card": true
         ]
@@ -798,6 +798,23 @@ final class CliqCardAPI {
             } else {
                 // send back the error
                 responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func leaveGroup(id: Int, responseHandler: @escaping (APIError?) -> Void) {
+        self._request("/groups/\(id)/leave", method: .post, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode {
+                if statusCode == 204 {
+                    // all good - send back nothing
+                    responseHandler(nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(APIError.UnknownError())
+                }
+            } else {
+                // return the error
+                responseHandler(error)
             }
         }
     }

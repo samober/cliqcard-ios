@@ -213,7 +213,16 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         let controller = UIAlertController(title: "Are you sure?", message: "You will lose any contacts you have in this group and you may not be able to get back in.", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         controller.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { action in
-            self.navigationController?.popViewController(animated: true)
+            // leave the group
+            CliqCardAPI.shared.leaveGroup(id: self.group.identifier, responseHandler: { (error) in
+                if error != nil {
+                    // display error message
+                    self.showError(title: "Error", message: "An unknown error occurred.")
+                } else {
+                    // pop two controllers back
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            })
         }))
         self.present(controller, animated: true, completion: nil)
     }

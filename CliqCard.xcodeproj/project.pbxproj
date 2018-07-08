@@ -51,6 +51,7 @@
 		797F0EFE20F2973F002E516D /* CCGroupPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFD20F2973E002E516D /* CCGroupPicture.m */; };
 		797F0F0020F29A48002E516D /* UpdatePictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */; };
 		797F0F0220F2A517002E516D /* ShareJoinCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */; };
+		797F0F0420F2AF92002E516D /* EnterJoinCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
@@ -127,6 +128,7 @@
 		797F0EFD20F2973E002E516D /* CCGroupPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGroupPicture.m; sourceTree = "<group>"; };
 		797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePictureCell.swift; sourceTree = "<group>"; };
 		797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareJoinCodeController.swift; sourceTree = "<group>"; };
+		797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterJoinCodeController.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				797F0EE320F13A78002E516D /* GroupSettingsController.swift */,
 				797F0EE520F13B7E002E516D /* ContactController.swift */,
 				797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */,
+				797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				797F0F0220F2A517002E516D /* ShareJoinCodeController.swift in Sources */,
 				797F0ED020F124F4002E516D /* SettingsController.swift in Sources */,
 				797F0ED520F1281A002E516D /* PhoneNumberTextField+Placeholders.swift in Sources */,
+				797F0F0420F2AF92002E516D /* EnterJoinCodeController.swift in Sources */,
 				7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */,
 				797F0ECE20F109F0002E516D /* EditEmailController.swift in Sources */,
 				799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */,
