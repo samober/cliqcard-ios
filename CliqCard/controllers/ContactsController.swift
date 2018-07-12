@@ -27,6 +27,9 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
     
     var searchQuery: String = ""
     var searchResults: [CCContact] = []
+    
+    var alphabetMap: [String: [CCContact]] = [:]
+    var alphabetLetters: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +69,9 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
                 self.showError(title: "Error", message: "Unable to load contacts at this time. Please try again later.")
             } else if let contacts = contacts {
                 self.contacts = contacts
+                self.alphabetMap = self.sortContacts(contacts: contacts)
+                self.alphabetLetters = Array(self.alphabetMap.keys).sorted()
+                print(self.alphabetLetters)
                 self.tableView.reloadData()
             }
             
@@ -74,12 +80,31 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
         }
     }
     
+    func sortContacts(contacts: [CCContact]) -> [String: [CCContact]] {
+        var map: [String: [CCContact]] = [:]
+        for contact in contacts {
+            // get the first letter
+            if let firstChar = contact.fullName.first {
+                let first = String(firstChar)
+                if map[first] != nil {
+                    map[first]!.append(contact)
+                } else {
+                    map[first] = [contact]
+                }
+            }
+        }
+        return map
+    }
+    
     @objc func refresh() {
         self.loadContacts()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        if self.searchQuery.count > 0 {
+            return 2
+        }
+        return 1 + self.alphabetLetters.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,7 +114,7 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
         if self.searchQuery.count > 0 {
             return self.searchResults.count
         }
-        return self.contacts.count
+        return self.alphabetMap[self.alphabetLetters[section - 1]]!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,7 +124,13 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactCell
 
-        let contact = self.searchQuery.count > 0 ? self.searchResults[indexPath.row] : self.contacts[indexPath.row]
+        var contact: CCContact!
+        if self.searchQuery.count > 0 {
+            contact = self.searchResults[indexPath.row]
+        } else {
+            contact = self.alphabetMap[self.alphabetLetters[indexPath.section - 1]]![indexPath.row]
+        }
+        
         if let profilePicture = contact.profilePicture {
             cell.profileImageView.kf.setImage(with: profilePicture.thumbSmall)
         } else {
@@ -115,8 +146,8 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
             cell.detailLabel.text = "Contact"
         }
         
-        cell.isTopSeparatorHidden = false
-        cell.isBottomSeparatorHidden = indexPath.row == self.contacts.count
+        cell.isTopSeparatorHidden = self.searchQuery.count > 0 ? false : indexPath.row == 0
+        cell.isBottomSeparatorHidden = self.searchQuery.count > 0 ? indexPath.row == self.searchResults.count - 1 : indexPath.row == self.alphabetMap[self.alphabetLetters[indexPath.section - 1]]!.count - 1
 
         return cell
     }
@@ -128,18 +159,54 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
         return 88
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 || self.searchQuery.count > 0 {
+            return nil
+        }
+        
+        let letter = self.alphabetLetters[section - 1]
+        
+        let view = UIView()
+        view.backgroundColor = Colors.lightestGray
+        
+        let label = UILabel()
+        label.font = UIFont(name: "Lato-Bold", size: 15)
+        label.textColor = Colors.darkGray
+        label.text = letter
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24))
+        }
+        
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 || self.searchQuery.count > 0 {
+            return 0
+        }
+        return 32
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == 1 {
-            // get the contact
-            let contact = self.searchQuery.count > 0 ? self.searchResults[indexPath.row] : self.contacts[indexPath.row]
-            // create a contact controller
-            let controller = ContactController(contact: contact)
-            let navigationController = SJONavigationController(rootViewController: controller)
-            navigationController.transitioningDelegate = self
-            self.present(navigationController, animated: true, completion: nil)
+        if indexPath.section == 0 {
+            return
         }
+        
+        var contact: CCContact!
+        if self.searchQuery.count > 0 {
+            contact = self.searchResults[indexPath.row]
+        } else {
+            contact = self.alphabetMap[self.alphabetLetters[indexPath.section - 1]]![indexPath.row]
+        }
+        
+        // create a contact controller
+        let controller = ContactController(contact: contact)
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -161,7 +228,8 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
             self.search()
         } else {
             self.searchQuery = ""
-            self.tableView.reloadSections(IndexSet(integer: 1), with: UITableViewRowAnimation.none)
+            self.tableView.reloadData()
+            self.searchCell.searchField.becomeFirstResponder()
         }
     }
     
@@ -170,7 +238,8 @@ class ContactsController: UITableViewController, UIViewControllerTransitioningDe
         self.searchResults = self.contacts.filter({ contact -> Bool in
             return contact.fullName.lowercased().contains(query.lowercased())
         })
-        self.tableView.reloadSections(IndexSet(integer: 1), with: UITableViewRowAnimation.none)
+        self.tableView.reloadData()
+        self.searchCell.searchField.becomeFirstResponder()
     }
 
 }
