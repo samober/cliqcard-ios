@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -91,12 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // create a new home controller
         let homeController = HomeController()
         
-        // create a new navigation controller
-        let navigationController = SJONavigationController(rootViewController: homeController)
-//        navigationController.isNavigationBarHidden = true
-        
         // set as root view controller
-        window!.rootViewController = navigationController
+        window!.rootViewController = homeController
     }
     
     

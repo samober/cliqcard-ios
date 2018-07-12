@@ -11,12 +11,15 @@ import PhoneNumberKit
 import SwiftIcons
 import SimpleImageViewer
 import Kingfisher
+import Hero
 
-class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
     
     var loading: Bool = true
     
     var account: CCAccount!
+    
+    var homeController: HomeController!
     
     // mutable builder versions
     var accountBuilder: CCAccountBuilder!
@@ -27,7 +30,7 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Colors.lightestGray
         
         self.tableView.register(ProfileHeaderCell.self, forCellReuseIdentifier: "ProfileHeaderCell")
         self.tableView.register(SubHeaderCell.self, forCellReuseIdentifier: "SubHeaderCell")
@@ -42,8 +45,12 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         self.title = "Profile"
         
         let settingsButton = UIBarButtonItem()
-        settingsButton.setIcon(icon: .fontAwesome(.cog), iconSize: 24, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 4, width: 24, height: 24), target: self, action: #selector(openSettings))
+        settingsButton.setIcon(icon: .icofont(.gear), iconSize: 24, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 4, width: 24, height: 24), target: self, action: #selector(openSettings))
         self.navigationItem.rightBarButtonItem = settingsButton
+        
+        let groupsButton = UIBarButtonItem()
+        groupsButton.setIcon(icon: .icofont(.arrowLeft), iconSize: 28, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 0, width: 24, height: 24), target: self, action: #selector(showGroups))
+        self.navigationItem.leftBarButtonItem = groupsButton
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -58,6 +65,10 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    @objc func showGroups() {
+        self.homeController.showGroupsFromProfile()
     }
     
     func loadAccount() {
@@ -109,7 +120,7 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         if indexPath.row == 1 {
             // header for name
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Name"
+            cell.label.text = "NAME"
             return cell
         }
         
@@ -118,6 +129,8 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = "First name"
             cell.valueLabel.text = self.account.firstName
+            cell.isTopSeparatorHidden = true
+            cell.isBottomSeparatorHidden = false
             return cell
         }
         
@@ -126,13 +139,15 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = "Last name"
             cell.valueLabel.text = self.account.lastName
+            cell.isTopSeparatorHidden = false
+            cell.isBottomSeparatorHidden = true
             return cell
         }
         
         if indexPath.row == 4 {
             // header for phones
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Phones"
+            cell.label.text = "PHONES"
             return cell
         }
         
@@ -142,6 +157,8 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = phone.type.capitalized
             cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: phone.number)
+            cell.isTopSeparatorHidden = indexPath.row == 5
+            cell.isBottomSeparatorHidden = false
             return cell
         }
         
@@ -149,13 +166,15 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
             // add phone
             let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineLinkCell", for: indexPath) as! SingleLineLinkCell
             cell.titleLabel.text = "Add Phone"
+            cell.isTopSeparatorHidden = false
+            cell.isBottomSeparatorHidden = true
             return cell
         }
         
         if indexPath.row == 6 + self.account.phones.count {
             // header for emails
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Emails"
+            cell.label.text = "EMAILS"
             return cell
         }
         
@@ -165,6 +184,8 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = email.type.capitalized
             cell.valueLabel.text = email.address
+            cell.isTopSeparatorHidden = indexPath.row == 7 + self.account.phones.count
+            cell.isBottomSeparatorHidden = false
             return cell
         }
         
@@ -172,6 +193,8 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
             // add email
             let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineLinkCell", for: indexPath) as! SingleLineLinkCell
             cell.titleLabel.text = "Add Email"
+            cell.isTopSeparatorHidden = false
+            cell.isBottomSeparatorHidden = true
             return cell
         }
         
@@ -182,7 +205,7 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             // profile header cell
-            return 168
+            return 192
         }
         
         if indexPath.row == 1 {
@@ -201,12 +224,12 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         
         if indexPath.row < 5 + self.account.phones.count {
             // phone
-            return 64
+            return 68
         }
         
         if indexPath.row == 5 + self.account.phones.count {
             // add phone
-            return 64
+            return 68
         }
         
         if indexPath.row == 6 + self.account.phones.count {
@@ -216,12 +239,12 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         
         if indexPath.row < 7 + self.account.phones.count + self.account.emails.count {
             // email
-            return 64
+            return 68
         }
         
         if indexPath.row == 7 + self.account.phones.count + self.account.emails.count {
             // add email
-            return 64
+            return 68
         }
         
         // buffer cell
@@ -230,6 +253,10 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.row < 2 {
+            return
+        }
         
         if indexPath.row == 2 {
             let controller = EditNameController(name: self.account.firstName, placeholder: "First Name") { firstName in
@@ -241,11 +268,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                         self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
                         self.accountBuilder = CCAccountBuilder.init(model: self.account)
                     }
-                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil)
                     self.tableView.reloadData()
                 }
             }
-            self.navigationController?.pushViewController(controller, animated: true)
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
             return
         }
         
@@ -259,11 +288,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                         self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
                         self.accountBuilder = CCAccountBuilder.init(model: self.account)
                     }
-                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil)
                     self.tableView.reloadData()
                 }
             }
-            self.navigationController?.pushViewController(controller, animated: true)
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
             return
         }
         
@@ -288,11 +319,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                         } else {
                             self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
                         }
-                        self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: true, completion: nil)
                         self.tableView.reloadData()
                     })
                 }
-                self.navigationController?.pushViewController(editController, animated: true)
+                let navigationController = SJONavigationController(rootViewController: editController)
+                navigationController.transitioningDelegate = self
+                self.present(navigationController, animated: true, completion: nil)
             }))
             controller.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
                 // get the phone
@@ -353,11 +386,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                         } else {
                             self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
                         }
-                        self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: true, completion: nil)
                         self.tableView.reloadData()
                     })
                 }
-                self.navigationController?.pushViewController(editController, animated: true)
+                let navigationController = SJONavigationController(rootViewController: editController)
+                navigationController.transitioningDelegate = self
+                self.present(navigationController, animated: true, completion: nil)
             }))
             controller.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
                 // get the email
@@ -408,11 +443,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                 } else {
                     self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
                 }
-                self.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: true, completion: nil)
                 self.tableView.reloadData()
             })
         }
-        self.navigationController?.pushViewController(controller, animated: true)
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     func newEmail(type: String) {
@@ -428,11 +465,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                 } else {
                     self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
                 }
-                self.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: true, completion: nil)
                 self.tableView.reloadData()
             })
         }
-        self.navigationController?.pushViewController(controller, animated: true)
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     @objc func openImage(sender: UIButton) {
@@ -527,8 +566,17 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     @objc func openSettings() {
         // create a new settings controller
         let controller = SettingsController()
-        // push the controller
-        self.navigationController?.pushViewController(controller, animated: true)
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverPresentAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverDismissAnimator()
     }
 
 }

@@ -24,7 +24,7 @@ class SeparatorCell: UITableViewCell {
     
     private lazy var topSeparator: UIView! = {
         let view = UIView()
-        view.backgroundColor = Colors.lightestGray
+        view.backgroundColor = Colors.lightGray
         view.layer.zPosition = 1
         
         return view
@@ -32,7 +32,7 @@ class SeparatorCell: UITableViewCell {
     
     private lazy var bottomSeparator: UIView! = {
         let view = UIView()
-        view.backgroundColor = Colors.lightestGray
+        view.backgroundColor = Colors.lightGray
         view.layer.zPosition = 1
         
         return view

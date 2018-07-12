@@ -19,5 +19,7 @@ target 'CliqCard' do
   pod 'QRCode'
   pod 'pop'
   pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+  pod 'Hero'
+  pod 'TweenKit'
 
 end

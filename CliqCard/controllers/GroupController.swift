@@ -8,8 +8,9 @@
 
 import UIKit
 import SimpleImageViewer
+import SwiftIcons
 
-class GroupController: UITableViewController {
+class GroupController: UITableViewController, UIViewControllerTransitioningDelegate {
     
     var group: CCGroup
     
@@ -42,6 +43,10 @@ class GroupController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        let closeButton = UIBarButtonItem()
+        closeButton.setIcon(icon: .fontAwesome(.times), iconSize: 24, color: Colors.darkGray, cgRect: .zero, target: self, action: #selector(close))
+        self.navigationItem.leftBarButtonItem = closeButton
+        
         self.title = self.group.name
     }
     
@@ -49,6 +54,10 @@ class GroupController: UITableViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -72,7 +81,7 @@ class GroupController: UITableViewController {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
-            cell.actionButton.setTitle("Share Join Code", for: .normal)
+            cell.actionButton.setIcon(prefixText: "", prefixTextColor: UIColor.white, icon: .fontAwesome(.userPlus), iconColor: UIColor.white, postfixText: "  INVITE", postfixTextColor: UIColor.white, forState: .normal)
             cell.buttonColor = Colors.bondiBlue
             cell.actionButton.addTarget(self, action: #selector(shareCode), for: .touchUpInside)
             return cell
@@ -118,13 +127,15 @@ class GroupController: UITableViewController {
         case 4:
             // create a new group members controller
             let controller = GroupMembersController(group: self.group)
-            // push the controller
-            self.navigationController?.pushViewController(controller, animated: true)
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
         case 5:
             // create a new group settings controller
             let controller = GroupSettingsController(group: self.group)
-            // push the controller
-            self.navigationController?.pushViewController(controller, animated: true)
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
         default:
             break
         }
@@ -147,7 +158,7 @@ class GroupController: UITableViewController {
                 let controller = ShareJoinCodeController(code: code)
                 // create a new navigation controller
                 let navigationController = SJONavigationController(rootViewController: controller)
-                // present as modal
+                navigationController.transitioningDelegate = self
                 self.present(navigationController, animated: true, completion: nil)
             } else {
                 // present error message
@@ -163,6 +174,14 @@ class GroupController: UITableViewController {
             self.title = newGroup.name
             self.tableView.reloadData()
         }
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverPresentAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverDismissAnimator()
     }
     
     deinit {

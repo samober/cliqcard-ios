@@ -12,6 +12,9 @@ class SJONavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.layer.cornerRadius = 8
+        self.view.layer.masksToBounds = true
 
         self.navigationBar.isTranslucent = false
         

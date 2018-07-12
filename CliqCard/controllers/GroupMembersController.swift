@@ -35,6 +35,10 @@ class GroupMembersController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        let closeButton = UIBarButtonItem()
+        closeButton.setIcon(icon: .fontAwesome(.times), iconSize: 24, color: Colors.darkGray, cgRect: .zero, target: self, action: #selector(close))
+        self.navigationItem.leftBarButtonItem = closeButton
+        
         self.title = "\(self.group.name) Members"
         
         // setup the refresh control
@@ -58,6 +62,10 @@ class GroupMembersController: UITableViewController {
             // stop refreshing
             self.refreshControl?.endRefreshing()
         }
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func refresh() {

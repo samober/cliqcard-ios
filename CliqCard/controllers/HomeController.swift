@@ -2,357 +2,122 @@
 //  HomeController.swift
 //  CliqCard
 //
-//  Created by Sam Ober on 6/14/18.
+//  Created by Sam Ober on 7/11/18.
 //  Copyright © 2018 Sam Ober. All rights reserved.
 //
 
 import UIKit
-import SnapKit
-import SwiftIcons
-import Kingfisher
 import pop
 
-class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
+class HomeController: UIViewController {
     
-    var groups: [CCGroup] = []
-    
-    lazy var profileButton: UIButton! = {
-        let view = UIButton(type: .custom)
-        view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 14
-        view.layer.masksToBounds = true
-        view.imageView?.contentMode = .scaleAspectFill
-        view.snp.makeConstraints({ make in
-            make.width.height.equalTo(28)
-        })
+    lazy var groupsController: UIViewController! = {
+        let controller = GroupsController()
+        controller.homeController = self
+        let navigationController = SJONavigationController(rootViewController: controller)
         
-        return view
+        return navigationController
     }()
     
-    lazy var tableView: UITableView! = {
-        let view = UITableView()
-        view.backgroundColor = UIColor.white
-        view.separatorStyle = .none
-        view.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
-        view.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
+    lazy var contactsController: UIViewController! = {
+        let controller = ContactsController()
+        controller.homeController = self
+        let navigationController = SJONavigationController(rootViewController: controller)
         
-        return view
+        return navigationController
     }()
     
-    lazy var addGroupButtonContainer: UIView! = {
-        let view = UIView()
-        view.layer.backgroundColor = UIColor.clear.cgColor
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowRadius = 1.5
+    lazy var profileController: UIViewController! = {
+        let controller = ProfileController()
+        controller.homeController = self
+        let navigationController = SJONavigationController(rootViewController: controller)
         
-        return view
+        return navigationController
     }()
-    
-    lazy var addGroupButton: UIButton! = {
-        let view = UIButton(type: .custom)
-        view.layer.cornerRadius = 28
-        view.layer.masksToBounds = true
-        view.setBackgroundImage(UIImage(color: Colors.bondiBlue), for: .normal)
-        view.setIcon(icon: .fontAwesome(.plus), iconSize: 24, color: UIColor.white, backgroundColor: UIColor.clear, forState: .normal)
-        
-        return view
-    }()
-    
-    let refreshControl = UIRefreshControl()
-
-    var addGroupButtonBottomConstraint: Constraint!
-    
-    var lastContentOffset: CGFloat = 0
-    var buttonsHidden: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // register for model update notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(modelDidUpdate(notification:)), name: Notification.Name(rawValue: kPlankDidInitializeNotification), object: nil)
-        
-        self.view.backgroundColor = UIColor.white
-        
-        self.title = "Groups"
-        
-        // remove back button titles
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        self.navigationController?.delegate = self
-        
-        // create an empty bar button item for contacts
-        let contactsButton = UIBarButtonItem()
-        // set the icon and add a target to open up the contacts view
-        contactsButton.setIcon(icon: .fontAwesome(.addressBook), iconSize: 22, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 2, width: 24, height: 24), target: self, action: #selector(viewContacts))
-        // add it the left
-        self.navigationItem.leftBarButtonItem = contactsButton
+        self.view.backgroundColor = UIColor.black
+        self.view.layer.masksToBounds = true
 
-        // load the user image for the profile button
-        if let currentUser = CliqCardAPI.shared.currentUser, let profilePicture = currentUser.profilePicture {
-            self.profileButton.kf.setImage(with: profilePicture.thumbBig, for: .normal)
-        } else {
-            self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
-        }
-        // hook up the profile button to open the profile page
-        self.profileButton.addTarget(self, action: #selector(viewProfile), for: .touchUpInside)
-        // wrap it in a bar button item
-        let profileBarButton = UIBarButtonItem(customView: self.profileButton)
-        // assign it the right spot
-        self.navigationItem.rightBarButtonItem = profileBarButton
+        // add the groups controller
+        self.addChildViewController(self.groupsController)
+        self.view.addSubview(self.groupsController.view)
+        self.groupsController.view.frame = self.view.bounds
+        self.groupsController.didMove(toParentViewController: self)
         
-        // setup a refresh control
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        self.tableView.refreshControl = refreshControl
+        // add the contacts controller
+        self.addChildViewController(self.contactsController)
+        self.view.addSubview(self.contactsController.view)
+        self.contactsController.view.frame = CGRect(x: -self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        self.contactsController.didMove(toParentViewController: self)
         
-        // hook up the table view
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        
-        // position the table view
-        self.view.addSubview(self.tableView)
-        self.tableView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.topMargin).offset(0)
-            make.left.right.bottom.equalToSuperview()
-        }
-        
-        // position the add button
-        self.addGroupButtonContainer.addSubview(self.addGroupButton)
-        self.addGroupButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.height.equalTo(56)
-        }
-        self.view.addSubview(self.addGroupButtonContainer)
-        self.addGroupButtonContainer.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            self.addGroupButtonBottomConstraint = make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottomMargin).offset(-24).constraint
-        }
-        
-        self.addGroupButton.addTarget(self, action: #selector(addGroup), for: .touchUpInside)
-
-        self.loadGroups()
+        // add the profile controller
+        self.addChildViewController(self.profileController)
+        self.view.addSubview(self.profileController.view)
+        self.profileController.view.frame = CGRect(x: self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        self.profileController.didMove(toParentViewController: self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.refresh()
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
-    func hideButtons() {
-        if !self.buttonsHidden {
-            if let anim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant) {
-                anim.toValue = 48 + self.addGroupButton.bounds.height
-                self.addGroupButtonBottomConstraint.layoutConstraints.first?.pop_add(anim, forKey: "slide")
-            }
-            
-            self.buttonsHidden = true
+    func showContacts() {
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = self.groupsController.view.frame
+            self.contactsController.view.pop_add(anim, forKey: "slide_right")
+        }
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = CGRect(x: self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+            self.groupsController.view.pop_add(anim, forKey: "slide_right")
+        }
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewAlpha) {
+            anim.toValue = 0.6
+            self.groupsController.view.pop_add(anim, forKey: "alpha")
         }
     }
     
-    func showButtons() {
-        if self.buttonsHidden {
-            if let anim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant) {
-                anim.toValue = -24
-                self.addGroupButtonBottomConstraint.layoutConstraints.first?.pop_add(anim, forKey: "slide")
-            }
-            
-            self.buttonsHidden = false
+    func showGroupsFromContacts() {
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = self.contactsController.view.frame
+            self.groupsController.view.pop_add(anim, forKey: "slide_left")
+        }
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = CGRect(x: -self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+            self.contactsController.view.pop_add(anim, forKey: "slide_left")
+        }
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewAlpha) {
+            anim.toValue = 1
+            self.groupsController.view.pop_add(anim, forKey: "alpha")
         }
     }
     
-    func loadGroups() {
-        CliqCardAPI.shared.getGroups { (groups, error) in
-            if error != nil {
-                self.showError(title: "Error", message: "Unable to load groups at this time. Please try again later.")
-            } else if let groups = groups {
-                self.groups = groups
-                self.tableView.reloadData()
-            }
-            
-            // stop refreshing
-            self.refreshControl.endRefreshing()
+    func showProfile() {
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = self.groupsController.view.frame
+            self.profileController.view.pop_add(anim, forKey: "slide_left")
+        }
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = CGRect(x: -self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+            self.groupsController.view.pop_add(anim, forKey: "slide_left")
+        }
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewAlpha) {
+            anim.toValue = 0.6
+            self.groupsController.view.pop_add(anim, forKey: "alpha")
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.groups.count + 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 || indexPath.row == self.groups.count + 1 {
-            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
+    func showGroupsFromProfile() {
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = self.profileController.view.frame
+            self.groupsController.view.pop_add(anim, forKey: "slide_right")
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupCell
-        
-        let group = self.groups[indexPath.row - 1]
-        if let picture = group.picture {
-            cell.groupImageView.kf.setImage(with: picture.thumbBig)
-        } else {
-            cell.groupImageView.image = UIImage(named: "DefaultGroupProfile")
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewFrame) {
+            anim.toValue = CGRect(x: self.view.bounds.width, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+            self.profileController.view.pop_add(anim, forKey: "slide_right")
         }
-        cell.nameLabel.text = group.name
-        cell.membersLabel.text = "\(group.memberCount) member\(group.memberCount == 1 ? "" : "s")"
-        
-        cell.shareButton.tag = indexPath.row - 1
-        cell.shareButton.addTarget(self, action: #selector(shareGroup(sender:)), for: .touchUpInside)
-        
-        cell.isTopSeparatorHidden = false
-        cell.isBottomSeparatorHidden = false
-        if indexPath.row == 1 {
-            cell.isTopSeparatorHidden = true
+        if let anim = POPSpringAnimation(propertyNamed: kPOPViewAlpha) {
+            anim.toValue = 1
+            self.groupsController.view.pop_add(anim, forKey: "alpha")
         }
-        if indexPath.row == self.groups.count {
-            cell.isBottomSeparatorHidden = true
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 || indexPath.row == self.groups.count + 1 {
-            return 0
-        }
-        return 88
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        if indexPath.row > 0 && indexPath.row < self.groups.count + 1 {
-            // get the group
-            let group = self.groups[indexPath.row - 1]
-            // create a new group controller
-            let controller = GroupController(group: group)
-            // push the controller
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.lastContentOffset = scrollView.contentOffset.y
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y > 32) {
-            // scrolling down
-            self.hideButtons()
-        } else if (self.lastContentOffset > scrollView.contentOffset.y) {
-            // scrolling up
-            self.showButtons()
-        }
-    }
-    
-    @objc func refresh() {
-        self.loadGroups()
-    }
-    
-    @objc func shareGroup(sender: UIButton) {
-        let group = self.groups[sender.tag]
-        CliqCardAPI.shared.getGroupCode(id: group.identifier) { (code, error) in
-            if let code = code {
-                let controller = ShareJoinCodeController(code: code)
-                let navigationController = SJONavigationController(rootViewController: controller)
-                self.present(navigationController, animated: true, completion: nil)
-            } else {
-                self.showError(title: "Error", message: "Could not share this group right now.")
-            }
-        }
-    }
-    
-    @objc func viewContacts() {
-        // create a new contacts controller
-        let controller = ContactsController()
-        // push
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    @objc func viewProfile() {
-        // create a new profile controller
-        let controller = ProfileController()
-        // push
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    @objc func addGroup() {
-        // enter manually or scan
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        controller.addAction(UIAlertAction(title: "Create Group", style: .default, handler: { action in
-            
-        }))
-        controller.addAction(UIAlertAction(title: "Enter Code", style: .default, handler: { action in
-            // create a new enter join code controller
-            let controller = EnterJoinCodeController(callback: { group in
-                // refresh our group list
-                self.refresh()
-                // push a group controller
-                let controller = GroupController(group: group)
-                self.navigationController?.pushViewController(controller, animated: true)
-            })
-            // create a new navigation controller
-            let navigationController = SJONavigationController(rootViewController: controller)
-            // present modal
-            self.present(navigationController, animated: true, completion: nil)
-        }))
-        controller.addAction(UIAlertAction(title: "Scan QR Code", style: .default, handler: { action in
-            // create a new scan controller
-            let controller = ScanQRController(callback: { group in
-                // refresh our group list
-                self.refresh()
-                // push a group controller
-                let controller = GroupController(group: group)
-                self.navigationController?.pushViewController(controller, animated: true)
-            })
-            // create a new navigation controller
-            let navigationController = SJONavigationController(rootViewController: controller)
-            // present
-            self.present(navigationController, animated: true, completion: nil)
-        }))
-        controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(controller, animated: true, completion: nil)
-    }
-    
-    @objc func modelDidUpdate(notification: Notification) {
-        // check for new group
-        if let newGroup = notification.object as? CCGroup {
-            let index = self.groups.index { group -> Bool in
-                return newGroup.identifier == group.identifier
-            }
-            if let index = index {
-                self.groups.remove(at: index)
-                self.groups.insert(newGroup, at: index)
-                self.tableView.reloadData()
-            }
-        }
-        // check for new account
-        else if let newAccount = notification.object as? CCAccount {
-            // load the user image for the profile button
-            if let profilePicture = newAccount.profilePicture {
-                self.profileButton.kf.setImage(with: profilePicture.thumbBig, for: .normal)
-            } else {
-                self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
-            }
-        }
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let toVC = toVC as? ContactsController {
-            return SlideRightNavigationAnimator()
-        }
-        
-        return nil
-    }
-    
-    deinit {
-        // remove observer
-        NotificationCenter.default.removeObserver(self)
     }
 
 }

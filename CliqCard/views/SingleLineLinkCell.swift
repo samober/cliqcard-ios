@@ -15,7 +15,7 @@ class SingleLineLinkCell: SeparatorCell {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
         view.font = UIFont(name: "Lato-Regular", size: 18)
-        view.textColor = Colors.darkestGray
+        view.textColor = Colors.gray
         
         return view
     }()

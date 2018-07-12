@@ -9,10 +9,13 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import SwiftIcons
 
-class ContactsController: UITableViewController {
+class ContactsController: UITableViewController, UIViewControllerTransitioningDelegate {
     
     var contacts: [CCContact] = []
+    
+    var homeController: HomeController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,10 @@ class ContactsController: UITableViewController {
         self.tableView.separatorStyle = .none
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        let groupsButton = UIBarButtonItem()
+        groupsButton.setIcon(icon: .icofont(.arrowRight), iconSize: 28, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 0, width: 24, height: 24), target: self, action: #selector(showGroups))
+        self.navigationItem.rightBarButtonItem = groupsButton
         
         self.title = "Contacts"
         
@@ -37,6 +44,10 @@ class ContactsController: UITableViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    @objc func showGroups() {
+        self.homeController.showGroupsFromContacts()
     }
 
     func loadContacts() {
@@ -101,8 +112,17 @@ class ContactsController: UITableViewController {
         let contact = self.contacts[indexPath.row]
         // create a contact controller
         let controller = ContactController(contact: contact)
-        // push the controller
-        self.navigationController?.pushViewController(controller, animated: true)
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverPresentAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverDismissAnimator()
     }
 
 }

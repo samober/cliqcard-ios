@@ -12,7 +12,7 @@ import UIColor_Hex_Swift
 public struct Colors {
     
 //    static let lightestGray = UIColor("#F7F9F9")
-    static let lightestGray = UIColor("#E8EAEA")
+    static let lightestGray = UIColor("#F7F9F9")
     static let lightGray = UIColor("#DEE4E5")
     static let gray = UIColor("#C6C6C6")
     static let darkGray = UIColor("#828282")

@@ -29,6 +29,8 @@ class EditNameCell: SeparatorCell {
         view.placeholder = "Name"
         view.placeholderColor = Colors.gray
         //        view.clearButtonMode = .whileEditing
+        view.returnKeyType = .done
+        view.enablesReturnKeyAutomatically = true
         
         return view
     }()

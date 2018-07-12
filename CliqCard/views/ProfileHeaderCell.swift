@@ -26,7 +26,7 @@ class ProfileHeaderCell: UITableViewCell {
     lazy var nameLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont(name: "Lato-Bold", size: 22)
+        view.font = UIFont(name: "Lato-Regular", size: 24)
         view.textAlignment = .center
         
         return view
@@ -35,7 +35,7 @@ class ProfileHeaderCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = UIColor.white
         
         self.selectionStyle = .none
         

@@ -30,6 +30,8 @@ class EditEmailCell: SeparatorCell {
         view.placeholder = "Email"
         view.placeholderColor = Colors.gray
         //        view.clearButtonMode = .whileEditing
+        view.returnKeyType = .done
+        view.enablesReturnKeyAutomatically = true
         
         return view
     }()

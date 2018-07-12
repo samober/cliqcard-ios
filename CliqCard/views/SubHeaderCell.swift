@@ -14,7 +14,7 @@ class SubHeaderCell: UITableViewCell {
     lazy var label: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont(name: "Lato-Bold", size: 15)
+        view.font = UIFont(name: "Lato-Regular", size: 12)
         view.textColor = Colors.darkGray
 //        view.textAlignment = .center
         
@@ -29,7 +29,6 @@ class SubHeaderCell: UITableViewCell {
         
         self.addSubview(label)
         label.snp.makeConstraints { make in
-            make.height.equalTo(20)
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview().offset(-16)

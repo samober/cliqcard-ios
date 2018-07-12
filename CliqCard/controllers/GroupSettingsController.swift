@@ -42,9 +42,17 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        let closeButton = UIBarButtonItem()
+        closeButton.setIcon(icon: .fontAwesome(.times), iconSize: 24, color: Colors.darkGray, cgRect: .zero, target: self, action: #selector(close))
+        self.navigationItem.leftBarButtonItem = closeButton
+        
         self.title = "\(self.group.name) Settings"
         
         self.imagePicker.delegate = self
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

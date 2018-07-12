@@ -47,6 +47,7 @@ class EditPhoneController: UITableViewController {
 
         self.title = "Phone Number"
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(endEditing))
         
         // update the national phone number
@@ -68,9 +69,23 @@ class EditPhoneController: UITableViewController {
             // present it as a modal
             self.present(navigationController, animated: true, completion: nil)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         // show the keyboard
         self.editPhoneNumberCell.phoneNumberField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.view.endEditing(true)
+    }
+    
+    @objc func cancel() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func parseE164PhoneNumber() {

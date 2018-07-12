@@ -30,7 +30,7 @@
 		797F0ED020F124F4002E516D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ECF20F124F4002E516D /* SettingsController.swift */; };
 		797F0ED320F125EC002E516D /* UITextField+Placeholders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED220F125EC002E516D /* UITextField+Placeholders.swift */; };
 		797F0ED520F1281A002E516D /* PhoneNumberTextField+Placeholders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED420F1281A002E516D /* PhoneNumberTextField+Placeholders.swift */; };
-		797F0ED820F12C9F002E516D /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED720F12C9F002E516D /* GroupController.swift */; };
+		797F0ED820F12C9F002E516D /* GroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED720F12C9F002E516D /* GroupsController.swift */; };
 		797F0EDA20F12DA1002E516D /* GroupHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0ED920F12DA1002E516D /* GroupHeaderCell.swift */; };
 		797F0EDC20F12F8B002E516D /* SingleLineLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EDB20F12F8B002E516D /* SingleLineLinkCell.swift */; };
 		797F0EDE20F13365002E516D /* SingleLineIconLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EDD20F13365002E516D /* SingleLineIconLinkCell.swift */; };
@@ -69,6 +69,9 @@
 		797F0F2520F6C342002E516D /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1B20F6C341002E516D /* Lato-Hairline.ttf */; };
 		797F0F2820F6D64C002E516D /* SlideRightNavigationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2720F6D64C002E516D /* SlideRightNavigationAnimator.swift */; };
 		797F0F2A20F6EC15002E516D /* ScanQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2920F6EC15002E516D /* ScanQRController.swift */; };
+		797F0F2C20F6FB67002E516D /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2B20F6FB67002E516D /* HomeController.swift */; };
+		797F0F2E20F6FCC4002E516D /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2D20F6FCC4002E516D /* GroupController.swift */; };
+		797F0F3020F73C3F002E516D /* PageOverAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
@@ -76,7 +79,6 @@
 		799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530A420D21BE700EABAAF /* PhoneVerificationController.swift */; };
 		799530AC20D23DED00EABAAF /* DateFormatter+ISO8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */; };
 		799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530AD20D240B300EABAAF /* CliqCardAPI.swift */; };
-		799530B020D24F1D00EABAAF /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799530AF20D24F1D00EABAAF /* HomeController.swift */; };
 		799530B320D2A74600EABAAF /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530B220D2A74600EABAAF /* user.json */; };
 		799530B520D2A85000EABAAF /* account.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530B420D2A85000EABAAF /* account.json */; };
 		799530B720D2A89100EABAAF /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530B620D2A89100EABAAF /* token.json */; };
@@ -118,7 +120,7 @@
 		797F0ECF20F124F4002E516D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		797F0ED220F125EC002E516D /* UITextField+Placeholders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Placeholders.swift"; sourceTree = "<group>"; };
 		797F0ED420F1281A002E516D /* PhoneNumberTextField+Placeholders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhoneNumberTextField+Placeholders.swift"; sourceTree = "<group>"; };
-		797F0ED720F12C9F002E516D /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
+		797F0ED720F12C9F002E516D /* GroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsController.swift; sourceTree = "<group>"; };
 		797F0ED920F12DA1002E516D /* GroupHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupHeaderCell.swift; sourceTree = "<group>"; };
 		797F0EDB20F12F8B002E516D /* SingleLineLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineLinkCell.swift; sourceTree = "<group>"; };
 		797F0EDD20F13365002E516D /* SingleLineIconLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineIconLinkCell.swift; sourceTree = "<group>"; };
@@ -161,6 +163,9 @@
 		797F0F1B20F6C341002E516D /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
 		797F0F2720F6D64C002E516D /* SlideRightNavigationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideRightNavigationAnimator.swift; sourceTree = "<group>"; };
 		797F0F2920F6EC15002E516D /* ScanQRController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRController.swift; sourceTree = "<group>"; };
+		797F0F2B20F6FB67002E516D /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		797F0F2D20F6FCC4002E516D /* GroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
+		797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageOverAnimator.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -170,7 +175,6 @@
 		799530A420D21BE700EABAAF /* PhoneVerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationController.swift; sourceTree = "<group>"; };
 		799530AB20D23DED00EABAAF /* DateFormatter+ISO8601.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+ISO8601.swift"; sourceTree = "<group>"; };
 		799530AD20D240B300EABAAF /* CliqCardAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CliqCardAPI.swift; sourceTree = "<group>"; };
-		799530AF20D24F1D00EABAAF /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		799530B220D2A74600EABAAF /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		799530B420D2A85000EABAAF /* account.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = account.json; sourceTree = "<group>"; };
 		799530B620D2A89100EABAAF /* token.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
@@ -259,10 +263,10 @@
 		797F0ED620F12960002E516D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				797F0F2D20F6FCC4002E516D /* GroupController.swift */,
 				799530A220D2111C00EABAAF /* StartController.swift */,
 				799530A420D21BE700EABAAF /* PhoneVerificationController.swift */,
 				797F0EA320F08534002E516D /* NewAccountController.swift */,
-				799530AF20D24F1D00EABAAF /* HomeController.swift */,
 				797F0EA820F0AA47002E516D /* ContactsController.swift */,
 				797F0EAC20F0BFC3002E516D /* ProfileController.swift */,
 				797F0EB820F0D18A002E516D /* EditPhoneController.swift */,
@@ -270,13 +274,14 @@
 				797F0EEB20F1458B002E516D /* EditNameController.swift */,
 				797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */,
 				797F0ECF20F124F4002E516D /* SettingsController.swift */,
-				797F0ED720F12C9F002E516D /* GroupController.swift */,
+				797F0ED720F12C9F002E516D /* GroupsController.swift */,
 				797F0EE120F137F5002E516D /* GroupMembersController.swift */,
 				797F0EE320F13A78002E516D /* GroupSettingsController.swift */,
 				797F0EE520F13B7E002E516D /* ContactController.swift */,
 				797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */,
 				797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */,
 				797F0F2920F6EC15002E516D /* ScanQRController.swift */,
+				797F0F2B20F6FB67002E516D /* HomeController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				797F0F2720F6D64C002E516D /* SlideRightNavigationAnimator.swift */,
+				797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -528,6 +534,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCode/QRCode.framework",
@@ -537,12 +544,14 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TweenKit/TweenKit.framework",
 				"${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCode.framework",
@@ -552,6 +561,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweenKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIColor_Hex_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
@@ -568,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				797F0EAB20F0AA58002E516D /* ContactCell.swift in Sources */,
+				797F0F2E20F6FCC4002E516D /* GroupController.swift in Sources */,
 				799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */,
 				799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */,
 				797F0EEE20F1487B002E516D /* SJONavigationController.swift in Sources */,
@@ -576,9 +587,8 @@
 				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
 				797F0EC820F0F629002E516D /* CountryCodeCell.swift in Sources */,
 				799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */,
-				797F0ED820F12C9F002E516D /* GroupController.swift in Sources */,
+				797F0ED820F12C9F002E516D /* GroupsController.swift in Sources */,
 				797F0EDA20F12DA1002E516D /* GroupHeaderCell.swift in Sources */,
-				799530B020D24F1D00EABAAF /* HomeController.swift in Sources */,
 				797F0EE420F13A78002E516D /* GroupSettingsController.swift in Sources */,
 				797F0EFE20F2973F002E516D /* CCGroupPicture.m in Sources */,
 				797F0F1020F6B0C8002E516D /* pop+SnapKit.swift in Sources */,
@@ -612,9 +622,11 @@
 				797F0EF220F15EC9002E516D /* LargeActionButtonCell.swift in Sources */,
 				797F0EDC20F12F8B002E516D /* SingleLineLinkCell.swift in Sources */,
 				797F0EE020F13647002E516D /* SingleLineToggleCell.swift in Sources */,
+				797F0F2C20F6FB67002E516D /* HomeController.swift in Sources */,
 				797F0EAF20F0C05D002E516D /* UIViewController+ErrorDialogs.swift in Sources */,
 				797F0EC020F0E1A8002E516D /* PhoneCodePickerController.swift in Sources */,
 				797F0EC620F0F0AD002E516D /* Colors.swift in Sources */,
+				797F0F3020F73C3F002E516D /* PageOverAnimator.swift in Sources */,
 				797F0EC420F0EF47002E516D /* EmptyCell.swift in Sources */,
 				797F0EA420F08534002E516D /* NewAccountController.swift in Sources */,
 				797F0ECA20F1074A002E516D /* SeparatorCell.swift in Sources */,

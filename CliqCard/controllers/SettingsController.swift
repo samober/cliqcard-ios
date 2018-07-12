@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftIcons
 
 class SettingsController: UITableViewController {
 
@@ -20,8 +21,16 @@ class SettingsController: UITableViewController {
         self.tableView.separatorStyle = .none
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        let closeButton = UIBarButtonItem()
+        closeButton.setIcon(icon: .icofont(.close), iconSize: 24, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 0, width: 24, height: 24), target: self, action: #selector(close))
+        self.navigationItem.leftBarButtonItem = closeButton
 
         self.title = "Settings"
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

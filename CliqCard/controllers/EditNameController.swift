@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditNameController: UITableViewController {
+class EditNameController: UITableViewController, UITextFieldDelegate {
 
     var name: String?
     var placeholder: String
@@ -45,11 +45,28 @@ class EditNameController: UITableViewController {
         
         self.title = self.placeholder
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(endEditing))
         
         self.editNameCell.nameField.text = self.name
         self.editNameCell.nameField.placeholder = self.placeholder
+        self.editNameCell.nameField.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         self.editNameCell.nameField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.view.endEditing(true)
+    }
+    
+    @objc func cancel() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func endEditing() {
@@ -95,6 +112,11 @@ class EditNameController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing()
+        return false
     }
 
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditEmailController: UITableViewController {
+class EditEmailController: UITableViewController, UITextFieldDelegate {
     
     var email: String?
     let callback: (String) -> Void
@@ -42,10 +42,28 @@ class EditEmailController: UITableViewController {
         
         self.title = "Email"
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(endEditing))
         
         self.editEmailCell.emailField.text = self.email
+        self.editEmailCell.emailField.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // show the keyboard
         self.editEmailCell.emailField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.view.endEditing(true)
+    }
+    
+    @objc func cancel() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     @objc func endEditing() {
@@ -90,6 +108,11 @@ class EditEmailController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing()
+        return false
     }
 
 }

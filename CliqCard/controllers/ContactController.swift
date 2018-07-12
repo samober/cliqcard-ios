@@ -8,8 +8,9 @@
 
 import UIKit
 import SimpleImageViewer
+import MessageUI
 
-class ContactController: UITableViewController {
+class ContactController: UITableViewController, MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
     
     var contact: CCContact
     
@@ -37,11 +38,19 @@ class ContactController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        let closeButton = UIBarButtonItem()
+        closeButton.setIcon(icon: .fontAwesome(.times), iconSize: 24, color: Colors.darkGray, cgRect: .zero, target: self, action: #selector(close))
+        self.navigationItem.leftBarButtonItem = closeButton
+        
         self.title = "Contact"
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.refreshControl = refreshControl
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func refresh() {
@@ -151,6 +160,35 @@ class ContactController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.row < 2 {
+            return
+        }
+        
+        if indexPath.row < 2 + self.contact.phones.count {
+            let phone = self.contact.phones[indexPath.row - 2]
+            // call
+            guard let number = URL(string: "tel://\(phone.number)") else { return }
+            UIApplication.shared.open(number)
+            return
+        }
+        
+        if indexPath.row < 3 + self.contact.phones.count {
+            return
+        }
+        
+        if indexPath.row < 3 + self.contact.phones.count + self.contact.emails.count {
+            let email = self.contact.emails[indexPath.row - 3 - self.contact.phones.count]
+            if !MFMailComposeViewController.canSendMail() {
+                self.showError(title: "Not Logged In", message: "Log into the Mail app on your phone to send emails.")
+            } else {
+                let composeController = MFMailComposeViewController()
+                composeController.mailComposeDelegate = self
+                composeController.setToRecipients([email.address])
+                self.present(composeController, animated: true, completion: nil)
+            }
+            return
+        }
     }
     
     @objc func openImage(sender: UIButton) {
@@ -160,6 +198,10 @@ class ContactController: UITableViewController {
         
         let controller = ImageViewerController(configuration: configuration)
         self.present(controller, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
