@@ -16,7 +16,7 @@
 		797F0EAF20F0C05D002E516D /* UIViewController+ErrorDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EAE20F0C05D002E516D /* UIViewController+ErrorDialogs.swift */; };
 		797F0EB120F0C0D7002E516D /* ProfileHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB020F0C0D7002E516D /* ProfileHeaderCell.swift */; };
 		797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB420F0C655002E516D /* SubHeaderCell.swift */; };
-		797F0EB920F0D18A002E516D /* EditPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */; };
+		797F0EB920F0D18A002E516D /* EditPhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EB820F0D18A002E516D /* EditPhoneController.swift */; };
 		797F0EBB20F0D354002E516D /* InlineDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EBA20F0D354002E516D /* InlineDataCell.swift */; };
 		797F0EBE20F0E140002E516D /* phoneCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0EBD20F0E140002E516D /* phoneCodes.json */; };
 		797F0EC020F0E1A8002E516D /* PhoneCodePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */; };
@@ -52,6 +52,23 @@
 		797F0F0020F29A48002E516D /* UpdatePictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */; };
 		797F0F0220F2A517002E516D /* ShareJoinCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */; };
 		797F0F0420F2AF92002E516D /* EnterJoinCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */; };
+		797F0F0620F67A8E002E516D /* phone.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F0520F67A8E002E516D /* phone.json */; };
+		797F0F0820F67AEE002E516D /* email.json in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F0720F67AEE002E516D /* email.json */; };
+		797F0F0D20F67BF7002E516D /* CCPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0A20F67BF6002E516D /* CCPhone.m */; };
+		797F0F0E20F67BF7002E516D /* CCEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0C20F67BF6002E516D /* CCEmail.m */; };
+		797F0F1020F6B0C8002E516D /* pop+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F0F20F6B0C8002E516D /* pop+SnapKit.swift */; };
+		797F0F1C20F6C342002E516D /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1220F6C33F002E516D /* Lato-BoldItalic.ttf */; };
+		797F0F1D20F6C342002E516D /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1320F6C340002E516D /* Lato-Light.ttf */; };
+		797F0F1E20F6C342002E516D /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1420F6C340002E516D /* Lato-Bold.ttf */; };
+		797F0F1F20F6C342002E516D /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1520F6C340002E516D /* Lato-Regular.ttf */; };
+		797F0F2020F6C342002E516D /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1620F6C340002E516D /* Lato-LightItalic.ttf */; };
+		797F0F2120F6C342002E516D /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1720F6C340002E516D /* Lato-BlackItalic.ttf */; };
+		797F0F2220F6C342002E516D /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1820F6C341002E516D /* Lato-Black.ttf */; };
+		797F0F2320F6C342002E516D /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1920F6C341002E516D /* Lato-HairlineItalic.ttf */; };
+		797F0F2420F6C342002E516D /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1A20F6C341002E516D /* Lato-Italic.ttf */; };
+		797F0F2520F6C342002E516D /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 797F0F1B20F6C341002E516D /* Lato-Hairline.ttf */; };
+		797F0F2820F6D64C002E516D /* SlideRightNavigationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2720F6D64C002E516D /* SlideRightNavigationAnimator.swift */; };
+		797F0F2A20F6EC15002E516D /* ScanQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2920F6EC15002E516D /* ScanQRController.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
@@ -70,14 +87,10 @@
 		799530C620D2B81000EABAAF /* group.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530C520D2B81000EABAAF /* group.json */; };
 		799530C920D2B89B00EABAAF /* CCGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530C720D2B89B00EABAAF /* CCGroup.m */; };
 		799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530CC20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m */; };
-		799530D020D2C0D400EABAAF /* personal_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530CF20D2C0D400EABAAF /* personal_card.json */; };
-		799530D220D2C17900EABAAF /* work_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530D120D2C17900EABAAF /* work_card.json */; };
 		799530D420D2C1A800EABAAF /* address.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530D320D2C1A800EABAAF /* address.json */; };
 		799530D820D2C23A00EABAAF /* contact.json in Resources */ = {isa = PBXBuildFile; fileRef = 799530D720D2C23A00EABAAF /* contact.json */; };
 		799530E120D2C43100EABAAF /* CCAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530D920D2C43000EABAAF /* CCAddress.m */; };
-		799530E220D2C43100EABAAF /* CCWorkCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530DB20D2C43000EABAAF /* CCWorkCard.m */; };
 		799530E320D2C43100EABAAF /* CCContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530DC20D2C43000EABAAF /* CCContact.m */; };
-		799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 799530DE20D2C43000EABAAF /* CCPersonalCard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,7 +104,7 @@
 		797F0EAE20F0C05D002E516D /* UIViewController+ErrorDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ErrorDialogs.swift"; sourceTree = "<group>"; };
 		797F0EB020F0C0D7002E516D /* ProfileHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCell.swift; sourceTree = "<group>"; };
 		797F0EB420F0C655002E516D /* SubHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubHeaderCell.swift; sourceTree = "<group>"; };
-		797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhoneNumberController.swift; sourceTree = "<group>"; };
+		797F0EB820F0D18A002E516D /* EditPhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhoneController.swift; sourceTree = "<group>"; };
 		797F0EBA20F0D354002E516D /* InlineDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineDataCell.swift; sourceTree = "<group>"; };
 		797F0EBD20F0E140002E516D /* phoneCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = phoneCodes.json; sourceTree = "<group>"; };
 		797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCodePickerController.swift; sourceTree = "<group>"; };
@@ -129,6 +142,25 @@
 		797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePictureCell.swift; sourceTree = "<group>"; };
 		797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareJoinCodeController.swift; sourceTree = "<group>"; };
 		797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterJoinCodeController.swift; sourceTree = "<group>"; };
+		797F0F0520F67A8E002E516D /* phone.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = phone.json; sourceTree = "<group>"; };
+		797F0F0720F67AEE002E516D /* email.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = email.json; sourceTree = "<group>"; };
+		797F0F0920F67BF5002E516D /* CCPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhone.h; sourceTree = "<group>"; };
+		797F0F0A20F67BF6002E516D /* CCPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhone.m; sourceTree = "<group>"; };
+		797F0F0B20F67BF6002E516D /* CCEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEmail.h; sourceTree = "<group>"; };
+		797F0F0C20F67BF6002E516D /* CCEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEmail.m; sourceTree = "<group>"; };
+		797F0F0F20F6B0C8002E516D /* pop+SnapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "pop+SnapKit.swift"; sourceTree = "<group>"; };
+		797F0F1220F6C33F002E516D /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		797F0F1320F6C340002E516D /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		797F0F1420F6C340002E516D /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		797F0F1520F6C340002E516D /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		797F0F1620F6C340002E516D /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		797F0F1720F6C340002E516D /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		797F0F1820F6C341002E516D /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		797F0F1920F6C341002E516D /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
+		797F0F1A20F6C341002E516D /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		797F0F1B20F6C341002E516D /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
+		797F0F2720F6D64C002E516D /* SlideRightNavigationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideRightNavigationAnimator.swift; sourceTree = "<group>"; };
+		797F0F2920F6EC15002E516D /* ScanQRController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRController.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -156,18 +188,12 @@
 		799530C820D2B89B00EABAAF /* CCGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGroup.h; sourceTree = "<group>"; };
 		799530CC20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateValueTransformer.m; sourceTree = "<group>"; };
 		799530CE20D2BC0D00EABAAF /* ISO8601DateValueTransformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601DateValueTransformer.h; sourceTree = "<group>"; };
-		799530CF20D2C0D400EABAAF /* personal_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = personal_card.json; sourceTree = "<group>"; };
-		799530D120D2C17900EABAAF /* work_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = work_card.json; sourceTree = "<group>"; };
 		799530D320D2C1A800EABAAF /* address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = address.json; sourceTree = "<group>"; };
 		799530D720D2C23A00EABAAF /* contact.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contact.json; sourceTree = "<group>"; };
 		799530D920D2C43000EABAAF /* CCAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAddress.m; sourceTree = "<group>"; };
 		799530DA20D2C43000EABAAF /* CCContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCContact.h; sourceTree = "<group>"; };
-		799530DB20D2C43000EABAAF /* CCWorkCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCWorkCard.m; sourceTree = "<group>"; };
 		799530DC20D2C43000EABAAF /* CCContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCContact.m; sourceTree = "<group>"; };
-		799530DD20D2C43000EABAAF /* CCWorkCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCWorkCard.h; sourceTree = "<group>"; };
-		799530DE20D2C43000EABAAF /* CCPersonalCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPersonalCard.m; sourceTree = "<group>"; };
 		799530DF20D2C43100EABAAF /* CCAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAddress.h; sourceTree = "<group>"; };
-		799530E020D2C43100EABAAF /* CCPersonalCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPersonalCard.h; sourceTree = "<group>"; };
 		EB85AA872B20CD226AD70874 /* Pods-CliqCard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CliqCard.release.xcconfig"; path = "Pods/Target Support Files/Pods-CliqCard/Pods-CliqCard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,6 +251,7 @@
 				797F0ED420F1281A002E516D /* PhoneNumberTextField+Placeholders.swift */,
 				797F0EE720F14380002E516D /* Utils.swift */,
 				797F0EF320F15F4D002E516D /* UIImage+UIColor.swift */,
+				797F0F0F20F6B0C8002E516D /* pop+SnapKit.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -238,7 +265,7 @@
 				799530AF20D24F1D00EABAAF /* HomeController.swift */,
 				797F0EA820F0AA47002E516D /* ContactsController.swift */,
 				797F0EAC20F0BFC3002E516D /* ProfileController.swift */,
-				797F0EB820F0D18A002E516D /* EditPhoneNumberController.swift */,
+				797F0EB820F0D18A002E516D /* EditPhoneController.swift */,
 				797F0ECD20F109F0002E516D /* EditEmailController.swift */,
 				797F0EEB20F1458B002E516D /* EditNameController.swift */,
 				797F0EBF20F0E1A8002E516D /* PhoneCodePickerController.swift */,
@@ -249,8 +276,34 @@
 				797F0EE520F13B7E002E516D /* ContactController.swift */,
 				797F0F0120F2A517002E516D /* ShareJoinCodeController.swift */,
 				797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */,
+				797F0F2920F6EC15002E516D /* ScanQRController.swift */,
 			);
 			path = controllers;
+			sourceTree = "<group>";
+		};
+		797F0F1120F6C32A002E516D /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				797F0F1820F6C341002E516D /* Lato-Black.ttf */,
+				797F0F1720F6C340002E516D /* Lato-BlackItalic.ttf */,
+				797F0F1420F6C340002E516D /* Lato-Bold.ttf */,
+				797F0F1220F6C33F002E516D /* Lato-BoldItalic.ttf */,
+				797F0F1B20F6C341002E516D /* Lato-Hairline.ttf */,
+				797F0F1920F6C341002E516D /* Lato-HairlineItalic.ttf */,
+				797F0F1A20F6C341002E516D /* Lato-Italic.ttf */,
+				797F0F1320F6C340002E516D /* Lato-Light.ttf */,
+				797F0F1620F6C340002E516D /* Lato-LightItalic.ttf */,
+				797F0F1520F6C340002E516D /* Lato-Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		797F0F2620F6D62A002E516D /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				797F0F2720F6D64C002E516D /* SlideRightNavigationAnimator.swift */,
+			);
+			path = animation;
 			sourceTree = "<group>";
 		};
 		7995308420D20B3500EABAAF = {
@@ -274,6 +327,8 @@
 		7995308F20D20B3500EABAAF /* CliqCard */ = {
 			isa = PBXGroup;
 			children = (
+				797F0F2620F6D62A002E516D /* animation */,
+				797F0F1120F6C32A002E516D /* fonts */,
 				797F0ED620F12960002E516D /* controllers */,
 				797F0ED120F125D5002E516D /* utils */,
 				797F0EBC20F0E112002E516D /* data */,
@@ -293,6 +348,10 @@
 		799530A620D22F7200EABAAF /* models */ = {
 			isa = PBXGroup;
 			children = (
+				797F0F0B20F67BF6002E516D /* CCEmail.h */,
+				797F0F0C20F67BF6002E516D /* CCEmail.m */,
+				797F0F0920F67BF5002E516D /* CCPhone.h */,
+				797F0F0A20F67BF6002E516D /* CCPhone.m */,
 				797F0EFC20F2973E002E516D /* CCGroupPicture.h */,
 				797F0EFD20F2973E002E516D /* CCGroupPicture.m */,
 				797F0EF820F18389002E516D /* CCProfilePicture.h */,
@@ -301,10 +360,6 @@
 				799530D920D2C43000EABAAF /* CCAddress.m */,
 				799530DA20D2C43000EABAAF /* CCContact.h */,
 				799530DC20D2C43000EABAAF /* CCContact.m */,
-				799530E020D2C43100EABAAF /* CCPersonalCard.h */,
-				799530DE20D2C43000EABAAF /* CCPersonalCard.m */,
-				799530DD20D2C43000EABAAF /* CCWorkCard.h */,
-				799530DB20D2C43000EABAAF /* CCWorkCard.m */,
 				799530C820D2B89B00EABAAF /* CCGroup.h */,
 				799530C720D2B89B00EABAAF /* CCGroup.m */,
 				799530BA20D2A96D00EABAAF /* CCAccount.h */,
@@ -330,12 +385,12 @@
 				799530B420D2A85000EABAAF /* account.json */,
 				799530B620D2A89100EABAAF /* token.json */,
 				799530C520D2B81000EABAAF /* group.json */,
-				799530CF20D2C0D400EABAAF /* personal_card.json */,
-				799530D120D2C17900EABAAF /* work_card.json */,
 				799530D320D2C1A800EABAAF /* address.json */,
 				799530D720D2C23A00EABAAF /* contact.json */,
 				797F0EF520F182A7002E516D /* profile_picture.json */,
 				797F0EFA20F296FC002E516D /* group_picture.json */,
+				797F0F0520F67A8E002E516D /* phone.json */,
+				797F0F0720F67AEE002E516D /* email.json */,
 			);
 			path = plank;
 			sourceTree = "<group>";
@@ -418,19 +473,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797F0F2120F6C342002E516D /* Lato-BlackItalic.ttf in Resources */,
+				797F0F1D20F6C342002E516D /* Lato-Light.ttf in Resources */,
 				797F0EF620F182A7002E516D /* profile_picture.json in Resources */,
 				799530B320D2A74600EABAAF /* user.json in Resources */,
+				797F0F2420F6C342002E516D /* Lato-Italic.ttf in Resources */,
 				799530C620D2B81000EABAAF /* group.json in Resources */,
 				7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */,
 				7995309820D20B3700EABAAF /* Assets.xcassets in Resources */,
-				799530D220D2C17900EABAAF /* work_card.json in Resources */,
+				797F0F1C20F6C342002E516D /* Lato-BoldItalic.ttf in Resources */,
+				797F0F2220F6C342002E516D /* Lato-Black.ttf in Resources */,
+				797F0F2520F6C342002E516D /* Lato-Hairline.ttf in Resources */,
+				797F0F2020F6C342002E516D /* Lato-LightItalic.ttf in Resources */,
+				797F0F1E20F6C342002E516D /* Lato-Bold.ttf in Resources */,
+				797F0F2320F6C342002E516D /* Lato-HairlineItalic.ttf in Resources */,
 				799530D420D2C1A800EABAAF /* address.json in Resources */,
+				797F0F0820F67AEE002E516D /* email.json in Resources */,
 				799530B520D2A85000EABAAF /* account.json in Resources */,
+				797F0F0620F67A8E002E516D /* phone.json in Resources */,
 				799530B720D2A89100EABAAF /* token.json in Resources */,
 				799530D820D2C23A00EABAAF /* contact.json in Resources */,
-				799530D020D2C0D400EABAAF /* personal_card.json in Resources */,
 				797F0EBE20F0E140002E516D /* phoneCodes.json in Resources */,
 				797F0EFB20F296FC002E516D /* group_picture.json in Resources */,
+				797F0F1F20F6C342002E516D /* Lato-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,10 +533,12 @@
 				"${BUILT_PRODUCTS_DIR}/QRCode/QRCode.framework",
 				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -481,10 +548,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCode.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIColor_Hex_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -502,7 +571,8 @@
 				799530CD20D2BBFB00EABAAF /* ISO8601DateValueTransformer.m in Sources */,
 				799530AE20D240B300EABAAF /* CliqCardAPI.swift in Sources */,
 				797F0EEE20F1487B002E516D /* SJONavigationController.swift in Sources */,
-				797F0EB920F0D18A002E516D /* EditPhoneNumberController.swift in Sources */,
+				797F0F0D20F67BF7002E516D /* CCPhone.m in Sources */,
+				797F0EB920F0D18A002E516D /* EditPhoneController.swift in Sources */,
 				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
 				797F0EC820F0F629002E516D /* CountryCodeCell.swift in Sources */,
 				799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */,
@@ -511,11 +581,11 @@
 				799530B020D24F1D00EABAAF /* HomeController.swift in Sources */,
 				797F0EE420F13A78002E516D /* GroupSettingsController.swift in Sources */,
 				797F0EFE20F2973F002E516D /* CCGroupPicture.m in Sources */,
+				797F0F1020F6B0C8002E516D /* pop+SnapKit.swift in Sources */,
 				797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */,
 				797F0ED320F125EC002E516D /* UITextField+Placeholders.swift in Sources */,
 				799530C320D2A96D00EABAAF /* PlankModelRuntime.m in Sources */,
 				797F0EEC20F1458B002E516D /* EditNameController.swift in Sources */,
-				799530E220D2C43100EABAAF /* CCWorkCard.m in Sources */,
 				797F0EF420F15F4D002E516D /* UIImage+UIColor.swift in Sources */,
 				797F0EE820F14380002E516D /* Utils.swift in Sources */,
 				799530E320D2C43100EABAAF /* CCContact.m in Sources */,
@@ -530,7 +600,9 @@
 				799530E120D2C43100EABAAF /* CCAddress.m in Sources */,
 				797F0EA720F0A520002E516D /* GroupCell.swift in Sources */,
 				797F0EF920F18389002E516D /* CCProfilePicture.m in Sources */,
+				797F0F2A20F6EC15002E516D /* ScanQRController.swift in Sources */,
 				799530C220D2A96D00EABAAF /* CCAccount.m in Sources */,
+				797F0F0E20F67BF7002E516D /* CCEmail.m in Sources */,
 				799530AC20D23DED00EABAAF /* DateFormatter+ISO8601.swift in Sources */,
 				797F0EE620F13B7E002E516D /* ContactController.swift in Sources */,
 				797F0EAD20F0BFC3002E516D /* ProfileController.swift in Sources */,
@@ -552,9 +624,9 @@
 				797F0ED020F124F4002E516D /* SettingsController.swift in Sources */,
 				797F0ED520F1281A002E516D /* PhoneNumberTextField+Placeholders.swift in Sources */,
 				797F0F0420F2AF92002E516D /* EnterJoinCodeController.swift in Sources */,
+				797F0F2820F6D64C002E516D /* SlideRightNavigationAnimator.swift in Sources */,
 				7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */,
 				797F0ECE20F109F0002E516D /* EditEmailController.swift in Sources */,
-				799530E420D2C43100EABAAF /* CCPersonalCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

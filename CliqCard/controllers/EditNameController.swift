@@ -37,7 +37,7 @@ class EditNameController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
         self.tableView.register(EditNameCell.self, forCellReuseIdentifier: "EditNameCell")
         self.tableView.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
@@ -87,7 +87,7 @@ class EditNameController: UITableViewController {
         case 0:
             return 32
         case 1:
-            return 48
+            return 64
         default:
             return 0
         }

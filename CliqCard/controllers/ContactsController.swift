@@ -17,7 +17,7 @@ class ContactsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
 
         self.tableView.register(ContactCell.self, forCellReuseIdentifier: "ContactCell")
         self.tableView.separatorStyle = .none
@@ -31,6 +31,12 @@ class ContactsController: UITableViewController {
         self.refreshControl = refreshControl
         
         self.loadContacts()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     func loadContacts() {
@@ -69,12 +75,23 @@ class ContactsController: UITableViewController {
             cell.profileImageView.image = UIImage(named: "DefaultUserProfile")
         }
         cell.nameLabel.text = contact.fullName
+        
+        if contact.phones.count > 0 {
+            cell.detailLabel.text = contact.phones[0].number
+        } else if contact.emails.count > 0 {
+            cell.detailLabel.text = contact.emails[0].address
+        } else {
+            cell.detailLabel.text = "Contact"
+        }
+        
+        cell.isTopSeparatorHidden = indexPath.row == 0
+        cell.isBottomSeparatorHidden = indexPath.row == self.contacts.count - 1
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        return 88
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -14,10 +14,10 @@ class GroupHeaderCell: UITableViewCell {
     lazy var imageButton: UIButton! = {
         let view = UIButton(type: .custom)
         view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 100
         view.layer.masksToBounds = true
-        view.layer.borderColor = Colors.lightGray.cgColor
-        view.layer.borderWidth = 1.0
+//        view.layer.borderColor = Colors.lightGray.cgColor
+//        view.layer.borderWidth = 1.0
         view.imageView?.contentMode = .scaleAspectFill
         
         return view

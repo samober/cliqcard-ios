@@ -14,7 +14,7 @@ class SingleLineLinkCell: SeparatorCell {
     lazy var titleLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         
         return view
@@ -22,7 +22,7 @@ class SingleLineLinkCell: SeparatorCell {
     
     lazy var caretImageView: UIImageView! = {
         let view = UIImageView()
-        view.setIcon(icon: .fontAwesome(.caretRight), textColor: Colors.lightGray, backgroundColor: UIColor.clear, size: CGSize(width: 28, height: 28))
+        view.setIcon(icon: .fontAwesome(.caretRight), textColor: Colors.gray, backgroundColor: UIColor.clear, size: CGSize(width: 28, height: 28))
         view.contentMode = .center
         view.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: UILayoutConstraintAxis.horizontal)
         view.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: UILayoutConstraintAxis.vertical)
@@ -35,14 +35,14 @@ class SingleLineLinkCell: SeparatorCell {
         
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.top.bottom.equalToSuperview()
         }
         
         self.addSubview(caretImageView)
         caretImageView.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-8)
-            make.centerY.equalToSuperview().offset(1)
+            make.right.equalToSuperview().offset(-16)
+            make.centerY.equalToSuperview()
         }
     }
     

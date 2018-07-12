@@ -10,21 +10,20 @@ import UIKit
 import SnapKit
 import SwiftIcons
 import Kingfisher
+import pop
 
-class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
     
     var groups: [CCGroup] = []
     
     lazy var profileButton: UIButton! = {
-        let view = UIButton(type: UIButtonType.custom)
+        let view = UIButton(type: .custom)
         view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 14
         view.layer.masksToBounds = true
-        view.layer.borderColor = Colors.lightGray.cgColor
-        view.layer.borderWidth = 1.0
         view.imageView?.contentMode = .scaleAspectFill
         view.snp.makeConstraints({ make in
-            make.width.height.equalTo(32)
+            make.width.height.equalTo(28)
         })
         
         return view
@@ -32,16 +31,28 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     lazy var tableView: UITableView! = {
         let view = UITableView()
-        view.backgroundColor = Colors.lightestGray
+        view.backgroundColor = UIColor.white
         view.separatorStyle = .none
         view.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
+        view.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
+        
+        return view
+    }()
+    
+    lazy var addGroupButtonContainer: UIView! = {
+        let view = UIView()
+        view.layer.backgroundColor = UIColor.clear.cgColor
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowRadius = 1.5
         
         return view
     }()
     
     lazy var addGroupButton: UIButton! = {
         let view = UIButton(type: .custom)
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 28
         view.layer.masksToBounds = true
         view.setBackgroundImage(UIImage(color: Colors.bondiBlue), for: .normal)
         view.setIcon(icon: .fontAwesome(.plus), iconSize: 24, color: UIColor.white, backgroundColor: UIColor.clear, forState: .normal)
@@ -51,29 +62,36 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let refreshControl = UIRefreshControl()
 
+    var addGroupButtonBottomConstraint: Constraint!
+    
+    var lastContentOffset: CGFloat = 0
+    var buttonsHidden: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // register for model update notifications
         NotificationCenter.default.addObserver(self, selector: #selector(modelDidUpdate(notification:)), name: Notification.Name(rawValue: kPlankDidInitializeNotification), object: nil)
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
-        self.title = "CliqCard"
+        self.title = "Groups"
         
         // remove back button titles
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
+        self.navigationController?.delegate = self
+        
         // create an empty bar button item for contacts
         let contactsButton = UIBarButtonItem()
         // set the icon and add a target to open up the contacts view
-        contactsButton.setIcon(icon: .fontAwesome(.listUl), iconSize: 24, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 2, width: 24, height: 24), target: self, action: #selector(viewContacts))
+        contactsButton.setIcon(icon: .fontAwesome(.addressBook), iconSize: 22, color: Colors.darkGray, cgRect: CGRect(x: 0, y: 2, width: 24, height: 24), target: self, action: #selector(viewContacts))
         // add it the left
         self.navigationItem.leftBarButtonItem = contactsButton
-        
+
         // load the user image for the profile button
         if let currentUser = CliqCardAPI.shared.currentUser, let profilePicture = currentUser.profilePicture {
-            self.profileButton.kf.setImage(with: profilePicture.thumbSmall, for: .normal)
+            self.profileButton.kf.setImage(with: profilePicture.thumbBig, for: .normal)
         } else {
             self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
         }
@@ -95,16 +113,20 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // position the table view
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.topMargin).offset(0)
+            make.left.right.bottom.equalToSuperview()
         }
         
         // position the add button
-        self.view.addSubview(self.addGroupButton)
+        self.addGroupButtonContainer.addSubview(self.addGroupButton)
         self.addGroupButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-24)
-            make.height.equalTo(56)
+            make.edges.equalToSuperview()
+            make.width.height.equalTo(56)
+        }
+        self.view.addSubview(self.addGroupButtonContainer)
+        self.addGroupButtonContainer.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            self.addGroupButtonBottomConstraint = make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottomMargin).offset(-24).constraint
         }
         
         self.addGroupButton.addTarget(self, action: #selector(addGroup), for: .touchUpInside)
@@ -116,6 +138,29 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewWillAppear(animated)
         
         self.refresh()
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func hideButtons() {
+        if !self.buttonsHidden {
+            if let anim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant) {
+                anim.toValue = 48 + self.addGroupButton.bounds.height
+                self.addGroupButtonBottomConstraint.layoutConstraints.first?.pop_add(anim, forKey: "slide")
+            }
+            
+            self.buttonsHidden = true
+        }
+    }
+    
+    func showButtons() {
+        if self.buttonsHidden {
+            if let anim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant) {
+                anim.toValue = -24
+                self.addGroupButtonBottomConstraint.layoutConstraints.first?.pop_add(anim, forKey: "slide")
+            }
+            
+            self.buttonsHidden = false
+        }
     }
     
     func loadGroups() {
@@ -137,13 +182,17 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.groups.count
+        return self.groups.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 || indexPath.row == self.groups.count + 1 {
+            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupCell
         
-        let group = self.groups[indexPath.row]
+        let group = self.groups[indexPath.row - 1]
         if let picture = group.picture {
             cell.groupImageView.kf.setImage(with: picture.thumbBig)
         } else {
@@ -152,26 +201,70 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.nameLabel.text = group.name
         cell.membersLabel.text = "\(group.memberCount) member\(group.memberCount == 1 ? "" : "s")"
         
+        cell.shareButton.tag = indexPath.row - 1
+        cell.shareButton.addTarget(self, action: #selector(shareGroup(sender:)), for: .touchUpInside)
+        
+        cell.isTopSeparatorHidden = false
+        cell.isBottomSeparatorHidden = false
+        if indexPath.row == 1 {
+            cell.isTopSeparatorHidden = true
+        }
+        if indexPath.row == self.groups.count {
+            cell.isBottomSeparatorHidden = true
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 || indexPath.row == self.groups.count + 1 {
+            return 0
+        }
         return 88
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // get the group
-        let group = self.groups[indexPath.row]
-        // create a new group controller
-        let controller = GroupController(group: group)
-        // push the controller
-        self.navigationController?.pushViewController(controller, animated: true)
+        if indexPath.row > 0 && indexPath.row < self.groups.count + 1 {
+            // get the group
+            let group = self.groups[indexPath.row - 1]
+            // create a new group controller
+            let controller = GroupController(group: group)
+            // push the controller
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y > 32) {
+            // scrolling down
+            self.hideButtons()
+        } else if (self.lastContentOffset > scrollView.contentOffset.y) {
+            // scrolling up
+            self.showButtons()
+        }
     }
     
     @objc func refresh() {
         self.loadGroups()
+    }
+    
+    @objc func shareGroup(sender: UIButton) {
+        let group = self.groups[sender.tag]
+        CliqCardAPI.shared.getGroupCode(id: group.identifier) { (code, error) in
+            if let code = code {
+                let controller = ShareJoinCodeController(code: code)
+                let navigationController = SJONavigationController(rootViewController: controller)
+                self.present(navigationController, animated: true, completion: nil)
+            } else {
+                self.showError(title: "Error", message: "Could not share this group right now.")
+            }
+        }
     }
     
     @objc func viewContacts() {
@@ -209,7 +302,18 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.present(navigationController, animated: true, completion: nil)
         }))
         controller.addAction(UIAlertAction(title: "Scan QR Code", style: .default, handler: { action in
-            
+            // create a new scan controller
+            let controller = ScanQRController(callback: { group in
+                // refresh our group list
+                self.refresh()
+                // push a group controller
+                let controller = GroupController(group: group)
+                self.navigationController?.pushViewController(controller, animated: true)
+            })
+            // create a new navigation controller
+            let navigationController = SJONavigationController(rootViewController: controller)
+            // present
+            self.present(navigationController, animated: true, completion: nil)
         }))
         controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(controller, animated: true, completion: nil)
@@ -231,11 +335,19 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         else if let newAccount = notification.object as? CCAccount {
             // load the user image for the profile button
             if let profilePicture = newAccount.profilePicture {
-                self.profileButton.kf.setImage(with: profilePicture.thumbSmall, for: .normal)
+                self.profileButton.kf.setImage(with: profilePicture.thumbBig, for: .normal)
             } else {
                 self.profileButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
             }
         }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let toVC = toVC as? ContactsController {
+            return SlideRightNavigationAnimator()
+        }
+        
+        return nil
     }
     
     deinit {

@@ -23,7 +23,7 @@ class LargeActionButtonCell: UITableViewCell {
         view.layer.masksToBounds = true
         view.setBackgroundImage(UIImage(color: UIColor.black), for: .normal)
         view.setTitleColor(UIColor.white, for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        view.titleLabel?.font = UIFont(name: "Lato-Bold", size: 15)
         
         return view
     }()

@@ -14,10 +14,10 @@ class ProfileHeaderCell: UITableViewCell {
     lazy var profileImageButton: UIButton! = {
         let view = UIButton(type: .custom)
         view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = 48
         view.layer.masksToBounds = true
-        view.layer.borderColor = Colors.lightGray.cgColor
-        view.layer.borderWidth = 1.0
+//        view.layer.borderColor = Colors.lightGray.cgColor
+//        view.layer.borderWidth = 1.0
         view.imageView?.contentMode = .scaleAspectFill
         
         return view
@@ -26,7 +26,7 @@ class ProfileHeaderCell: UITableViewCell {
     lazy var nameLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 36)
+        view.font = UIFont(name: "Lato-Bold", size: 22)
         view.textAlignment = .center
         
         return view
@@ -43,14 +43,14 @@ class ProfileHeaderCell: UITableViewCell {
         profileImageButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(24)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(200)
+            make.width.height.equalTo(96)
         }
         
         self.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageButton.snp.bottom).offset(16)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
         }
     }
     

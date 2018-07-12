@@ -7,9 +7,11 @@ PODS:
   - PhoneNumberKit/PhoneNumberKitCore (2.1.0)
   - PhoneNumberKit/UIKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore
+  - pop (1.0.10)
   - QRCode (2.0)
   - SimpleImageViewer (1.1.1)
   - SnapKit (4.0.0)
+  - Spring (1.0.5)
   - SwiftIcons (2.0.1)
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyJSON (4.1.0)
@@ -19,9 +21,11 @@ DEPENDENCIES:
   - Alamofire
   - Kingfisher
   - PhoneNumberKit (~> 2.1)
+  - pop
   - QRCode
   - SimpleImageViewer
   - SnapKit (~> 4.0.0)
+  - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftIcons
   - SwiftKeychainWrapper
   - SwiftyJSON
@@ -32,6 +36,7 @@ SPEC REPOS:
     - Alamofire
     - Kingfisher
     - PhoneNumberKit
+    - pop
     - QRCode
     - SimpleImageViewer
     - SnapKit
@@ -40,18 +45,29 @@ SPEC REPOS:
     - SwiftyJSON
     - UIColor_Hex_Swift
 
+EXTERNAL SOURCES:
+  Spring:
+    :git: https://github.com/MengTo/Spring.git
+
+CHECKOUT OPTIONS:
+  Spring:
+    :commit: c540239f3590bbaf4a35c3959c329dd5ed4e3eee
+    :git: https://github.com/MengTo/Spring.git
+
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
+  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Spring: 3c7666eccefdeb87140008dc81043f89f8dbb787
   SwiftIcons: e475a56ae2c2da40672dbf16061ca5dd5cee7dbb
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   UIColor_Hex_Swift: c5ff88470499383b8fd85302d59344bb24ba9436
 
-PODFILE CHECKSUM: b8a546a2b8f2bea06ee2138d55425857e305d264
+PODFILE CHECKSUM: 718aa539c69b2e1e1d4969867b149965c710eb64
 
 COCOAPODS: 1.5.3

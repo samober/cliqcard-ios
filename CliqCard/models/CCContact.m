@@ -7,20 +7,20 @@
 //
 
 #import "CCContact.h"
-#import "CCPersonalCard.h"
+#import "CCEmail.h"
+#import "CCPhone.h"
 #import "CCProfilePicture.h"
-#import "CCWorkCard.h"
 
 struct CCContactDirtyProperties {
     unsigned int CCContactDirtyPropertyCreatedAt:1;
+    unsigned int CCContactDirtyPropertyEmails:1;
     unsigned int CCContactDirtyPropertyFirstName:1;
     unsigned int CCContactDirtyPropertyFullName:1;
     unsigned int CCContactDirtyPropertyIdentifier:1;
     unsigned int CCContactDirtyPropertyLastName:1;
-    unsigned int CCContactDirtyPropertyPersonalCard:1;
+    unsigned int CCContactDirtyPropertyPhones:1;
     unsigned int CCContactDirtyPropertyProfilePicture:1;
     unsigned int CCContactDirtyPropertyUpdatedAt:1;
-    unsigned int CCContactDirtyPropertyWorkCard:1;
 };
 
 @interface CCContact ()
@@ -67,6 +67,26 @@ struct CCContactDirtyProperties {
             }
         }
         {
+            __unsafe_unretained id value = modelDictionary[@"emails"]; // Collection will retain.
+            if (value != nil) {
+                if (value != (id)kCFNull) {
+                    NSArray *items = value;
+                    NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items.count];
+                    for (id obj0 in items) {
+                        if (obj0 != (id)kCFNull) {
+                            id tmp0 = nil;
+                            tmp0 = [CCEmail modelObjectWithDictionary:obj0];
+                            if (tmp0 != nil) {
+                                [result0 addObject:tmp0];
+                            }
+                        }
+                    }
+                    self->_emails = result0;
+                }
+                self->_contactDirtyProperties.CCContactDirtyPropertyEmails = 1;
+            }
+        }
+        {
             __unsafe_unretained id value = modelDictionary[@"first_name"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
@@ -103,12 +123,23 @@ struct CCContactDirtyProperties {
             }
         }
         {
-            __unsafe_unretained id value = modelDictionary[@"personal_card"]; // Collection will retain.
+            __unsafe_unretained id value = modelDictionary[@"phones"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
-                    self->_personalCard = [CCPersonalCard modelObjectWithDictionary:value];
+                    NSArray *items = value;
+                    NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items.count];
+                    for (id obj0 in items) {
+                        if (obj0 != (id)kCFNull) {
+                            id tmp0 = nil;
+                            tmp0 = [CCPhone modelObjectWithDictionary:obj0];
+                            if (tmp0 != nil) {
+                                [result0 addObject:tmp0];
+                            }
+                        }
+                    }
+                    self->_phones = result0;
                 }
-                self->_contactDirtyProperties.CCContactDirtyPropertyPersonalCard = 1;
+                self->_contactDirtyProperties.CCContactDirtyPropertyPhones = 1;
             }
         }
         {
@@ -129,15 +160,6 @@ struct CCContactDirtyProperties {
                 self->_contactDirtyProperties.CCContactDirtyPropertyUpdatedAt = 1;
             }
         }
-        {
-            __unsafe_unretained id value = modelDictionary[@"work_card"]; // Collection will retain.
-            if (value != nil) {
-                if (value != (id)kCFNull) {
-                    self->_workCard = [CCWorkCard modelObjectWithDictionary:value];
-                }
-                self->_contactDirtyProperties.CCContactDirtyPropertyWorkCard = 1;
-            }
-        }
     if ([self class] == [CCContact class]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPlankDidInitializeNotification object:self userInfo:@{ kPlankInitTypeKey : @(PlankModelInitTypeDefault) }];
     }
@@ -155,14 +177,14 @@ struct CCContactDirtyProperties {
         return self;
     }
     _createdAt = builder.createdAt;
+    _emails = builder.emails;
     _firstName = builder.firstName;
     _fullName = builder.fullName;
     _identifier = builder.identifier;
     _lastName = builder.lastName;
-    _personalCard = builder.personalCard;
+    _phones = builder.phones;
     _profilePicture = builder.profilePicture;
     _updatedAt = builder.updatedAt;
-    _workCard = builder.workCard;
     _contactDirtyProperties = builder.contactDirtyProperties;
     if ([self class] == [CCContact class]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPlankDidInitializeNotification object:self userInfo:@{ kPlankInitTypeKey : @(initType) }];
@@ -178,6 +200,9 @@ struct CCContactDirtyProperties {
     if (props.CCContactDirtyPropertyCreatedAt) {
         [descriptionFields addObject:[@"_createdAt = " stringByAppendingFormat:@"%@", _createdAt]];
     }
+    if (props.CCContactDirtyPropertyEmails) {
+        [descriptionFields addObject:[@"_emails = " stringByAppendingFormat:@"%@", _emails]];
+    }
     if (props.CCContactDirtyPropertyFirstName) {
         [descriptionFields addObject:[@"_firstName = " stringByAppendingFormat:@"%@", _firstName]];
     }
@@ -190,17 +215,14 @@ struct CCContactDirtyProperties {
     if (props.CCContactDirtyPropertyLastName) {
         [descriptionFields addObject:[@"_lastName = " stringByAppendingFormat:@"%@", _lastName]];
     }
-    if (props.CCContactDirtyPropertyPersonalCard) {
-        [descriptionFields addObject:[@"_personalCard = " stringByAppendingFormat:@"%@", _personalCard]];
+    if (props.CCContactDirtyPropertyPhones) {
+        [descriptionFields addObject:[@"_phones = " stringByAppendingFormat:@"%@", _phones]];
     }
     if (props.CCContactDirtyPropertyProfilePicture) {
         [descriptionFields addObject:[@"_profilePicture = " stringByAppendingFormat:@"%@", _profilePicture]];
     }
     if (props.CCContactDirtyPropertyUpdatedAt) {
         [descriptionFields addObject:[@"_updatedAt = " stringByAppendingFormat:@"%@", _updatedAt]];
-    }
-    if (props.CCContactDirtyPropertyWorkCard) {
-        [descriptionFields addObject:[@"_workCard = " stringByAppendingFormat:@"%@", _workCard]];
     }
     return [NSString stringWithFormat:@"CCContact = {\n%@\n}", debugDescriptionForFields(descriptionFields)];
 }
@@ -227,13 +249,13 @@ struct CCContactDirtyProperties {
         (anObject != nil) &&
         (_identifier == anObject.identifier) &&
         (_createdAt == anObject.createdAt || [_createdAt isEqualToDate:anObject.createdAt]) &&
+        (_emails == anObject.emails || [_emails isEqualToArray:anObject.emails]) &&
         (_firstName == anObject.firstName || [_firstName isEqualToString:anObject.firstName]) &&
         (_fullName == anObject.fullName || [_fullName isEqualToString:anObject.fullName]) &&
         (_lastName == anObject.lastName || [_lastName isEqualToString:anObject.lastName]) &&
-        (_personalCard == anObject.personalCard || [_personalCard isEqual:anObject.personalCard]) &&
+        (_phones == anObject.phones || [_phones isEqualToArray:anObject.phones]) &&
         (_profilePicture == anObject.profilePicture || [_profilePicture isEqual:anObject.profilePicture]) &&
-        (_updatedAt == anObject.updatedAt || [_updatedAt isEqualToDate:anObject.updatedAt]) &&
-        (_workCard == anObject.workCard || [_workCard isEqual:anObject.workCard])
+        (_updatedAt == anObject.updatedAt || [_updatedAt isEqualToDate:anObject.updatedAt])
     );
 }
 - (NSUInteger)hash
@@ -241,14 +263,14 @@ struct CCContactDirtyProperties {
     NSUInteger subhashes[] = {
         17,
         [_createdAt hash],
+        [_emails hash],
         [_firstName hash],
         [_fullName hash],
         (NSUInteger)_identifier,
         [_lastName hash],
-        [_personalCard hash],
+        [_phones hash],
         [_profilePicture hash],
-        [_updatedAt hash],
-        [_workCard hash]
+        [_updatedAt hash]
     };
     return PINIntegerArrayHash(subhashes, sizeof(subhashes) / sizeof(subhashes[0]));
 }
@@ -278,6 +300,18 @@ struct CCContactDirtyProperties {
             [dict setObject:[NSNull null] forKey:@"created_at"];
         }
     }
+    if (_contactDirtyProperties.CCContactDirtyPropertyEmails) {
+        if (_emails != (id)kCFNull) {
+            __auto_type items0 = _emails;
+            NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items0.count];
+            for (CCEmail * obj0 in items0) {
+                [result0 addObject:[obj0 dictionaryObjectRepresentation]];
+            }
+            [dict setObject:result0 forKey:@"emails"];
+        } else {
+            [dict setObject:[NSNull null] forKey:@"emails"];
+        }
+    }
     if (_contactDirtyProperties.CCContactDirtyPropertyFirstName) {
         if (_firstName != (id)kCFNull) {
             [dict setObject:_firstName forKey:@"first_name"];
@@ -302,11 +336,16 @@ struct CCContactDirtyProperties {
             [dict setObject:[NSNull null] forKey:@"last_name"];
         }
     }
-    if (_contactDirtyProperties.CCContactDirtyPropertyPersonalCard) {
-        if (_personalCard != (id)kCFNull) {
-            [dict setObject:[_personalCard dictionaryObjectRepresentation] forKey:@"personal_card"];
+    if (_contactDirtyProperties.CCContactDirtyPropertyPhones) {
+        if (_phones != (id)kCFNull) {
+            __auto_type items0 = _phones;
+            NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items0.count];
+            for (CCPhone * obj0 in items0) {
+                [result0 addObject:[obj0 dictionaryObjectRepresentation]];
+            }
+            [dict setObject:result0 forKey:@"phones"];
         } else {
-            [dict setObject:[NSNull null] forKey:@"personal_card"];
+            [dict setObject:[NSNull null] forKey:@"phones"];
         }
     }
     if (_contactDirtyProperties.CCContactDirtyPropertyProfilePicture) {
@@ -328,13 +367,6 @@ struct CCContactDirtyProperties {
             [dict setObject:[NSNull null] forKey:@"updated_at"];
         }
     }
-    if (_contactDirtyProperties.CCContactDirtyPropertyWorkCard) {
-        if (_workCard != (id)kCFNull) {
-            [dict setObject:[_workCard dictionaryObjectRepresentation] forKey:@"work_card"];
-        } else {
-            [dict setObject:[NSNull null] forKey:@"work_card"];
-        }
-    }
     return dict;
 }
 #pragma mark - NSCopying
@@ -353,23 +385,23 @@ struct CCContactDirtyProperties {
         return self;
     }
     _createdAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"created_at"];
+    _emails = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[CCEmail class], [NSArray class]]] forKey:@"emails"];
     _firstName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"first_name"];
     _fullName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"full_name"];
     _identifier = [aDecoder decodeIntegerForKey:@"id"];
     _lastName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"last_name"];
-    _personalCard = [aDecoder decodeObjectOfClass:[CCPersonalCard class] forKey:@"personal_card"];
+    _phones = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[CCPhone class], [NSArray class]]] forKey:@"phones"];
     _profilePicture = [aDecoder decodeObjectOfClass:[CCProfilePicture class] forKey:@"profile_picture"];
     _updatedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"updated_at"];
-    _workCard = [aDecoder decodeObjectOfClass:[CCWorkCard class] forKey:@"work_card"];
     _contactDirtyProperties.CCContactDirtyPropertyCreatedAt = [aDecoder decodeIntForKey:@"created_at_dirty_property"] & 0x1;
+    _contactDirtyProperties.CCContactDirtyPropertyEmails = [aDecoder decodeIntForKey:@"emails_dirty_property"] & 0x1;
     _contactDirtyProperties.CCContactDirtyPropertyFirstName = [aDecoder decodeIntForKey:@"first_name_dirty_property"] & 0x1;
     _contactDirtyProperties.CCContactDirtyPropertyFullName = [aDecoder decodeIntForKey:@"full_name_dirty_property"] & 0x1;
     _contactDirtyProperties.CCContactDirtyPropertyIdentifier = [aDecoder decodeIntForKey:@"id_dirty_property"] & 0x1;
     _contactDirtyProperties.CCContactDirtyPropertyLastName = [aDecoder decodeIntForKey:@"last_name_dirty_property"] & 0x1;
-    _contactDirtyProperties.CCContactDirtyPropertyPersonalCard = [aDecoder decodeIntForKey:@"personal_card_dirty_property"] & 0x1;
+    _contactDirtyProperties.CCContactDirtyPropertyPhones = [aDecoder decodeIntForKey:@"phones_dirty_property"] & 0x1;
     _contactDirtyProperties.CCContactDirtyPropertyProfilePicture = [aDecoder decodeIntForKey:@"profile_picture_dirty_property"] & 0x1;
     _contactDirtyProperties.CCContactDirtyPropertyUpdatedAt = [aDecoder decodeIntForKey:@"updated_at_dirty_property"] & 0x1;
-    _contactDirtyProperties.CCContactDirtyPropertyWorkCard = [aDecoder decodeIntForKey:@"work_card_dirty_property"] & 0x1;
     if ([self class] == [CCContact class]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPlankDidInitializeNotification object:self userInfo:@{ kPlankInitTypeKey : @(PlankModelInitTypeDefault) }];
     }
@@ -378,23 +410,23 @@ struct CCContactDirtyProperties {
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.createdAt forKey:@"created_at"];
+    [aCoder encodeObject:self.emails forKey:@"emails"];
     [aCoder encodeObject:self.firstName forKey:@"first_name"];
     [aCoder encodeObject:self.fullName forKey:@"full_name"];
     [aCoder encodeInteger:self.identifier forKey:@"id"];
     [aCoder encodeObject:self.lastName forKey:@"last_name"];
-    [aCoder encodeObject:self.personalCard forKey:@"personal_card"];
+    [aCoder encodeObject:self.phones forKey:@"phones"];
     [aCoder encodeObject:self.profilePicture forKey:@"profile_picture"];
     [aCoder encodeObject:self.updatedAt forKey:@"updated_at"];
-    [aCoder encodeObject:self.workCard forKey:@"work_card"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyCreatedAt forKey:@"created_at_dirty_property"];
+    [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyEmails forKey:@"emails_dirty_property"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyFirstName forKey:@"first_name_dirty_property"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyFullName forKey:@"full_name_dirty_property"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyIdentifier forKey:@"id_dirty_property"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyLastName forKey:@"last_name_dirty_property"];
-    [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyPersonalCard forKey:@"personal_card_dirty_property"];
+    [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyPhones forKey:@"phones_dirty_property"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyProfilePicture forKey:@"profile_picture_dirty_property"];
     [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyUpdatedAt forKey:@"updated_at_dirty_property"];
-    [aCoder encodeInt:_contactDirtyProperties.CCContactDirtyPropertyWorkCard forKey:@"work_card_dirty_property"];
 }
 @end
 
@@ -409,6 +441,9 @@ struct CCContactDirtyProperties {
     if (contactDirtyProperties.CCContactDirtyPropertyCreatedAt) {
         _createdAt = modelObject.createdAt;
     }
+    if (contactDirtyProperties.CCContactDirtyPropertyEmails) {
+        _emails = modelObject.emails;
+    }
     if (contactDirtyProperties.CCContactDirtyPropertyFirstName) {
         _firstName = modelObject.firstName;
     }
@@ -421,17 +456,14 @@ struct CCContactDirtyProperties {
     if (contactDirtyProperties.CCContactDirtyPropertyLastName) {
         _lastName = modelObject.lastName;
     }
-    if (contactDirtyProperties.CCContactDirtyPropertyPersonalCard) {
-        _personalCard = modelObject.personalCard;
+    if (contactDirtyProperties.CCContactDirtyPropertyPhones) {
+        _phones = modelObject.phones;
     }
     if (contactDirtyProperties.CCContactDirtyPropertyProfilePicture) {
         _profilePicture = modelObject.profilePicture;
     }
     if (contactDirtyProperties.CCContactDirtyPropertyUpdatedAt) {
         _updatedAt = modelObject.updatedAt;
-    }
-    if (contactDirtyProperties.CCContactDirtyPropertyWorkCard) {
-        _workCard = modelObject.workCard;
     }
     _contactDirtyProperties = contactDirtyProperties;
     return self;
@@ -447,6 +479,9 @@ struct CCContactDirtyProperties {
     if (modelObject.contactDirtyProperties.CCContactDirtyPropertyCreatedAt) {
         builder.createdAt = modelObject.createdAt;
     }
+    if (modelObject.contactDirtyProperties.CCContactDirtyPropertyEmails) {
+        builder.emails = modelObject.emails;
+    }
     if (modelObject.contactDirtyProperties.CCContactDirtyPropertyFirstName) {
         builder.firstName = modelObject.firstName;
     }
@@ -459,17 +494,8 @@ struct CCContactDirtyProperties {
     if (modelObject.contactDirtyProperties.CCContactDirtyPropertyLastName) {
         builder.lastName = modelObject.lastName;
     }
-    if (modelObject.contactDirtyProperties.CCContactDirtyPropertyPersonalCard) {
-        id value = modelObject.personalCard;
-        if (value != nil) {
-            if (builder.personalCard) {
-                builder.personalCard = [builder.personalCard mergeWithModel:value initType:PlankModelInitTypeFromSubmerge];
-            } else {
-                builder.personalCard = value;
-            }
-        } else {
-            builder.personalCard = nil;
-        }
+    if (modelObject.contactDirtyProperties.CCContactDirtyPropertyPhones) {
+        builder.phones = modelObject.phones;
     }
     if (modelObject.contactDirtyProperties.CCContactDirtyPropertyProfilePicture) {
         id value = modelObject.profilePicture;
@@ -486,23 +512,16 @@ struct CCContactDirtyProperties {
     if (modelObject.contactDirtyProperties.CCContactDirtyPropertyUpdatedAt) {
         builder.updatedAt = modelObject.updatedAt;
     }
-    if (modelObject.contactDirtyProperties.CCContactDirtyPropertyWorkCard) {
-        id value = modelObject.workCard;
-        if (value != nil) {
-            if (builder.workCard) {
-                builder.workCard = [builder.workCard mergeWithModel:value initType:PlankModelInitTypeFromSubmerge];
-            } else {
-                builder.workCard = value;
-            }
-        } else {
-            builder.workCard = nil;
-        }
-    }
 }
 - (void)setCreatedAt:(NSDate *)createdAt
 {
     _createdAt = [createdAt copy];
     _contactDirtyProperties.CCContactDirtyPropertyCreatedAt = 1;
+}
+- (void)setEmails:(NSArray<CCEmail *> *)emails
+{
+    _emails = emails;
+    _contactDirtyProperties.CCContactDirtyPropertyEmails = 1;
 }
 - (void)setFirstName:(NSString *)firstName
 {
@@ -524,10 +543,10 @@ struct CCContactDirtyProperties {
     _lastName = [lastName copy];
     _contactDirtyProperties.CCContactDirtyPropertyLastName = 1;
 }
-- (void)setPersonalCard:(CCPersonalCard *)personalCard
+- (void)setPhones:(NSArray<CCPhone *> *)phones
 {
-    _personalCard = personalCard;
-    _contactDirtyProperties.CCContactDirtyPropertyPersonalCard = 1;
+    _phones = phones;
+    _contactDirtyProperties.CCContactDirtyPropertyPhones = 1;
 }
 - (void)setProfilePicture:(CCProfilePicture *)profilePicture
 {
@@ -538,10 +557,5 @@ struct CCContactDirtyProperties {
 {
     _updatedAt = [updatedAt copy];
     _contactDirtyProperties.CCContactDirtyPropertyUpdatedAt = 1;
-}
-- (void)setWorkCard:(CCWorkCard *)workCard
-{
-    _workCard = workCard;
-    _contactDirtyProperties.CCContactDirtyPropertyWorkCard = 1;
 }
 @end

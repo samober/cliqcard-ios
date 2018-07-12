@@ -45,7 +45,7 @@ class EnterJoinCodeController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
 
         self.title = "Join Group"
         

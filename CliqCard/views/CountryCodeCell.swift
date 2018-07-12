@@ -32,7 +32,7 @@ class CountryCodeCell: SeparatorCell {
     private lazy var countryLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         
         return view
@@ -41,7 +41,7 @@ class CountryCodeCell: SeparatorCell {
     private lazy var codeLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkGray
         view.textAlignment = .right
         
@@ -53,13 +53,13 @@ class CountryCodeCell: SeparatorCell {
         
         self.addSubview(countryLabel)
         countryLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.centerY.equalToSuperview()
         }
         
         self.addSubview(codeLabel)
         codeLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-16)
+            make.right.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
         }
     }

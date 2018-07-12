@@ -15,7 +15,7 @@ class EditNameCell: SeparatorCell {
     private lazy var iconImageView: UIImageView! = {
         let view = UIImageView()
         view.contentMode = .center
-        view.setIcon(icon: .fontAwesome(.user), textColor: Colors.darkGray, backgroundColor: UIColor.clear, size: CGSize(width: 40, height: 40))
+        view.setIcon(icon: .fontAwesome(.user), textColor: Colors.gray, backgroundColor: UIColor.clear, size: CGSize(width: 40, height: 40))
         view.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: UILayoutConstraintAxis.horizontal)
         
         return view
@@ -23,7 +23,7 @@ class EditNameCell: SeparatorCell {
     
     lazy var nameField: SJOTextField! = {
         let view = SJOTextField()
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         view.borderStyle = .none
         view.placeholder = "Name"
@@ -40,14 +40,14 @@ class EditNameCell: SeparatorCell {
         
         self.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.centerY.equalToSuperview()
         }
         
         self.addSubview(nameField)
         nameField.snp.makeConstraints { make in
-            make.left.equalTo(iconImageView.snp.right).offset(8)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalTo(iconImageView.snp.right).offset(16)
+            make.right.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
         }
     }

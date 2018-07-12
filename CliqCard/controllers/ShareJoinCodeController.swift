@@ -17,7 +17,7 @@ class ShareJoinCodeController: UIViewController {
     lazy var codeLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 48)
+        view.font = UIFont(name: "Lato-Bold", size: 48)
         view.textColor = Colors.darkestGray
         view.textAlignment = .center
         
@@ -46,7 +46,7 @@ class ShareJoinCodeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
 
         self.title = "Join Code"
         

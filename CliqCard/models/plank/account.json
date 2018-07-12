@@ -8,13 +8,19 @@
         "id": { "type": "integer" },
         "created_at": { "type": "string", "format": "date-time" },
         "updated_at": { "type": "string", "format": "date-time" },
-        "email": { "type": "string" },
-        "phone_number": { "type": "string" },
         "first_name": { "type": "string" },
         "last_name": { "type": "string" },
         "full_name": { "type": "string" },
-        "profile_picture": { "$ref": "profile_picture.json" }
+        "profile_picture": { "$ref": "profile_picture.json" },
+        "phones": {
+            "type": "array",
+            "items": { "$ref": "phone.json" }
+        },
+        "emails": {
+            "type": "array",
+            "items": { "$ref": "email.json" }
+        }
     },
-    "required": [ "id", "created_at", "updated_at", "phone_number", "first_name", "last_name", "full_name" ]
+    "required": [ "id", "created_at", "updated_at", "first_name", "last_name", "full_name", "phones", "emails" ]
 }
 

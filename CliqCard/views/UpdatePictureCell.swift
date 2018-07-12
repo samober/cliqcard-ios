@@ -14,10 +14,10 @@ class UpdatePictureCell: SeparatorCell {
     lazy var pictureView: UIImageView! = {
         let view = UIImageView()
         view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 40
         view.layer.masksToBounds = true
-        view.layer.borderColor = Colors.lightGray.cgColor
-        view.layer.borderWidth = 1.0
+//        view.layer.borderColor = Colors.lightGray.cgColor
+//        view.layer.borderWidth = 1.0
         view.contentMode = .scaleAspectFill
         
         return view
@@ -26,7 +26,7 @@ class UpdatePictureCell: SeparatorCell {
     lazy var descriptionLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         view.numberOfLines = 0
         
@@ -38,15 +38,15 @@ class UpdatePictureCell: SeparatorCell {
         
         self.addSubview(self.pictureView)
         self.pictureView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(80)
         }
         
         self.addSubview(self.descriptionLabel)
         self.descriptionLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.pictureView.snp.right).offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalTo(self.pictureView.snp.right).offset(24)
+            make.right.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
         }
     }

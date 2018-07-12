@@ -8,16 +8,15 @@
 
 import UIKit
 import SnapKit
+import SwiftIcons
 
 class GroupCell: SeparatorCell {
     
     lazy var groupImageView: UIImageView! = {
         let view = UIImageView()
         view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 20
         view.layer.masksToBounds = true
-        view.layer.borderColor = Colors.lightGray.cgColor
-        view.layer.borderWidth = 1.0
         view.contentMode = .scaleAspectFill
         
         return view
@@ -26,7 +25,7 @@ class GroupCell: SeparatorCell {
     lazy var nameLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         
         return view
@@ -35,8 +34,27 @@ class GroupCell: SeparatorCell {
     lazy var membersLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 15)
+        view.font = UIFont(name: "Lato-Regular", size: 15)
         view.textColor = UIColor.lightGray
+        
+        return view
+    }()
+    
+    lazy var labelsView: UIView! = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        
+        return view
+    }()
+    
+    lazy var shareButton: UIButton! = {
+        let view = UIButton(type: .system)
+        view.setIcon(icon: .fontAwesome(.userPlus), iconSize: 20, color: Colors.gray, backgroundColor: UIColor.clear, forState: .normal)
+//        view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+//        view.setIcon(prefixText: "", prefixTextFont: UIFont(), prefixTextColor: .clear, icon: .fontAwesome(.shareSquareO), iconColor: Colors.gray, postfixText: "  Share", postfixTextFont: UIFont(name: "Lato-Bold", size: 15)!, postfixTextColor: Colors.gray, backgroundColor: .clear, forState: .normal, iconSize: 16)
+//        view.setIcon(icon: .fontAwesome(.shareSquareO), title: "Share", font: UIFont(name: "Lato-Bold", size: 15)!, forState: .normal)
+//        view.setIcon(icon: .fontAwesome(.shareSquareO), title: "Share", font: UIFont(name: "Lato-Bold", size: 15), forState: .normal)
+//        view.setTitleColor(Colors.gray, for: .normal)
         
         return view
     }()
@@ -46,23 +64,34 @@ class GroupCell: SeparatorCell {
         
         self.addSubview(groupImageView)
         groupImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(64)
+            make.width.height.equalTo(40)
         }
         
-        self.addSubview(nameLabel)
+        self.addSubview(self.shareButton)
+        self.shareButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-24)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(40)
+        }
+        
+        self.labelsView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(groupImageView.snp.right).offset(12)
-            make.right.equalToSuperview().offset(-16)
-            make.centerY.equalToSuperview().offset(-10)
+            make.top.right.left.equalToSuperview()
         }
         
-        self.addSubview(membersLabel)
+        self.labelsView.addSubview(membersLabel)
         membersLabel.snp.makeConstraints { make in
-            make.left.equalTo(groupImageView.snp.right).offset(12)
-            make.right.equalToSuperview().offset(-16)
-            make.centerY.equalToSuperview().offset(12)
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(nameLabel.snp.bottom).offset(4)
+        }
+        
+        self.addSubview(self.labelsView)
+        self.labelsView.snp.makeConstraints { make in
+            make.left.equalTo(groupImageView.snp.right).offset(16)
+            make.right.equalTo(self.shareButton.snp.left).offset(-24)
+            make.centerY.equalToSuperview()
         }
     }
 

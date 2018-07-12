@@ -22,10 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // look and feel
         UINavigationBar.appearance().tintColor = Colors.darkestGray
+        UIBarButtonItem.appearance().setTitleTextAttributes([.font: UIFont(name: "Lato-Regular", size: 18)!, .foregroundColor: Colors.darkestGray], for: .normal)
         
         // initialize the window
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
+        window?.layer.cornerRadius = 8
+        window?.layer.masksToBounds = true
         
         // check to see whether or not a user is logged in and direct
         // them to the correct screen
@@ -90,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // create a new navigation controller
         let navigationController = SJONavigationController(rootViewController: homeController)
+//        navigationController.isNavigationBarHidden = true
         
         // set as root view controller
         window!.rootViewController = navigationController

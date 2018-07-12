@@ -30,7 +30,7 @@ class GroupController: UITableViewController {
         // register for model update notifications
         NotificationCenter.default.addObserver(self, selector: #selector(modelDidUpdate(notification:)), name: Notification.Name(rawValue: kPlankDidInitializeNotification), object: nil)
 
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
         self.tableView.register(GroupHeaderCell.self, forCellReuseIdentifier: "GroupHeaderCell")
         self.tableView.register(SingleLineLinkCell.self, forCellReuseIdentifier: "SingleLineLinkCell")
@@ -43,6 +43,12 @@ class GroupController: UITableViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         self.title = self.group.name
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -101,7 +107,7 @@ class GroupController: UITableViewController {
         case 2:
             return 32
         default:
-            return 56
+            return 64
         }
     }
     

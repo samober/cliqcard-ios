@@ -7,16 +7,18 @@
 //
 
 #import "CCAccount.h"
+#import "CCEmail.h"
+#import "CCPhone.h"
 #import "CCProfilePicture.h"
 
 struct CCAccountDirtyProperties {
     unsigned int CCAccountDirtyPropertyCreatedAt:1;
-    unsigned int CCAccountDirtyPropertyEmail:1;
+    unsigned int CCAccountDirtyPropertyEmails:1;
     unsigned int CCAccountDirtyPropertyFirstName:1;
     unsigned int CCAccountDirtyPropertyFullName:1;
     unsigned int CCAccountDirtyPropertyIdentifier:1;
     unsigned int CCAccountDirtyPropertyLastName:1;
-    unsigned int CCAccountDirtyPropertyPhoneNumber:1;
+    unsigned int CCAccountDirtyPropertyPhones:1;
     unsigned int CCAccountDirtyPropertyProfilePicture:1;
     unsigned int CCAccountDirtyPropertyUpdatedAt:1;
 };
@@ -65,12 +67,23 @@ struct CCAccountDirtyProperties {
             }
         }
         {
-            __unsafe_unretained id value = modelDictionary[@"email"]; // Collection will retain.
+            __unsafe_unretained id value = modelDictionary[@"emails"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
-                    self->_email = [value copy];
+                    NSArray *items = value;
+                    NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items.count];
+                    for (id obj0 in items) {
+                        if (obj0 != (id)kCFNull) {
+                            id tmp0 = nil;
+                            tmp0 = [CCEmail modelObjectWithDictionary:obj0];
+                            if (tmp0 != nil) {
+                                [result0 addObject:tmp0];
+                            }
+                        }
+                    }
+                    self->_emails = result0;
                 }
-                self->_accountDirtyProperties.CCAccountDirtyPropertyEmail = 1;
+                self->_accountDirtyProperties.CCAccountDirtyPropertyEmails = 1;
             }
         }
         {
@@ -110,12 +123,23 @@ struct CCAccountDirtyProperties {
             }
         }
         {
-            __unsafe_unretained id value = modelDictionary[@"phone_number"]; // Collection will retain.
+            __unsafe_unretained id value = modelDictionary[@"phones"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
-                    self->_phoneNumber = [value copy];
+                    NSArray *items = value;
+                    NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items.count];
+                    for (id obj0 in items) {
+                        if (obj0 != (id)kCFNull) {
+                            id tmp0 = nil;
+                            tmp0 = [CCPhone modelObjectWithDictionary:obj0];
+                            if (tmp0 != nil) {
+                                [result0 addObject:tmp0];
+                            }
+                        }
+                    }
+                    self->_phones = result0;
                 }
-                self->_accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber = 1;
+                self->_accountDirtyProperties.CCAccountDirtyPropertyPhones = 1;
             }
         }
         {
@@ -153,12 +177,12 @@ struct CCAccountDirtyProperties {
         return self;
     }
     _createdAt = builder.createdAt;
-    _email = builder.email;
+    _emails = builder.emails;
     _firstName = builder.firstName;
     _fullName = builder.fullName;
     _identifier = builder.identifier;
     _lastName = builder.lastName;
-    _phoneNumber = builder.phoneNumber;
+    _phones = builder.phones;
     _profilePicture = builder.profilePicture;
     _updatedAt = builder.updatedAt;
     _accountDirtyProperties = builder.accountDirtyProperties;
@@ -176,8 +200,8 @@ struct CCAccountDirtyProperties {
     if (props.CCAccountDirtyPropertyCreatedAt) {
         [descriptionFields addObject:[@"_createdAt = " stringByAppendingFormat:@"%@", _createdAt]];
     }
-    if (props.CCAccountDirtyPropertyEmail) {
-        [descriptionFields addObject:[@"_email = " stringByAppendingFormat:@"%@", _email]];
+    if (props.CCAccountDirtyPropertyEmails) {
+        [descriptionFields addObject:[@"_emails = " stringByAppendingFormat:@"%@", _emails]];
     }
     if (props.CCAccountDirtyPropertyFirstName) {
         [descriptionFields addObject:[@"_firstName = " stringByAppendingFormat:@"%@", _firstName]];
@@ -191,8 +215,8 @@ struct CCAccountDirtyProperties {
     if (props.CCAccountDirtyPropertyLastName) {
         [descriptionFields addObject:[@"_lastName = " stringByAppendingFormat:@"%@", _lastName]];
     }
-    if (props.CCAccountDirtyPropertyPhoneNumber) {
-        [descriptionFields addObject:[@"_phoneNumber = " stringByAppendingFormat:@"%@", _phoneNumber]];
+    if (props.CCAccountDirtyPropertyPhones) {
+        [descriptionFields addObject:[@"_phones = " stringByAppendingFormat:@"%@", _phones]];
     }
     if (props.CCAccountDirtyPropertyProfilePicture) {
         [descriptionFields addObject:[@"_profilePicture = " stringByAppendingFormat:@"%@", _profilePicture]];
@@ -225,11 +249,11 @@ struct CCAccountDirtyProperties {
         (anObject != nil) &&
         (_identifier == anObject.identifier) &&
         (_createdAt == anObject.createdAt || [_createdAt isEqualToDate:anObject.createdAt]) &&
-        (_email == anObject.email || [_email isEqualToString:anObject.email]) &&
+        (_emails == anObject.emails || [_emails isEqualToArray:anObject.emails]) &&
         (_firstName == anObject.firstName || [_firstName isEqualToString:anObject.firstName]) &&
         (_fullName == anObject.fullName || [_fullName isEqualToString:anObject.fullName]) &&
         (_lastName == anObject.lastName || [_lastName isEqualToString:anObject.lastName]) &&
-        (_phoneNumber == anObject.phoneNumber || [_phoneNumber isEqualToString:anObject.phoneNumber]) &&
+        (_phones == anObject.phones || [_phones isEqualToArray:anObject.phones]) &&
         (_profilePicture == anObject.profilePicture || [_profilePicture isEqual:anObject.profilePicture]) &&
         (_updatedAt == anObject.updatedAt || [_updatedAt isEqualToDate:anObject.updatedAt])
     );
@@ -239,12 +263,12 @@ struct CCAccountDirtyProperties {
     NSUInteger subhashes[] = {
         17,
         [_createdAt hash],
-        [_email hash],
+        [_emails hash],
         [_firstName hash],
         [_fullName hash],
         (NSUInteger)_identifier,
         [_lastName hash],
-        [_phoneNumber hash],
+        [_phones hash],
         [_profilePicture hash],
         [_updatedAt hash]
     };
@@ -276,11 +300,16 @@ struct CCAccountDirtyProperties {
             [dict setObject:[NSNull null] forKey:@"created_at"];
         }
     }
-    if (_accountDirtyProperties.CCAccountDirtyPropertyEmail) {
-        if (_email != (id)kCFNull) {
-            [dict setObject:_email forKey:@"email"];
+    if (_accountDirtyProperties.CCAccountDirtyPropertyEmails) {
+        if (_emails != (id)kCFNull) {
+            __auto_type items0 = _emails;
+            NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items0.count];
+            for (CCEmail * obj0 in items0) {
+                [result0 addObject:[obj0 dictionaryObjectRepresentation]];
+            }
+            [dict setObject:result0 forKey:@"emails"];
         } else {
-            [dict setObject:[NSNull null] forKey:@"email"];
+            [dict setObject:[NSNull null] forKey:@"emails"];
         }
     }
     if (_accountDirtyProperties.CCAccountDirtyPropertyFirstName) {
@@ -307,11 +336,16 @@ struct CCAccountDirtyProperties {
             [dict setObject:[NSNull null] forKey:@"last_name"];
         }
     }
-    if (_accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber) {
-        if (_phoneNumber != (id)kCFNull) {
-            [dict setObject:_phoneNumber forKey:@"phone_number"];
+    if (_accountDirtyProperties.CCAccountDirtyPropertyPhones) {
+        if (_phones != (id)kCFNull) {
+            __auto_type items0 = _phones;
+            NSMutableArray *result0 = [NSMutableArray arrayWithCapacity:items0.count];
+            for (CCPhone * obj0 in items0) {
+                [result0 addObject:[obj0 dictionaryObjectRepresentation]];
+            }
+            [dict setObject:result0 forKey:@"phones"];
         } else {
-            [dict setObject:[NSNull null] forKey:@"phone_number"];
+            [dict setObject:[NSNull null] forKey:@"phones"];
         }
     }
     if (_accountDirtyProperties.CCAccountDirtyPropertyProfilePicture) {
@@ -351,21 +385,21 @@ struct CCAccountDirtyProperties {
         return self;
     }
     _createdAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"created_at"];
-    _email = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"email"];
+    _emails = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[CCEmail class], [NSArray class]]] forKey:@"emails"];
     _firstName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"first_name"];
     _fullName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"full_name"];
     _identifier = [aDecoder decodeIntegerForKey:@"id"];
     _lastName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"last_name"];
-    _phoneNumber = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"phone_number"];
+    _phones = [aDecoder decodeObjectOfClasses:[NSSet setWithArray:@[[CCPhone class], [NSArray class]]] forKey:@"phones"];
     _profilePicture = [aDecoder decodeObjectOfClass:[CCProfilePicture class] forKey:@"profile_picture"];
     _updatedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"updated_at"];
     _accountDirtyProperties.CCAccountDirtyPropertyCreatedAt = [aDecoder decodeIntForKey:@"created_at_dirty_property"] & 0x1;
-    _accountDirtyProperties.CCAccountDirtyPropertyEmail = [aDecoder decodeIntForKey:@"email_dirty_property"] & 0x1;
+    _accountDirtyProperties.CCAccountDirtyPropertyEmails = [aDecoder decodeIntForKey:@"emails_dirty_property"] & 0x1;
     _accountDirtyProperties.CCAccountDirtyPropertyFirstName = [aDecoder decodeIntForKey:@"first_name_dirty_property"] & 0x1;
     _accountDirtyProperties.CCAccountDirtyPropertyFullName = [aDecoder decodeIntForKey:@"full_name_dirty_property"] & 0x1;
     _accountDirtyProperties.CCAccountDirtyPropertyIdentifier = [aDecoder decodeIntForKey:@"id_dirty_property"] & 0x1;
     _accountDirtyProperties.CCAccountDirtyPropertyLastName = [aDecoder decodeIntForKey:@"last_name_dirty_property"] & 0x1;
-    _accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber = [aDecoder decodeIntForKey:@"phone_number_dirty_property"] & 0x1;
+    _accountDirtyProperties.CCAccountDirtyPropertyPhones = [aDecoder decodeIntForKey:@"phones_dirty_property"] & 0x1;
     _accountDirtyProperties.CCAccountDirtyPropertyProfilePicture = [aDecoder decodeIntForKey:@"profile_picture_dirty_property"] & 0x1;
     _accountDirtyProperties.CCAccountDirtyPropertyUpdatedAt = [aDecoder decodeIntForKey:@"updated_at_dirty_property"] & 0x1;
     if ([self class] == [CCAccount class]) {
@@ -376,21 +410,21 @@ struct CCAccountDirtyProperties {
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.createdAt forKey:@"created_at"];
-    [aCoder encodeObject:self.email forKey:@"email"];
+    [aCoder encodeObject:self.emails forKey:@"emails"];
     [aCoder encodeObject:self.firstName forKey:@"first_name"];
     [aCoder encodeObject:self.fullName forKey:@"full_name"];
     [aCoder encodeInteger:self.identifier forKey:@"id"];
     [aCoder encodeObject:self.lastName forKey:@"last_name"];
-    [aCoder encodeObject:self.phoneNumber forKey:@"phone_number"];
+    [aCoder encodeObject:self.phones forKey:@"phones"];
     [aCoder encodeObject:self.profilePicture forKey:@"profile_picture"];
     [aCoder encodeObject:self.updatedAt forKey:@"updated_at"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyCreatedAt forKey:@"created_at_dirty_property"];
-    [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyEmail forKey:@"email_dirty_property"];
+    [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyEmails forKey:@"emails_dirty_property"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyFirstName forKey:@"first_name_dirty_property"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyFullName forKey:@"full_name_dirty_property"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyIdentifier forKey:@"id_dirty_property"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyLastName forKey:@"last_name_dirty_property"];
-    [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber forKey:@"phone_number_dirty_property"];
+    [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyPhones forKey:@"phones_dirty_property"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyProfilePicture forKey:@"profile_picture_dirty_property"];
     [aCoder encodeInt:_accountDirtyProperties.CCAccountDirtyPropertyUpdatedAt forKey:@"updated_at_dirty_property"];
 }
@@ -407,8 +441,8 @@ struct CCAccountDirtyProperties {
     if (accountDirtyProperties.CCAccountDirtyPropertyCreatedAt) {
         _createdAt = modelObject.createdAt;
     }
-    if (accountDirtyProperties.CCAccountDirtyPropertyEmail) {
-        _email = modelObject.email;
+    if (accountDirtyProperties.CCAccountDirtyPropertyEmails) {
+        _emails = modelObject.emails;
     }
     if (accountDirtyProperties.CCAccountDirtyPropertyFirstName) {
         _firstName = modelObject.firstName;
@@ -422,8 +456,8 @@ struct CCAccountDirtyProperties {
     if (accountDirtyProperties.CCAccountDirtyPropertyLastName) {
         _lastName = modelObject.lastName;
     }
-    if (accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber) {
-        _phoneNumber = modelObject.phoneNumber;
+    if (accountDirtyProperties.CCAccountDirtyPropertyPhones) {
+        _phones = modelObject.phones;
     }
     if (accountDirtyProperties.CCAccountDirtyPropertyProfilePicture) {
         _profilePicture = modelObject.profilePicture;
@@ -445,8 +479,8 @@ struct CCAccountDirtyProperties {
     if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyCreatedAt) {
         builder.createdAt = modelObject.createdAt;
     }
-    if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyEmail) {
-        builder.email = modelObject.email;
+    if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyEmails) {
+        builder.emails = modelObject.emails;
     }
     if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyFirstName) {
         builder.firstName = modelObject.firstName;
@@ -460,8 +494,8 @@ struct CCAccountDirtyProperties {
     if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyLastName) {
         builder.lastName = modelObject.lastName;
     }
-    if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber) {
-        builder.phoneNumber = modelObject.phoneNumber;
+    if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyPhones) {
+        builder.phones = modelObject.phones;
     }
     if (modelObject.accountDirtyProperties.CCAccountDirtyPropertyProfilePicture) {
         id value = modelObject.profilePicture;
@@ -484,10 +518,10 @@ struct CCAccountDirtyProperties {
     _createdAt = [createdAt copy];
     _accountDirtyProperties.CCAccountDirtyPropertyCreatedAt = 1;
 }
-- (void)setEmail:(NSString *)email
+- (void)setEmails:(NSArray<CCEmail *> *)emails
 {
-    _email = [email copy];
-    _accountDirtyProperties.CCAccountDirtyPropertyEmail = 1;
+    _emails = emails;
+    _accountDirtyProperties.CCAccountDirtyPropertyEmails = 1;
 }
 - (void)setFirstName:(NSString *)firstName
 {
@@ -509,10 +543,10 @@ struct CCAccountDirtyProperties {
     _lastName = [lastName copy];
     _accountDirtyProperties.CCAccountDirtyPropertyLastName = 1;
 }
-- (void)setPhoneNumber:(NSString *)phoneNumber
+- (void)setPhones:(NSArray<CCPhone *> *)phones
 {
-    _phoneNumber = [phoneNumber copy];
-    _accountDirtyProperties.CCAccountDirtyPropertyPhoneNumber = 1;
+    _phones = phones;
+    _accountDirtyProperties.CCAccountDirtyPropertyPhones = 1;
 }
 - (void)setProfilePicture:(CCProfilePicture *)profilePicture
 {

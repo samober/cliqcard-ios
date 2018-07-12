@@ -88,6 +88,9 @@ class PhoneCodePickerController: UITableViewController {
         let countryData = self.countries[indexPath.row - 1]
         cell.country = countryData.name
         cell.code = countryData.code
+        
+        cell.isTopSeparatorHidden = indexPath.row == 1
+        cell.isBottomSeparatorHidden = indexPath.row == self.countries.count
 
         return cell
     }
@@ -96,7 +99,7 @@ class PhoneCodePickerController: UITableViewController {
         if indexPath.row == 0 {
             return 64
         }
-        return 44
+        return 56
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

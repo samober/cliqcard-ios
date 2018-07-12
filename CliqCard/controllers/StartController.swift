@@ -18,6 +18,8 @@ class StartController: UIViewController {
         view.text = "Enter your phone number"
         view.backgroundColor = UIColor.clear
         view.textAlignment = .center
+        view.font = UIFont(name: "Lato-Regular", size: 22)
+        view.textColor = Colors.darkestGray
         
         return view
     }()
@@ -26,27 +28,31 @@ class StartController: UIViewController {
         let view = UILabel()
         view.text = "+1"
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 16)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textAlignment = .center
+        view.textColor = Colors.darkGray
         
         return view
     }()
     
-    lazy var phoneNumberField: PhoneNumberTextField! = {
-        let view = PhoneNumberTextField()
+    lazy var phoneNumberField: SJOPhoneNumberTextField! = {
+        let view = SJOPhoneNumberTextField()
         view.borderStyle = .none
         view.keyboardType = .numberPad
+        view.font = UIFont(name: "Lato-Regular", size: 18)
+        view.textColor = Colors.darkestGray
         view.placeholder = "(555) 555-5555"
+        view.placeholderColor = Colors.gray
         
         return view
     }()
     
     lazy var submitButton: UIButton! = {
         let view = UIButton(type: .custom)
-        view.backgroundColor = UIColor.red
-        view.setTitle("Next", for: .normal)
+        view.backgroundColor = Colors.bondiBlue
+        view.setTitle("NEXT", for: .normal)
         view.setTitleColor(UIColor.white, for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        view.titleLabel?.font = UIFont(name: "Lato-Bold", size: 15)
         view.layer.cornerRadius = 4
         
         return view
@@ -70,20 +76,20 @@ class StartController: UIViewController {
         self.view.addSubview(submitButton)
         
         phoneNumberLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view).offset(16)
-            make.right.equalTo(self.view).offset(-16)
+            make.left.equalTo(self.view).offset(24)
+            make.right.equalTo(self.view).offset(-24)
             make.centerX.equalTo(self.view)
             make.centerY.equalTo(self.view).offset(-120)
         }
         
         countryCodeLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view).offset(64)
+            make.left.equalTo(self.view).offset(112)
             make.top.equalTo(phoneNumberLabel.snp.bottom).offset(32)
             make.width.height.equalTo(32)
         }
         
         phoneNumberField.snp.makeConstraints { (make) in
-            make.left.equalTo(countryCodeLabel.snp.right).offset(16)
+            make.left.equalTo(countryCodeLabel.snp.right).offset(8)
             make.right.equalTo(self.view).offset(-64)
             make.top.equalTo(phoneNumberLabel.snp.bottom).offset(32)
             make.height.equalTo(32)
@@ -92,7 +98,7 @@ class StartController: UIViewController {
         submitButton.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(phoneNumberField.snp.bottom).offset(32)
-            make.height.equalTo(40)
+            make.height.equalTo(48)
             make.width.equalTo(160)
         }
         

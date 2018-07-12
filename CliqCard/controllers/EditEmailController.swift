@@ -11,14 +11,14 @@ import UIKit
 class EditEmailController: UITableViewController {
     
     var email: String?
-    let callback: (String?) -> Void
+    let callback: (String) -> Void
     
     lazy var editEmailCell: EditEmailCell! = {
         let view = EditEmailCell()
         return view
     }()
     
-    init(email: String?, callback: @escaping (String?) -> Void) {
+    init(email: String?, callback: @escaping (String) -> Void) {
         // save the old email
         self.email = email
         // set the callback that sends back the new value
@@ -34,7 +34,7 @@ class EditEmailController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
 
         self.tableView.register(EditEmailCell.self, forCellReuseIdentifier: "EditEmailCell")
         self.tableView.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
@@ -51,8 +51,7 @@ class EditEmailController: UITableViewController {
     @objc func endEditing() {
         // get the email
         guard let email = self.editEmailCell.emailField.text, email.count > 0 else {
-            // pass back blank (deleting the email)
-            self.callback(nil)
+            self.showError(title: "Invalid Email", message: "The email address cannot be blank.")
             return
         }
         
@@ -83,7 +82,7 @@ class EditEmailController: UITableViewController {
         case 0:
             return 32
         case 1:
-            return 48
+            return 64
         default:
             return 0
         }

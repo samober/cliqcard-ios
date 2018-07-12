@@ -17,13 +17,9 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     var loading: Bool = true
     
     var account: CCAccount!
-    var personalCard: CCPersonalCard!
-    var workCard: CCWorkCard!
     
     // mutable builder versions
     var accountBuilder: CCAccountBuilder!
-    var personalCardBuilder: CCPersonalCardBuilder!
-    var workCardBuilder: CCWorkCardBuilder!
     
     // image picker
     let imagePicker = UIImagePickerController()
@@ -31,12 +27,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
         self.tableView.register(ProfileHeaderCell.self, forCellReuseIdentifier: "ProfileHeaderCell")
         self.tableView.register(SubHeaderCell.self, forCellReuseIdentifier: "SubHeaderCell")
         self.tableView.register(InlineDataCell.self, forCellReuseIdentifier: "InlineDataCell")
         self.tableView.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
+        self.tableView.register(SingleLineLinkCell.self, forCellReuseIdentifier: "SingleLineLinkCell")
         
         self.tableView.separatorStyle = .none
         
@@ -57,6 +54,12 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         self.loadAccount()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     func loadAccount() {
         CliqCardAPI.shared.getAccount { (account, error) in
             if error != nil {
@@ -66,25 +69,13 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                 // set the account
                 self.account = account
                 self.accountBuilder = CCAccountBuilder.init(model: account)
-                // load up the cards
-                CliqCardAPI.shared.getCards(responseHandler: { (personalCard, workCard, error) in
-                    if let personalCard = personalCard, let workCard = workCard {
-                        // set personal and work cards
-                        self.personalCard = personalCard
-                        self.personalCardBuilder = CCPersonalCardBuilder.init(model: personalCard)
-                        self.workCard = workCard
-                        self.workCardBuilder = CCWorkCardBuilder.init(model: workCard)
-                        // set loading to false
-                        self.loading = false
-                        // reload the table view
-                        self.tableView.reloadData()
-                    } else {
-                        self.showError(title: "Error", message: "Unable to load account at this moment. Please try again later.")
-                    }
-                    
-                    self.refreshControl?.endRefreshing()
-                })
+                // set loading to false
+                self.loading = false
+                // reload the table view
+                self.tableView.reloadData()
             }
+            
+            self.refreshControl?.endRefreshing()
         }
     }
     
@@ -97,116 +88,150 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        // header cell, name header, 2 name cells, phones header, phone count, add phone, emails header, email count, add email, end buffer
+        return 9 + self.account.phones.count + self.account.emails.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            // return the header cell
+            // profile header
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileHeaderCell", for: indexPath) as! ProfileHeaderCell
-            cell.nameLabel.text = self.account.fullName
             if let profilePicture = self.account.profilePicture {
                 cell.profileImageButton.kf.setImage(with: profilePicture.original, for: .normal)
             } else {
                 cell.profileImageButton.setImage(UIImage(named: "DefaultUserProfile"), for: .normal)
             }
             cell.profileImageButton.addTarget(self, action: #selector(openImage(sender:)), for: .touchUpInside)
+            cell.nameLabel.text = self.account.fullName
             return cell
         }
         
-        if indexPath.row == 11 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyCell
-            return cell
-        }
-        
-        if indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 8 {
-            // return a subheader cell
+        if indexPath.row == 1 {
+            // header for name
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            switch indexPath.row {
-            case 1:
-                cell.label.text = "Account"
-            case 4:
-                cell.label.text = "Personal Card"
-            case 8:
-                cell.label.text = "Work Card"
-            default:
-                break
-            }
+            cell.label.text = "Name"
             return cell
         }
         
-        // return an information editing cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
-        switch indexPath.row {
-        case 2:
+        if indexPath.row == 2 {
+            // first name
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = "First name"
             cell.valueLabel.text = self.account.firstName
-            cell.valueLabel.isHidden = false
-            cell.placeholderLabel.text = "First name"
-            cell.placeholderLabel.isHidden = true
-        case 3:
+            return cell
+        }
+        
+        if indexPath.row == 3 {
+            // last name
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = "Last name"
             cell.valueLabel.text = self.account.lastName
-            cell.valueLabel.isHidden = false
-            cell.placeholderLabel.text = "Last name"
-            cell.placeholderLabel.isHidden = true
-        case 5:
-            cell.keyLabel.text = "Mobile"
-            cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: self.personalCard.cellPhone)
-            cell.valueLabel.isHidden = self.personalCard.cellPhone == nil || self.personalCard.cellPhone!.count == 0
-            cell.placeholderLabel.text = "Phone"
-            cell.placeholderLabel.isHidden = self.personalCard.cellPhone != nil && self.personalCard.cellPhone!.count > 0
-        case 6:
-            cell.keyLabel.text = "Home"
-            cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: self.personalCard.homePhone)
-            cell.valueLabel.isHidden = self.personalCard.homePhone == nil || self.personalCard.homePhone!.count == 0
-            cell.placeholderLabel.text = "Phone"
-            cell.placeholderLabel.isHidden = self.personalCard.homePhone != nil && self.personalCard.homePhone!.count > 0
-        case 7:
-            cell.keyLabel.text = "Email"
-            cell.valueLabel.text = self.personalCard.email
-            cell.valueLabel.isHidden = self.personalCard.email == nil || self.personalCard.email!.count == 0
-            cell.placeholderLabel.text = "Email"
-            cell.placeholderLabel.isHidden = self.personalCard.email != nil && self.personalCard.email!.count > 0
-        case 9:
-            cell.keyLabel.text = "Office"
-            cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: self.workCard.officePhone)
-            cell.valueLabel.isHidden = self.workCard.officePhone == nil || self.workCard.officePhone!.count == 0
-            cell.placeholderLabel.text = "Phone"
-            cell.placeholderLabel.isHidden = self.workCard.officePhone != nil && self.workCard.officePhone!.count > 0
-        case 10:
-            cell.keyLabel.text = "Email"
-            cell.valueLabel.text = self.workCard.email
-            cell.valueLabel.isHidden = self.workCard.email == nil || self.workCard.email!.count == 0
-            cell.placeholderLabel.text = "Email"
-            cell.placeholderLabel.isHidden = self.workCard.email != nil && self.workCard.email!.count > 0
-        default:
-            break
+            return cell
         }
-        return cell
+        
+        if indexPath.row == 4 {
+            // header for phones
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
+            cell.label.text = "Phones"
+            return cell
+        }
+        
+        if indexPath.row < 5 + self.account.phones.count {
+            // phone
+            let phone = self.account.phones[indexPath.row - 5]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
+            cell.keyLabel.text = phone.type.capitalized
+            cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: phone.number)
+            return cell
+        }
+        
+        if indexPath.row == 5 + self.account.phones.count {
+            // add phone
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineLinkCell", for: indexPath) as! SingleLineLinkCell
+            cell.titleLabel.text = "Add Phone"
+            return cell
+        }
+        
+        if indexPath.row == 6 + self.account.phones.count {
+            // header for emails
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
+            cell.label.text = "Emails"
+            return cell
+        }
+        
+        if indexPath.row < 7 + self.account.phones.count + self.account.emails.count {
+            // email
+            let email = self.account.emails[indexPath.row - 7 - self.account.phones.count]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
+            cell.keyLabel.text = email.type.capitalized
+            cell.valueLabel.text = email.address
+            return cell
+        }
+        
+        if indexPath.row == 7 + self.account.phones.count + self.account.emails.count {
+            // add email
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineLinkCell", for: indexPath) as! SingleLineLinkCell
+            cell.titleLabel.text = "Add Email"
+            return cell
+        }
+        
+        // buffer cell
+        return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 284
+            // profile header cell
+            return 168
         }
         
-        if indexPath.row == 11 {
-            return 64
-        }
-        
-        if indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 8 {
+        if indexPath.row == 1 {
+            // header for name
             return 72
         }
         
-        return 48
+        if indexPath.row == 2 || indexPath.row == 3 {
+            return 64
+        }
+        
+        if indexPath.row == 4 {
+            // header for phones
+            return 72
+        }
+        
+        if indexPath.row < 5 + self.account.phones.count {
+            // phone
+            return 64
+        }
+        
+        if indexPath.row == 5 + self.account.phones.count {
+            // add phone
+            return 64
+        }
+        
+        if indexPath.row == 6 + self.account.phones.count {
+            // header for emails
+            return 72
+        }
+        
+        if indexPath.row < 7 + self.account.phones.count + self.account.emails.count {
+            // email
+            return 64
+        }
+        
+        if indexPath.row == 7 + self.account.phones.count + self.account.emails.count {
+            // add email
+            return 64
+        }
+        
+        // buffer cell
+        return 64
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        switch indexPath.row {
-        case 2:
+        if indexPath.row == 2 {
             let controller = EditNameController(name: self.account.firstName, placeholder: "First Name") { firstName in
                 self.accountBuilder.firstName = firstName
                 self.accountBuilder.fullName = "\(firstName) \(self.account.lastName)"
@@ -221,7 +246,10 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                 }
             }
             self.navigationController?.pushViewController(controller, animated: true)
-        case 3:
+            return
+        }
+        
+        if indexPath.row == 3 {
             let controller = EditNameController(name: self.account.lastName, placeholder: "Last Name") { lastName in
                 self.accountBuilder.lastName = lastName
                 self.accountBuilder.fullName = "\(self.account.firstName) \(lastName)"
@@ -236,79 +264,175 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                 }
             }
             self.navigationController?.pushViewController(controller, animated: true)
-        case 5:
-            let controller = EditPhoneNumberController(e164PhoneNumber: self.personalCard.cellPhone) { phoneNumber in
-                self.personalCardBuilder.cellPhone = phoneNumber
-                // save
-                self.save() { error -> Void in
-                    if error != nil {
-                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
-                        self.personalCardBuilder = CCPersonalCardBuilder.init(model: self.personalCard)
-                    }
-                    self.navigationController?.popViewController(animated: true)
-                    self.tableView.reloadData()
-                }
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
-        case 6:
-            let controller = EditPhoneNumberController(e164PhoneNumber: self.personalCard.homePhone) { phoneNumber in
-                self.personalCardBuilder.homePhone = phoneNumber
-                // save
-                self.save() { error -> Void in
-                    if error != nil {
-                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
-                        self.personalCardBuilder = CCPersonalCardBuilder.init(model: self.personalCard)
-                    }
-                    self.navigationController?.popViewController(animated: true)
-                    self.tableView.reloadData()
-                }
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
-        case 7:
-            let controller = EditEmailController(email: self.personalCard.email) { email in
-                self.personalCardBuilder.email = email
-                // save
-                self.save() { error -> Void in
-                    if error != nil {
-                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
-                        self.personalCardBuilder = CCPersonalCardBuilder.init(model: self.personalCard)
-                    }
-                    self.navigationController?.popViewController(animated: true)
-                    self.tableView.reloadData()
-                }
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
-        case 9:
-            let controller = EditPhoneNumberController(e164PhoneNumber: self.workCard.officePhone) { phoneNumber in
-                self.workCardBuilder.officePhone = phoneNumber
-                // save
-                self.save() { error -> Void in
-                    if error != nil {
-                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
-                        self.workCardBuilder = CCWorkCardBuilder.init(model: self.workCard)
-                    }
-                    self.navigationController?.popViewController(animated: true)
-                    self.tableView.reloadData()
-                }
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
-        case 10:
-            let controller = EditEmailController(email: self.workCard.email) { email in
-                self.workCardBuilder.email = email
-                // save
-                self.save() { error -> Void in
-                    if error != nil {
-                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
-                        self.workCardBuilder = CCWorkCardBuilder.init(model: self.workCard)
-                    }
-                    self.navigationController?.popViewController(animated: true)
-                    self.tableView.reloadData()
-                }
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
-        default:
-            break
+            return
         }
+        
+        if indexPath.row < 5 + self.account.phones.count {
+            // update or delete
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "Update", style: .default, handler: { action in
+                // get the phone
+                let phone = self.account.phones[indexPath.row - 5]
+                let editController = EditPhoneController(e164PhoneNumber: phone.number) { phoneNumber in
+                    // create a phone builder
+                    let phoneBuilder = CCPhoneBuilder.init(model: phone)
+                    // update
+                    phoneBuilder.number = phoneNumber
+                    // update on the server
+                    CliqCardAPI.shared.updatePhone(phone: phoneBuilder.build(), responseHandler: { (phone, error) in
+                        if let phone = phone {
+                            // update the phone in the account builder
+                            self.accountBuilder.phones[indexPath.row - 5] = phone
+                            // build
+                            self.account = self.accountBuilder.build()
+                        } else {
+                            self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
+                        }
+                        self.navigationController?.popViewController(animated: true)
+                        self.tableView.reloadData()
+                    })
+                }
+                self.navigationController?.pushViewController(editController, animated: true)
+            }))
+            controller.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                // get the phone
+                let phone = self.account.phones[indexPath.row - 5]
+                // delete on server
+                CliqCardAPI.shared.deletePhone(phone: phone, responseHandler: { error in
+                    if error != nil {
+                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
+                    } else {
+                        // remove the phone from the builder
+                        self.accountBuilder.phones.remove(at: indexPath.row - 5)
+                        // build
+                        self.account = self.accountBuilder.build()
+                    }
+                    self.tableView.reloadData()
+                })
+            }))
+            controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(controller, animated: true, completion: nil)
+            return
+        }
+        
+        if indexPath.row == 5 + self.account.phones.count {
+            // select phone type
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "mobile", style: .default, handler: { action in
+                self.newPhone(type: "mobile")
+            }))
+            controller.addAction(UIAlertAction(title: "home", style: .default, handler: { action in
+                self.newPhone(type: "home")
+            }))
+            controller.addAction(UIAlertAction(title: "work", style: .default, handler: { action in
+                self.newPhone(type: "work")
+            }))
+            controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(controller, animated: true, completion: nil)
+            return
+        }
+        
+        if indexPath.row < 7 + self.account.phones.count + self.account.emails.count {
+            // update or delete
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "Update", style: .default, handler: { action in
+                // get the email
+                let email = self.account.emails[indexPath.row - 7 - self.account.phones.count]
+                let editController = EditEmailController(email: email.address) { emailAddress in
+                    // create an email builder
+                    let emailBuilder = CCEmailBuilder.init(model: email)
+                    // update
+                    emailBuilder.address = emailAddress
+                    // update on the server
+                    CliqCardAPI.shared.updateEmail(email: emailBuilder.build(), responseHandler: { (email, error) in
+                        if let email = email {
+                            // update the email in the account builder
+                            self.accountBuilder.emails[indexPath.row - 7 - self.account.phones.count] = email
+                            // build
+                            self.account = self.accountBuilder.build()
+                        } else {
+                            self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
+                        }
+                        self.navigationController?.popViewController(animated: true)
+                        self.tableView.reloadData()
+                    })
+                }
+                self.navigationController?.pushViewController(editController, animated: true)
+            }))
+            controller.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                // get the email
+                let email = self.account.emails[indexPath.row - 7 - self.account.phones.count]
+                // delete on server
+                CliqCardAPI.shared.deleteEmail(email: email, responseHandler: { error in
+                    if error != nil {
+                        self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
+                    } else {
+                        // remove the email from the builder
+                        self.accountBuilder.emails.remove(at: indexPath.row - 7 - self.account.phones.count)
+                        // build
+                        self.account = self.accountBuilder.build()
+                    }
+                    self.tableView.reloadData()
+                })
+            }))
+            controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(controller, animated: true, completion: nil)
+            return
+        }
+        
+        if indexPath.row == 7 + self.account.phones.count + self.account.emails.count {
+            // select email type
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "personal", style: .default, handler: { action in
+                self.newEmail(type: "personal")
+            }))
+            controller.addAction(UIAlertAction(title: "work", style: .default, handler: { action in
+                self.newEmail(type: "work")
+            }))
+            controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(controller, animated: true, completion: nil)
+            return
+        }
+    }
+    
+    func newPhone(type: String) {
+        // create edit phone controller
+        let controller = EditPhoneController(e164PhoneNumber: nil) { phoneNumber in
+            // create on the server
+            CliqCardAPI.shared.createPhone(type: type, number: phoneNumber, ext: nil, responseHandler: { (phone, error) in
+                if let phone = phone {
+                    // add the phone in the account builder
+                    self.accountBuilder.phones.append(phone)
+                    // build
+                    self.account = self.accountBuilder.build()
+                } else {
+                    self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
+                }
+                self.navigationController?.popViewController(animated: true)
+                self.tableView.reloadData()
+            })
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func newEmail(type: String) {
+        // create edit email controller
+        let controller = EditEmailController(email: nil) { emailAddress in
+            // create on the server
+            CliqCardAPI.shared.createEmail(type: type, address: emailAddress, responseHandler: { (email, error) in
+                if let email = email {
+                    // add the email in the account builder
+                    self.accountBuilder.emails.append(email)
+                    // build
+                    self.account = self.accountBuilder.build()
+                } else {
+                    self.showError(title: "Error", message: "There was an error updating your information. Please try again later.")
+                }
+                self.navigationController?.popViewController(animated: true)
+                self.tableView.reloadData()
+            })
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func openImage(sender: UIButton) {
@@ -384,8 +508,6 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
     func save(callback: @escaping (APIError?) -> Void) {
         // build the new account cards
         let account = self.accountBuilder.build()
-        let personalCard = self.personalCardBuilder.build()
-        let workCard = self.workCardBuilder.build()
         
         // send the account to the server
         CliqCardAPI.shared.updateAccount(account: account) { (account, error) in
@@ -393,30 +515,8 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
                 // recreate the account builder
                 self.account = account
                 self.accountBuilder = CCAccountBuilder.init(model: account)
-                // send the personal card to the server
-                CliqCardAPI.shared.updatePersonalCard(personalCard: personalCard) { (personalCard, error) in
-                    if let personalCard = personalCard {
-                        // recreate the personal card builder
-                        self.personalCard = personalCard
-                        self.personalCardBuilder = CCPersonalCardBuilder.init(model: personalCard)
-                        // send the work card to the server
-                        CliqCardAPI.shared.updateWorkCard(workCard: workCard, responseHandler: { (workCard, error) in
-                            if let workCard = workCard {
-                                // recreate the work card builder
-                                self.workCard = workCard
-                                self.workCardBuilder = CCWorkCardBuilder.init(model: workCard)
-                                // send the callback
-                                callback(nil)
-                            } else {
-                                // send back the error
-                                callback(error)
-                            }
-                        })
-                    } else {
-                        // send back the error
-                        callback(error)
-                    }
-                }
+                // send the callback
+                callback(nil)
             } else {
                 // send back the error
                 callback(error)

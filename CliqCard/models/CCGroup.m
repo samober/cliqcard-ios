@@ -12,6 +12,7 @@
 struct CCGroupDirtyProperties {
     unsigned int CCGroupDirtyPropertyCreatedAt:1;
     unsigned int CCGroupDirtyPropertyIdentifier:1;
+    unsigned int CCGroupDirtyPropertyIsAdmin:1;
     unsigned int CCGroupDirtyPropertyMemberCount:1;
     unsigned int CCGroupDirtyPropertyName:1;
     unsigned int CCGroupDirtyPropertyPicture:1;
@@ -71,6 +72,15 @@ struct CCGroupDirtyProperties {
             }
         }
         {
+            __unsafe_unretained id value = modelDictionary[@"is_admin"]; // Collection will retain.
+            if (value != nil) {
+                if (value != (id)kCFNull) {
+                    self->_isAdmin = [value boolValue];
+                }
+                self->_groupDirtyProperties.CCGroupDirtyPropertyIsAdmin = 1;
+            }
+        }
+        {
             __unsafe_unretained id value = modelDictionary[@"member_count"]; // Collection will retain.
             if (value != nil) {
                 if (value != (id)kCFNull) {
@@ -124,6 +134,7 @@ struct CCGroupDirtyProperties {
     }
     _createdAt = builder.createdAt;
     _identifier = builder.identifier;
+    _isAdmin = builder.isAdmin;
     _memberCount = builder.memberCount;
     _name = builder.name;
     _picture = builder.picture;
@@ -137,7 +148,7 @@ struct CCGroupDirtyProperties {
 - (NSString *)debugDescription
 {
     NSArray<NSString *> *parentDebugDescription = [[super debugDescription] componentsSeparatedByString:@"\n"];
-    NSMutableArray *descriptionFields = [NSMutableArray arrayWithCapacity:6];
+    NSMutableArray *descriptionFields = [NSMutableArray arrayWithCapacity:7];
     [descriptionFields addObject:parentDebugDescription];
     struct CCGroupDirtyProperties props = _groupDirtyProperties;
     if (props.CCGroupDirtyPropertyCreatedAt) {
@@ -145,6 +156,9 @@ struct CCGroupDirtyProperties {
     }
     if (props.CCGroupDirtyPropertyIdentifier) {
         [descriptionFields addObject:[@"_identifier = " stringByAppendingFormat:@"%@", @(_identifier)]];
+    }
+    if (props.CCGroupDirtyPropertyIsAdmin) {
+        [descriptionFields addObject:[@"_isAdmin = " stringByAppendingFormat:@"%@", @(_isAdmin)]];
     }
     if (props.CCGroupDirtyPropertyMemberCount) {
         [descriptionFields addObject:[@"_memberCount = " stringByAppendingFormat:@"%@", @(_memberCount)]];
@@ -182,6 +196,7 @@ struct CCGroupDirtyProperties {
     return (
         (anObject != nil) &&
         (_memberCount == anObject.memberCount) &&
+        (_isAdmin == anObject.isAdmin) &&
         (_identifier == anObject.identifier) &&
         (_createdAt == anObject.createdAt || [_createdAt isEqualToDate:anObject.createdAt]) &&
         (_name == anObject.name || [_name isEqualToString:anObject.name]) &&
@@ -195,6 +210,7 @@ struct CCGroupDirtyProperties {
         17,
         [_createdAt hash],
         (NSUInteger)_identifier,
+        (_isAdmin ? 1231 : 1237),
         (NSUInteger)_memberCount,
         [_name hash],
         [_picture hash],
@@ -215,7 +231,7 @@ struct CCGroupDirtyProperties {
 }
 - (NSDictionary *)dictionaryObjectRepresentation
 {
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:6];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:7];
     if (_groupDirtyProperties.CCGroupDirtyPropertyCreatedAt) {
         if (_createdAt != (id)kCFNull) {
             NSValueTransformer *valueTransformer = [NSValueTransformer valueTransformerForName:kPlankDateValueTransformerKey];
@@ -230,6 +246,9 @@ struct CCGroupDirtyProperties {
     }
     if (_groupDirtyProperties.CCGroupDirtyPropertyIdentifier) {
         [dict setObject:@(_identifier) forKey: @"id"];
+    }
+    if (_groupDirtyProperties.CCGroupDirtyPropertyIsAdmin) {
+        [dict setObject:@(_isAdmin) forKey: @"is_admin"];
     }
     if (_groupDirtyProperties.CCGroupDirtyPropertyMemberCount) {
         [dict setObject:@(_memberCount) forKey: @"member_count"];
@@ -279,12 +298,14 @@ struct CCGroupDirtyProperties {
     }
     _createdAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"created_at"];
     _identifier = [aDecoder decodeIntegerForKey:@"id"];
+    _isAdmin = [aDecoder decodeBoolForKey:@"is_admin"];
     _memberCount = [aDecoder decodeIntegerForKey:@"member_count"];
     _name = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"name"];
     _picture = [aDecoder decodeObjectOfClass:[CCGroupPicture class] forKey:@"picture"];
     _updatedAt = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"updated_at"];
     _groupDirtyProperties.CCGroupDirtyPropertyCreatedAt = [aDecoder decodeIntForKey:@"created_at_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyIdentifier = [aDecoder decodeIntForKey:@"id_dirty_property"] & 0x1;
+    _groupDirtyProperties.CCGroupDirtyPropertyIsAdmin = [aDecoder decodeIntForKey:@"is_admin_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyMemberCount = [aDecoder decodeIntForKey:@"member_count_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyName = [aDecoder decodeIntForKey:@"name_dirty_property"] & 0x1;
     _groupDirtyProperties.CCGroupDirtyPropertyPicture = [aDecoder decodeIntForKey:@"picture_dirty_property"] & 0x1;
@@ -298,12 +319,14 @@ struct CCGroupDirtyProperties {
 {
     [aCoder encodeObject:self.createdAt forKey:@"created_at"];
     [aCoder encodeInteger:self.identifier forKey:@"id"];
+    [aCoder encodeBool:self.isAdmin forKey:@"is_admin"];
     [aCoder encodeInteger:self.memberCount forKey:@"member_count"];
     [aCoder encodeObject:self.name forKey:@"name"];
     [aCoder encodeObject:self.picture forKey:@"picture"];
     [aCoder encodeObject:self.updatedAt forKey:@"updated_at"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyCreatedAt forKey:@"created_at_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyIdentifier forKey:@"id_dirty_property"];
+    [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyIsAdmin forKey:@"is_admin_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyMemberCount forKey:@"member_count_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyName forKey:@"name_dirty_property"];
     [aCoder encodeInt:_groupDirtyProperties.CCGroupDirtyPropertyPicture forKey:@"picture_dirty_property"];
@@ -324,6 +347,9 @@ struct CCGroupDirtyProperties {
     }
     if (groupDirtyProperties.CCGroupDirtyPropertyIdentifier) {
         _identifier = modelObject.identifier;
+    }
+    if (groupDirtyProperties.CCGroupDirtyPropertyIsAdmin) {
+        _isAdmin = modelObject.isAdmin;
     }
     if (groupDirtyProperties.CCGroupDirtyPropertyMemberCount) {
         _memberCount = modelObject.memberCount;
@@ -353,6 +379,9 @@ struct CCGroupDirtyProperties {
     }
     if (modelObject.groupDirtyProperties.CCGroupDirtyPropertyIdentifier) {
         builder.identifier = modelObject.identifier;
+    }
+    if (modelObject.groupDirtyProperties.CCGroupDirtyPropertyIsAdmin) {
+        builder.isAdmin = modelObject.isAdmin;
     }
     if (modelObject.groupDirtyProperties.CCGroupDirtyPropertyMemberCount) {
         builder.memberCount = modelObject.memberCount;
@@ -385,6 +414,11 @@ struct CCGroupDirtyProperties {
 {
     _identifier = identifier;
     _groupDirtyProperties.CCGroupDirtyPropertyIdentifier = 1;
+}
+- (void)setIsAdmin:(BOOL)isAdmin
+{
+    _isAdmin = isAdmin;
+    _groupDirtyProperties.CCGroupDirtyPropertyIsAdmin = 1;
 }
 - (void)setMemberCount:(NSInteger)memberCount
 {

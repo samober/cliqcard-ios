@@ -11,7 +11,7 @@ import SnapKit
 import SwiftIcons
 import PhoneNumberKit
 
-class EditPhoneNumberCell: UITableViewCell {
+class EditPhoneNumberCell: SeparatorCell {
     
     var countryCode: String {
         get {
@@ -30,7 +30,7 @@ class EditPhoneNumberCell: UITableViewCell {
         }
         set {
             self._region = newValue
-            let font = UIFont.boldSystemFont(ofSize: 17)
+            let font = UIFont(name: "Lato-Bold", size: 18)!
             self.countryPickerButton.setIcon(prefixText: newValue, prefixTextFont: font, prefixTextColor: Colors.bondiBlue, icon: .icofont(.caretDown),
                                              iconColor: Colors.bondiBlue, postfixText: "", postfixTextFont: font, postfixTextColor: Colors.bondiBlue, forState: .normal, iconSize: 20)
             
@@ -59,7 +59,7 @@ class EditPhoneNumberCell: UITableViewCell {
     private lazy var iconImageView: UIImageView! = {
         let view = UIImageView()
         view.contentMode = .center
-        view.setIcon(icon: .fontAwesome(.mobile), textColor: Colors.darkGray, backgroundColor: UIColor.clear, size: CGSize(width: 40, height: 40))
+        view.setIcon(icon: .fontAwesome(.mobile), textColor: Colors.gray, backgroundColor: UIColor.clear, size: CGSize(width: 40, height: 40))
         view.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: UILayoutConstraintAxis.horizontal)
         
         return view
@@ -77,7 +77,7 @@ class EditPhoneNumberCell: UITableViewCell {
     private lazy var countryCodeLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkGray
         
         return view
@@ -85,27 +85,13 @@ class EditPhoneNumberCell: UITableViewCell {
     
     lazy var phoneNumberField: SJOPhoneNumberTextField! = {
         let view = SJOPhoneNumberTextField()
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         view.borderStyle = .none
         view.keyboardType = .numberPad
         view.placeholder = "Phone"
         view.placeholderColor = Colors.gray
 //        view.clearButtonMode = .whileEditing
-        
-        return view
-    }()
-    
-    private lazy var topSeparator: UIView! = {
-        let view = UIView()
-        view.backgroundColor = Colors.lightGray
-        
-        return view
-    }()
-    
-    private lazy var bottomSeparator: UIView! = {
-        let view = UIView()
-        view.backgroundColor = Colors.lightGray
         
         return view
     }()
@@ -121,40 +107,27 @@ class EditPhoneNumberCell: UITableViewCell {
         self.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
         }
         
         self.addSubview(countryPickerButton)
         countryPickerButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalTo(iconImageView.snp.right).offset(8)
+            make.left.equalTo(iconImageView.snp.right).offset(16)
         }
         
         self.addSubview(countryCodeLabel)
         countryCodeLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalTo(countryPickerButton.snp.right).offset(8)
+            make.left.equalTo(countryPickerButton.snp.right).offset(16)
         }
         
         self.addSubview(phoneNumberField)
         phoneNumberField.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalTo(countryCodeLabel.snp.right).offset(4)
+            make.left.equalTo(countryCodeLabel.snp.right).offset(8)
             make.right.equalToSuperview().offset(-24)
             make.width.greaterThanOrEqualTo(countryPickerButton.snp.width)
-        }
-        
-        self.addSubview(topSeparator)
-        topSeparator.snp.makeConstraints { make in
-            make.top.right.left.equalToSuperview()
-            make.height.equalTo(0.5)
-        }
-        
-        self.addSubview(bottomSeparator)
-        bottomSeparator.snp.makeConstraints { make in
-            make.right.left.equalToSuperview()
-            make.bottom.equalToSuperview().offset(0.5)
-            make.height.equalTo(0.5)
         }
         
         countryPickerButton.addTarget(self, action: #selector(countryButtonPressed(sender:)), for: .touchUpInside)

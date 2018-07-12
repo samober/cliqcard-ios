@@ -16,8 +16,8 @@ final class CliqCardAPI {
     static let shared = CliqCardAPI()
     
     let host = "https://api.getcliqcard.com"
-    let clientId = "ai8fg37aorshflawehoiufhadaiowhuf"
-    let clientSecret = "awfkiuhuosrgfliusdhfisuherugyhasdkljfhawoieufaklsd"
+    let clientId = "ai7fiau3hfihiwufhseuhkaueyf"
+    let clientSecret = "aiuhfiouhsfoi3ahsflsudhguiowhfalksdflauhfljkshafkjwe"
     
 //    let host = "http://192.168.1.229:5000"
 //    let clientId = "784awhflkusdfhoawhpwjcwo4hf"
@@ -360,9 +360,7 @@ final class CliqCardAPI {
     func updateAccount(account: CCAccount, responseHandler: @escaping (CCAccount?, APIError?) -> Void) {
         let parameters: Parameters = [
             "first_name": account.firstName,
-            "last_name": account.lastName,
-            "email": account.email ?? NSNull(),
-            "phone_number": account.phoneNumber
+            "last_name": account.lastName
         ]
         
         self._request("/account", method: .put, parameters: parameters) { (statusCode, json, error) in
@@ -450,37 +448,16 @@ final class CliqCardAPI {
         }
     }
     
-    func getCards(responseHandler: @escaping (CCPersonalCard?, CCWorkCard?, APIError?) -> Void) {
-        self._request("/cards", method: .get, parameters: nil) { (statusCode, json, error) in
-            if let statusCode = statusCode, let json = json as? [String: [String: AnyObject]] {
+    func getPhones(responseHandler: @escaping ([CCPhone]?, APIError?) -> Void) {
+        self._request("/phones", method: .get, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [[String: AnyObject]] {
                 if statusCode == 200 {
-                    // extract the cards
-                    guard let personalJson = json["personal"] else { return responseHandler(nil, nil, APIError.UnknownError()) }
-                    guard let workJson = json["work"] else { return responseHandler(nil, nil, APIError.UnknownError()) }
-                    // serialize the cards
-                    let personalCard = CCPersonalCard(modelDictionary: personalJson)
-                    let workCard = CCWorkCard(modelDictionary: workJson)
-                    // send back the cards
-                    responseHandler(personalCard, workCard, nil)
-                } else {
-                    // send back an unknown error
-                    responseHandler(nil, nil, APIError.UnknownError())
-                }
-            } else {
-                // send back the error
-                responseHandler(nil, nil, error)
-            }
-        }
-    }
-    
-    func getPersonalCard(responseHandler: @escaping (CCPersonalCard?, APIError?) -> Void) {
-        self._request("/cards/personal", method: .get, parameters: nil) { (statusCode, json, error) in
-            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
-                if statusCode == 200 {
-                    // serialize the card
-                    let card = CCPersonalCard(modelDictionary: json)
-                    // send back the card
-                    responseHandler(card, nil)
+                    // serialize the phones
+                    let phones = json.map({ phoneJson -> CCPhone in
+                        return CCPhone(modelDictionary: phoneJson)
+                    })
+                    // send back the phone list
+                    responseHandler(phones, nil)
                 } else {
                     // send back an unknown error
                     responseHandler(nil, APIError.UnknownError())
@@ -492,39 +469,20 @@ final class CliqCardAPI {
         }
     }
     
-    func getWorkCard(responseHandler: @escaping (CCWorkCard?, APIError?) -> Void) {
-        self._request("/cards/work", method: .get, parameters: nil) { (statusCode, json, error) in
-            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
-                if statusCode == 200 {
-                    // serialize the card
-                    let card = CCWorkCard(modelDictionary: json)
-                    // send back the card
-                    responseHandler(card, nil)
-                } else {
-                    // send back an unknown error
-                    responseHandler(nil, APIError.UnknownError())
-                }
-            } else {
-                // send back the error
-                responseHandler(nil, error)
-            }
-        }
-    }
-    
-    func updatePersonalCard(personalCard: CCPersonalCard, responseHandler: @escaping (CCPersonalCard?, APIError?) -> Void) {
+    func createPhone(type: String, number: String, ext: String?, responseHandler: @escaping (CCPhone?, APIError?) -> Void) {
         let parameters: Parameters = [
-            "cell_phone": personalCard.cellPhone ?? NSNull(),
-            "home_phone": personalCard.homePhone ?? NSNull(),
-            "email": personalCard.email ?? NSNull()
+            "type": type,
+            "number": number,
+            "extension": ext ?? NSNull()
         ]
         
-        self._request("/cards/personal", method: .put, parameters: parameters) { (statusCode, json, error) in
+        self._request("/phones", method: .post, parameters: parameters) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [String: AnyObject] {
                 if statusCode == 200 {
-                    // serialize the card
-                    let card = CCPersonalCard(modelDictionary: json)
-                    // send back the card
-                    responseHandler(card, nil)
+                    // serialize the phone
+                    let phone = CCPhone(modelDictionary: json)
+                    // send back the phone
+                    responseHandler(phone, nil)
                 } else {
                     // send back an unknown error
                     responseHandler(nil, APIError.UnknownError())
@@ -536,19 +494,19 @@ final class CliqCardAPI {
         }
     }
     
-    func updateWorkCard(workCard: CCWorkCard, responseHandler: @escaping (CCWorkCard?, APIError?) -> Void) {
+    func updatePhone(phone: CCPhone, responseHandler: @escaping (CCPhone?, APIError?) -> Void) {
         let parameters: Parameters = [
-            "office_phone": workCard.officePhone ?? NSNull(),
-            "email": workCard.email ?? NSNull()
+            "number": phone.number,
+            "extension": phone.extension ?? NSNull()
         ]
         
-        self._request("/cards/work", method: .put, parameters: parameters) { (statusCode, json, error) in
+        self._request("/phones/\(phone.identifier)", method: .put, parameters: parameters) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [String: AnyObject] {
                 if statusCode == 200 {
-                    // serialize the card
-                    let card = CCWorkCard(modelDictionary: json)
-                    // send back the card
-                    responseHandler(card, nil)
+                    // serialize the phone
+                    let phone = CCPhone(modelDictionary: json)
+                    // send back the phone
+                    responseHandler(phone, nil)
                 } else {
                     // send back an unknown error
                     responseHandler(nil, APIError.UnknownError())
@@ -556,6 +514,108 @@ final class CliqCardAPI {
             } else {
                 // send back the error
                 responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func deletePhone(phone: CCPhone, responseHandler: @escaping (APIError?) -> Void) {
+        self._request("/phones/\(phone.identifier)", method: .delete, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode {
+                if statusCode == 204 {
+                    // send back success
+                    responseHandler(nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(error)
+            }
+        }
+    }
+    
+    func getEmails(responseHandler: @escaping ([CCEmail]?, APIError?) -> Void) {
+        self._request("/emails", method: .get, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [[String: AnyObject]] {
+                if statusCode == 200 {
+                    // serialize the emails
+                    let emails = json.map({ emailJson -> CCEmail in
+                        return CCEmail(modelDictionary: emailJson)
+                    })
+                    // send back the email list
+                    responseHandler(emails, nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func createEmail(type: String, address: String, responseHandler: @escaping (CCEmail?, APIError?) -> Void) {
+        let parameters: Parameters = [
+            "type": type,
+            "address": address
+        ]
+        
+        self._request("/emails", method: .post, parameters: parameters) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                if statusCode == 200 {
+                    // serialize the email
+                    let email = CCEmail(modelDictionary: json)
+                    // send back the email
+                    responseHandler(email, nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func updateEmail(email: CCEmail, responseHandler: @escaping (CCEmail?, APIError?) -> Void) {
+        let parameters: Parameters = [
+            "address": email.address
+        ]
+        
+        self._request("/emails/\(email.identifier)", method: .put, parameters: parameters) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                if statusCode == 200 {
+                    // serialize the email
+                    let email = CCEmail(modelDictionary: json)
+                    // send back the email
+                    responseHandler(email, nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func deleteEmail(email: CCEmail, responseHandler: @escaping (APIError?) -> Void) {
+        self._request("/emails/\(email.identifier)", method: .delete, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode {
+                if statusCode == 204 {
+                    // send back success
+                    responseHandler(nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(error)
             }
         }
     }
@@ -610,16 +670,11 @@ final class CliqCardAPI {
         ]
         
         self._request("/groups/\(group.identifier)", method: .put, parameters: parameters) { (statusCode, json, error) in
-            if let statusCode = statusCode, let json = json as? [String: [String: AnyObject]] {
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
                 switch statusCode {
                 case 200:
-                    // extract the group json
-                    guard let groupJson = json["group"] else {
-                        responseHandler(nil, APIError.UnknownError())
-                        return
-                    }
                     // serialize the group
-                    let group = CCGroup(modelDictionary: groupJson)
+                    let group = CCGroup(modelDictionary: json)
                     // return the group
                     responseHandler(group, nil)
                 case 404:
@@ -770,22 +825,20 @@ final class CliqCardAPI {
     func joinGroup(code: String, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
         let parameters: Parameters = [
             "join_code": code.uppercased(),
-            "share_personal_card": true,
-            "share_work_card": true
+            "phone_ids": self._currentUser!.phones.map({ phone -> Int in
+                phone.identifier
+            }),
+            "email_ids": self._currentUser!.emails.map({ email -> Int in
+                email.identifier
+            })
         ]
         
         self._request("/groups/join", method: .post, parameters: parameters) { (statusCode, json, error) in
             if let statusCode = statusCode, let json = json as? [String: AnyObject] {
                 switch statusCode {
                 case 200:
-                    // extract the group json
-                    guard let groupJson = json["group"] as? [String: AnyObject] else {
-                        // send back an unknown error
-                        responseHandler(nil, APIError.UnknownError())
-                        return
-                    }
                     // serialize the group
-                    let group = CCGroup(modelDictionary: groupJson)
+                    let group = CCGroup(modelDictionary: json)
                     // call the response handler
                     responseHandler(group, nil)
                 case 400:
@@ -829,6 +882,25 @@ final class CliqCardAPI {
                     })
                     // send back the contact list
                     responseHandler(contacts, nil)
+                } else {
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func getContact(id: Int, responseHandler: @escaping (CCContact?, APIError?) -> Void) {
+        self._request("/contacts/\(id)", method: .get, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                if statusCode == 200 {
+                    // serialize the contact
+                    let contact = CCContact(modelDictionary: json)
+                    // send back the contact
+                    responseHandler(contact, nil)
                 } else {
                     // send back an unknown error
                     responseHandler(nil, APIError.UnknownError())

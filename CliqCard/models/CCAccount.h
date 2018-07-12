@@ -9,20 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "PlankModelRuntime.h"
 @class CCAccountBuilder;
+@class CCEmail;
+@class CCPhone;
 @class CCProfilePicture;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CCAccount : NSObject<NSCopying, NSSecureCoding>
+@property (nonnull, nonatomic, strong, readonly) NSArray<CCPhone *> * phones;
 @property (nonnull, nonatomic, copy, readonly) NSString * lastName;
-@property (nullable, nonatomic, copy, readonly) NSString * email;
-@property (nonatomic, assign, readonly) NSInteger identifier;
 @property (nonnull, nonatomic, copy, readonly) NSDate * updatedAt;
+@property (nonatomic, assign, readonly) NSInteger identifier;
 @property (nonnull, nonatomic, copy, readonly) NSString * fullName;
-@property (nonnull, nonatomic, copy, readonly) NSDate * createdAt;
 @property (nonnull, nonatomic, copy, readonly) NSString * firstName;
-@property (nonnull, nonatomic, copy, readonly) NSString * phoneNumber;
+@property (nonnull, nonatomic, copy, readonly) NSDate * createdAt;
 @property (nullable, nonatomic, strong, readonly) CCProfilePicture * profilePicture;
+@property (nonnull, nonatomic, strong, readonly) NSArray<CCEmail *> * emails;
 + (NSString *)className;
 + (NSString *)polymorphicTypeIdentifier;
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dictionary;
@@ -37,15 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface CCAccountBuilder : NSObject
+@property (nonnull, nonatomic, strong, readwrite) NSArray<CCPhone *> * phones;
 @property (nonnull, nonatomic, copy, readwrite) NSString * lastName;
-@property (nullable, nonatomic, copy, readwrite) NSString * email;
-@property (nonatomic, assign, readwrite) NSInteger identifier;
 @property (nonnull, nonatomic, copy, readwrite) NSDate * updatedAt;
+@property (nonatomic, assign, readwrite) NSInteger identifier;
 @property (nonnull, nonatomic, copy, readwrite) NSString * fullName;
-@property (nonnull, nonatomic, copy, readwrite) NSDate * createdAt;
 @property (nonnull, nonatomic, copy, readwrite) NSString * firstName;
-@property (nonnull, nonatomic, copy, readwrite) NSString * phoneNumber;
+@property (nonnull, nonatomic, copy, readwrite) NSDate * createdAt;
 @property (nullable, nonatomic, strong, readwrite) CCProfilePicture * profilePicture;
+@property (nonnull, nonatomic, strong, readwrite) NSArray<CCEmail *> * emails;
 - (instancetype)initWithModel:(CCAccount *)modelObject;
 - (CCAccount *)build;
 - (void)mergeWithModel:(CCAccount *)modelObject;

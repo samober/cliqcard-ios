@@ -28,7 +28,7 @@ class GroupMembersController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
         self.tableView.register(ContactCell.self, forCellReuseIdentifier: "ContactCell")
         self.tableView.separatorStyle = .none
@@ -84,11 +84,22 @@ class GroupMembersController: UITableViewController {
         }
         cell.nameLabel.text = member.fullName
         
+        if member.phones.count > 0 {
+            cell.detailLabel.text = member.phones[0].number
+        } else if member.emails.count > 0 {
+            cell.detailLabel.text = member.emails[0].address
+        } else {
+            cell.detailLabel.text = "Contact"
+        }
+        
+        cell.isTopSeparatorHidden = indexPath.row == 0
+        cell.isBottomSeparatorHidden = indexPath.row == self.members.count - 1
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        return 88
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

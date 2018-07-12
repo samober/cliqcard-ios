@@ -14,6 +14,14 @@ class SJONavigationController: UINavigationController {
         super.viewDidLoad()
 
         self.navigationBar.isTranslucent = false
+        
+        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationBar.shadowImage = UIImage()
+        
+        self.navigationBar.titleTextAttributes = [
+            .font: UIFont(name: "Lato-Bold", size: 20)!,
+            .foregroundColor: Colors.darkestGray
+        ]
     }
 
 }

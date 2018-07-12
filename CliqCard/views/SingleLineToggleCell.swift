@@ -14,7 +14,7 @@ class SingleLineToggleCell: SeparatorCell {
     lazy var titleLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         
         return view
@@ -34,13 +34,13 @@ class SingleLineToggleCell: SeparatorCell {
         
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.top.bottom.equalToSuperview()
         }
         
         self.addSubview(toggleView)
         toggleView.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-16)
+            make.right.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
         }
     }

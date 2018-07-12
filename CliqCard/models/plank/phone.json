@@ -1,0 +1,17 @@
+{
+    "id": "phone.json",
+    "title": "phone",
+    "description": "Schema definition of a Phone",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "type": { "type": "string" },
+        "number": { "type": "string" },
+        "extension": { "type": "string" },
+        "is_primary": { "type": "boolean" }
+    },
+    "required": [ "id", "created_at", "updated_at", "type", "number", "is_primary" ]
+}

@@ -21,27 +21,31 @@ class PhoneVerificationController: UIViewController {
         view.text = "We have sent you a verification code. Please enter it below..."
         view.backgroundColor = UIColor.clear
         view.textAlignment = .center
-        view.font = UIFont.systemFont(ofSize: 20)
+        view.font = UIFont(name: "Lato-Regular", size: 22)
+        view.textColor = Colors.darkestGray
         view.numberOfLines = 0
         
         return view
     }()
     
-    lazy var verificationCodeField: UITextField! = {
-        let view = UITextField()
+    lazy var verificationCodeField: SJOTextField! = {
+        let view = SJOTextField()
         view.placeholder = "485493"
         view.textAlignment = .center
         view.keyboardType = .numberPad
+        view.font = UIFont(name: "Lato-Regular", size: 18)
+        view.textColor = Colors.darkestGray
+        view.placeholderColor = Colors.gray
         
         return view
     }()
     
     lazy var submitButton: UIButton! = {
         let view = UIButton(type: .custom)
-        view.backgroundColor = UIColor.red
+        view.backgroundColor = Colors.bondiBlue
         view.layer.cornerRadius = 4
-        view.setTitle("Submit", for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        view.setTitle("SUBMIT", for: .normal)
+        view.titleLabel?.font = UIFont(name: "Lato-Bold", size: 15)
         view.setTitleColor(UIColor.white, for: .normal)
         
         return view
@@ -88,7 +92,7 @@ class PhoneVerificationController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(verificationCodeField.snp.bottom).offset(32)
             make.width.equalTo(160)
-            make.height.equalTo(40)
+            make.height.equalTo(48)
         }
         
         activityIndicator.snp.makeConstraints { (make) in

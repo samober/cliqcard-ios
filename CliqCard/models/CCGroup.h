@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CCGroup : NSObject<NSCopying, NSSecureCoding>
 @property (nullable, nonatomic, strong, readonly) CCGroupPicture * picture;
+@property (nonatomic, assign, readonly) BOOL isAdmin;
 @property (nonnull, nonatomic, copy, readonly) NSString * name;
 @property (nonnull, nonatomic, copy, readonly) NSDate * updatedAt;
 @property (nonatomic, assign, readonly) NSInteger identifier;
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CCGroupBuilder : NSObject
 @property (nullable, nonatomic, strong, readwrite) CCGroupPicture * picture;
+@property (nonatomic, assign, readwrite) BOOL isAdmin;
 @property (nonnull, nonatomic, copy, readwrite) NSString * name;
 @property (nonnull, nonatomic, copy, readwrite) NSDate * updatedAt;
 @property (nonatomic, assign, readwrite) NSInteger identifier;

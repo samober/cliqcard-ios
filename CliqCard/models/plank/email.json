@@ -1,0 +1,16 @@
+{
+    "id": "email.json",
+    "title": "email",
+    "description": "Schema definition of an Email",
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "type": { "type": "string" },
+        "address": { "type": "string" },
+        "is_primary": { "type": "boolean" }
+    },
+    "required": [ "id", "created_at", "updated_at", "type", "address", "is_primary" ]
+}

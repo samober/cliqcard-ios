@@ -27,7 +27,7 @@ class ContactController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
         self.tableView.register(ProfileHeaderCell.self, forCellReuseIdentifier: "ProfileHeaderCell")
         self.tableView.register(SubHeaderCell.self, forCellReuseIdentifier: "SubHeaderCell")
@@ -37,7 +37,7 @@ class ContactController: UITableViewController {
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        self.title = self.contact.fullName
+        self.title = "Contact"
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -45,7 +45,16 @@ class ContactController: UITableViewController {
     }
     
     @objc func refresh() {
-        
+        CliqCardAPI.shared.getContact(id: self.contact.identifier) { (contact, error) in
+            if let contact = contact {
+                self.contact = contact
+                self.tableView.reloadData()
+            } else {
+                self.showError(title: "Error", message: "Could not load this contact at this time. Please try again later.")
+            }
+            
+            self.refreshControl?.endRefreshing()
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -53,13 +62,12 @@ class ContactController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // header cell, personal header, 3 personal items, work header, 2 work items, end buffer
-        return 9
+        // header cell, phones header, phone count, emails header, email count, end buffer
+        return 4 + self.contact.phones.count + self.contact.emails.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
+        if indexPath.row == 0 {
             // profile header
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileHeaderCell", for: indexPath) as! ProfileHeaderCell
             if let profilePicture = self.contact.profilePicture {
@@ -71,110 +79,74 @@ class ContactController: UITableViewController {
             }
             cell.nameLabel.text = self.contact.fullName
             return cell
-        case 1:
-            // header for personal card
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Personal Card"
-            cell.isHidden = self.contact.personalCard == nil
-            return cell
-        case 2:
-            // personal cell phone
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
-            cell.keyLabel.text = "Mobile"
-            cell.isHidden = true
-            if let personalCard = self.contact.personalCard {
-                cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: personalCard.cellPhone)
-                cell.isHidden = personalCard.cellPhone == nil
-                cell.valueLabel.isHidden = cell.valueLabel.text == nil
-                cell.placeholderLabel.isHidden = cell.valueLabel.text != nil
-            }
-            return cell
-        case 3:
-            // personal home phone
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
-            cell.keyLabel.text = "Home"
-            cell.isHidden = true
-            if let personalCard = self.contact.personalCard {
-                cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: personalCard.homePhone)
-                cell.isHidden = personalCard.homePhone == nil
-                cell.valueLabel.isHidden = cell.valueLabel.text == nil
-                cell.placeholderLabel.isHidden = cell.valueLabel.text != nil
-            }
-            return cell
-        case 4:
-            // personal email
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
-            cell.keyLabel.text = "Email"
-            cell.isHidden = true
-            if let personalCard = self.contact.personalCard {
-                cell.valueLabel.text = personalCard.email
-                cell.isHidden = personalCard.email == nil
-                cell.valueLabel.isHidden = cell.valueLabel.text == nil
-                cell.placeholderLabel.isHidden = cell.valueLabel.text != nil
-            }
-            return cell
-        case 5:
-            // header for work card
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Work Card"
-            cell.isHidden = self.contact.workCard == nil
-            return cell
-        case 6:
-            // work office phone
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
-            cell.keyLabel.text = "Office"
-            cell.isHidden = true
-            if let workCard = self.contact.workCard {
-                cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: workCard.officePhone)
-                cell.isHidden = workCard.officePhone == nil
-                cell.valueLabel.isHidden = cell.valueLabel.text == nil
-                cell.placeholderLabel.isHidden = cell.valueLabel.text != nil
-            }
-            return cell
-        case 7:
-            // work email
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
-            cell.keyLabel.text = "Email"
-            cell.isHidden = true
-            if let workCard = self.contact.workCard {
-                cell.valueLabel.text = workCard.email
-                cell.isHidden = workCard.email == nil
-                cell.valueLabel.isHidden = cell.valueLabel.text == nil
-                cell.placeholderLabel.isHidden = cell.valueLabel.text != nil
-            }
-            return cell
-        default:
-            // buffer cell
-            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
         }
+        
+        if indexPath.row == 1 {
+            // header for phones
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
+            cell.label.text = "Phones"
+            cell.isHidden = self.contact.phones.count == 0
+            return cell
+        }
+        
+        if indexPath.row < 2 + self.contact.phones.count {
+            // phone
+            let phone = self.contact.phones[indexPath.row - 2]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
+            cell.keyLabel.text = phone.type.capitalized
+            cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: phone.number)
+            return cell
+        }
+        
+        if indexPath.row == 2 + self.contact.phones.count {
+            // header for emails
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
+            cell.label.text = "Emails"
+            cell.isHidden = self.contact.emails.count == 0
+            return cell
+        }
+        
+        if indexPath.row < 3 + self.contact.phones.count + self.contact.emails.count {
+            // email
+            let email = self.contact.emails[indexPath.row - 3 - self.contact.phones.count]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
+            cell.keyLabel.text = email.type.capitalized
+            cell.valueLabel.text = email.address
+            return cell
+        }
+        
+        // buffer cell
+        return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 284
-        case 1:
-            return self.contact.personalCard != nil ? 72 : 0
-        case 2:
-            guard let personalCard = self.contact.personalCard else { return 0 }
-            return personalCard.cellPhone != nil ? 48 : 0
-        case 3:
-            guard let personalCard = self.contact.personalCard else { return 0 }
-            return personalCard.homePhone != nil ? 48 : 0
-        case 4:
-            guard let personalCard = self.contact.personalCard else { return 0 }
-            return personalCard.email != nil ? 48 : 0
-        case 5:
-            return self.contact.workCard != nil ? 72 : 0
-        case 6:
-            guard let workCard = self.contact.workCard else { return 0 }
-            return workCard.officePhone != nil ? 48 : 0
-        case 7:
-            guard let workCard = self.contact.workCard else { return 0 }
-            return workCard.email != nil ? 48 : 0
-        default:
+        if indexPath.row == 0 {
+            // profile header cell
+            return 168
+        }
+        
+        if indexPath.row == 1 {
+            // header for phones
+            return self.contact.phones.count == 0 ? 0 : 72
+        }
+        
+        if indexPath.row < 2 + self.contact.phones.count {
+            // phone
             return 64
         }
+        
+        if indexPath.row == 2 + self.contact.phones.count {
+            // header for emails
+            return self.contact.emails.count == 0 ? 0 : 72
+        }
+        
+        if indexPath.row < 3 + self.contact.phones.count + self.contact.emails.count {
+            // email
+            return 64
+        }
+        
+        // buffer cell
+        return 64
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

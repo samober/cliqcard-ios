@@ -32,7 +32,7 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.lightestGray
+        self.view.backgroundColor = UIColor.white
         
         self.tableView.register(InlineDataCell.self, forCellReuseIdentifier: "InlineDataCell")
         self.tableView.register(UpdatePictureCell.self, forCellReuseIdentifier: "UpdatePictureCell")
@@ -94,11 +94,11 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         case 0:
             return 32
         case 1:
-            return 112
+            return 128
         case 2:
-            return 48
+            return 64
         case 3:
-            return 104
+            return 72
         case 4:
             return 72
         default:

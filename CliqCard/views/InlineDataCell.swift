@@ -14,8 +14,8 @@ class InlineDataCell: SeparatorCell {
     lazy var keyLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.boldSystemFont(ofSize: 16)
-        view.textColor = Colors.darkestGray
+        view.font = UIFont(name: "Lato-Bold", size: 15)
+        view.textColor = Colors.gray
         
         return view
     }()
@@ -23,7 +23,7 @@ class InlineDataCell: SeparatorCell {
     lazy var valueLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.darkestGray
         
         return view
@@ -32,7 +32,7 @@ class InlineDataCell: SeparatorCell {
     lazy var placeholderLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont.systemFont(ofSize: 17)
+        view.font = UIFont(name: "Lato-Regular", size: 18)
         view.textColor = Colors.gray
         
         return view
@@ -45,21 +45,21 @@ class InlineDataCell: SeparatorCell {
         
         self.addSubview(keyLabel)
         keyLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.centerY.equalToSuperview().offset(1)
         }
         
         self.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(116)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalToSuperview().offset(120)
+            make.right.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
         }
         
         self.addSubview(placeholderLabel)
         placeholderLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(116)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalToSuperview().offset(120)
+            make.right.equalToSuperview().offset(-24)
             make.centerY.equalToSuperview()
         }
     }
