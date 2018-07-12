@@ -664,9 +664,74 @@ final class CliqCardAPI {
         }
     }
     
-    func updateGroup(group: CCGroup, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+    func getGroupSharing(id: Int, responseHandler: @escaping ([CCPhone]?, [CCEmail]?, APIError?) -> Void) {
+        self._request("/groups/\(id)/sharing", method: .get, parameters: nil) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                switch statusCode {
+                case 200:
+                    // serialize
+                    let result = JSON(json)
+                    guard let phones = (result["phones"].arrayObject as? [[String: AnyObject]])?.map({ phoneJson -> CCPhone in
+                        return CCPhone(modelDictionary: phoneJson)
+                    }), let emails = (result["emails"].arrayObject as? [[String: AnyObject]])?.map({ emailJson -> CCEmail in
+                        return CCEmail(modelDictionary: emailJson)
+                    }) else {
+                        responseHandler(nil, nil, APIError.UnknownError())
+                        return
+                    }
+                    // return the phones and emails
+                    responseHandler(phones, emails, nil)
+                case 404:
+                    // send back an unauthorized error
+                    responseHandler(nil, nil, APIError.UnauthorizedError())
+                default:
+                    // send back an unknown error
+                    responseHandler(nil, nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, nil, error)
+            }
+        }
+    }
+    
+    func createGroup(name: String, phoneIds: [Int], emailIds: [Int], responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
         let parameters: Parameters = [
-            "name": group.name
+            "name": name,
+            "phone_ids": phoneIds,
+            "email_ids": emailIds
+        ]
+        
+        self._request("/groups", method: .post, parameters: parameters) { (statusCode, json, error) in
+            if let statusCode = statusCode, let json = json as? [String: AnyObject] {
+                switch statusCode {
+                case 200:
+                    // serialize the group
+                    let group = CCGroup(modelDictionary: json)
+                    // return the group
+                    responseHandler(group, nil)
+                case 400:
+                    // send back an invalid error
+                    responseHandler(nil, APIError.InvalidRequestError(message: "Invalid request"))
+                case 401:
+                    // send back an unauthorized error
+                    responseHandler(nil, APIError.UnauthorizedError())
+                default:
+                    // send back an unknown error
+                    responseHandler(nil, APIError.UnknownError())
+                }
+            } else {
+                // send back the error
+                responseHandler(nil, error)
+            }
+        }
+    }
+    
+    func updateGroup(group: CCGroup, phoneIds: [Int], emailIds: [Int], responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+        let parameters: Parameters = [
+            "name": group.name,
+            "phone_ids": phoneIds,
+            "email_ids": emailIds
         ]
         
         self._request("/groups/\(group.identifier)", method: .put, parameters: parameters) { (statusCode, json, error) in
@@ -822,15 +887,11 @@ final class CliqCardAPI {
         }
     }
     
-    func joinGroup(code: String, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
+    func joinGroup(code: String, phoneIds: [Int], emailIds: [Int], responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
         let parameters: Parameters = [
             "join_code": code.uppercased(),
-            "phone_ids": self._currentUser!.phones.map({ phone -> Int in
-                phone.identifier
-            }),
-            "email_ids": self._currentUser!.emails.map({ email -> Int in
-                email.identifier
-            })
+            "phone_ids": phoneIds,
+            "email_ids": emailIds
         ]
         
         self._request("/groups/join", method: .post, parameters: parameters) { (statusCode, json, error) in

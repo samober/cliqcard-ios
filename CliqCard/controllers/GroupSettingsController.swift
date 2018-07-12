@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import SwiftSpinner
 
-class GroupSettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class GroupSettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
     
     var group: CCGroup!
     var groupBuilder: CCGroupBuilder!
+    
+    var phoneIds: [Int] = []
+    var emailIds: [Int] = []
     
     // image picker
     let imagePicker = UIImagePickerController()
@@ -38,6 +42,7 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         self.tableView.register(UpdatePictureCell.self, forCellReuseIdentifier: "UpdatePictureCell")
         self.tableView.register(LargeActionButtonCell.self, forCellReuseIdentifier: "LargeActionButtonCell")
         self.tableView.register(EmptyCell.self, forCellReuseIdentifier: "EmptyCell")
+        self.tableView.register(SingleLineLinkCell.self, forCellReuseIdentifier: "SingleLineLinkCell")
         self.tableView.separatorStyle = .none
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -49,6 +54,30 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         self.title = "\(self.group.name) Settings"
         
         self.imagePicker.delegate = self
+        
+        self.loadSharing()
+    }
+    
+    func loadSharing() {
+        SwiftSpinner.show("Loading...")
+        
+        CliqCardAPI.shared.getGroupSharing(id: self.group.identifier) { (phones, emails, error) in
+            SwiftSpinner.hide({
+                if let phones = phones, let emails = emails {
+                    // map phones and emails to ids
+                    self.phoneIds = phones.map { phone -> Int in
+                        return phone.identifier
+                    }
+                    self.emailIds = emails.map { email -> Int in
+                        return email.identifier
+                    }
+                } else {
+                    self.showError(title: "Error", message: "An unexpected error occurred. Please try again later.") { () -> Void in
+                        self.close()
+                    }
+                }
+            })
+        }
     }
     
     @objc func close() {
@@ -60,7 +89,7 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 7
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,8 +116,14 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         case 3:
             return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
         case 4:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SingleLineLinkCell", for: indexPath) as! SingleLineLinkCell
+            cell.titleLabel.text = "Sharing"
+            return cell
+        case 5:
+            return tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath)
+        case 6:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
-            cell.actionButton.setTitle("Leave Group", for: .normal)
+            cell.actionButton.setTitle("LEAVE GROUP", for: .normal)
             cell.buttonColor = Colors.carminePink
             cell.actionButton.addTarget(self, action: #selector(leaveGroup), for: .touchUpInside)
             return cell
@@ -108,6 +143,10 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         case 3:
             return 72
         case 4:
+            return 64
+        case 5:
+            return 72
+        case 6:
             return 72
         default:
             return 0
@@ -164,10 +203,33 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
                     }
                     self.title = "\(self.group.name) Settings"
                     self.tableView.reloadData()
-                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
-            self.navigationController?.pushViewController(controller, animated: true)
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
+        case 4:
+            let controller = GroupSharingController(phoneIds: self.phoneIds, emailIds: self.emailIds, callback: { (phoneIds, emailIds) in
+                self.phoneIds = phoneIds
+                self.emailIds = emailIds
+                SwiftSpinner.show("Saving...")
+                // save
+                self.save() { error in
+                    SwiftSpinner.hide({
+                        if error != nil {
+                            self.showError(title: "Error", message: "We were unable to update your group at this moment. Sorry for the inconvenience.")
+                            self.groupBuilder = CCGroupBuilder.init(model: self.group)
+                        }
+                        self.title = "\(self.group.name) Settings"
+                        self.tableView.reloadData()
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                }
+            })
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
         default:
             break
         }
@@ -202,7 +264,7 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         let group = self.groupBuilder.build()
         
         // send the group to the server
-        CliqCardAPI.shared.updateGroup(group: group) { (group, error) in
+        CliqCardAPI.shared.updateGroup(group: group, phoneIds: self.phoneIds, emailIds: self.emailIds) { (group, error) in
             if let group = group {
                 // update
                 self.group = group
@@ -228,11 +290,21 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
                     self.showError(title: "Error", message: "An unknown error occurred.")
                 } else {
                     // pop two controllers back
-                    self.navigationController?.popToRootViewController(animated: true)
+//                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.presentingViewController?.dismiss(animated: false, completion: nil)
+                    self.presentingViewController?.dismiss(animated: true, completion: nil)
                 }
             })
         }))
         self.present(controller, animated: true, completion: nil)
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverPresentAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverDismissAnimator()
     }
 
 }

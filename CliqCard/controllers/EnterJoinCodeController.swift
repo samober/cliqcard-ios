@@ -8,8 +8,9 @@
 
 import UIKit
 import SnapKit
+import SwiftSpinner
 
-class EnterJoinCodeController: UIViewController, UITextFieldDelegate {
+class EnterJoinCodeController: UIViewController, UITextFieldDelegate, UIViewControllerTransitioningDelegate {
     
     var callback: (CCGroup) -> Void
     
@@ -65,6 +66,11 @@ class EnterJoinCodeController: UIViewController, UITextFieldDelegate {
         
         self.codeField.delegate = self
         self.codeField.addTarget(self, action: #selector(codeChanged), for: .editingChanged)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         self.codeField.becomeFirstResponder()
     }
     
@@ -86,33 +92,45 @@ class EnterJoinCodeController: UIViewController, UITextFieldDelegate {
             return false
         }
         
-        // show the activity indicator
-        self.activityIndicator.startAnimating()
-        // hide the text field
-        self.codeField.isHidden = true
-        // end editing
-        self.view.endEditing(true)
-        
-        // try to join the group
-        CliqCardAPI.shared.joinGroup(code: code) { (group, error) in
-            if let group = group {
-                // callback
-                self.callback(group)
-                // dismiss
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                // stop the activity indicator
-                self.activityIndicator.stopAnimating()
-                // show the text field
-                self.codeField.isHidden = false
-                // display error message
-                self.showError(title: "Error", message: "An unknown error occurred.") { () -> Void in
-                    self.codeField.becomeFirstResponder()
-                }
+        // get the sharing details
+        let controller = GroupSharingController { (phoneIds, emailIds) in
+            // dismiss share controller
+            self.dismiss(animated: false, completion: nil)
+            // show the activity indicator
+            SwiftSpinner.show("Joining group...")
+            // end editing
+            self.view.endEditing(true)
+            
+            // try to join the group
+            CliqCardAPI.shared.joinGroup(code: code, phoneIds: phoneIds, emailIds: emailIds) { (group, error) in
+                SwiftSpinner.hide({
+                    if let group = group {
+                        // callback
+                        self.callback(group)
+                        // dismiss
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        // display error message
+                        self.showError(title: "Error", message: "An unknown error occurred.") { () -> Void in
+                            self.codeField.becomeFirstResponder()
+                        }
+                    }
+                })
             }
         }
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
         
         return false
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverPresentAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverDismissAnimator()
     }
 
 }

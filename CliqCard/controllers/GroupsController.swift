@@ -283,7 +283,11 @@ class GroupsController: UIViewController, UITableViewDelegate, UITableViewDataSo
         // enter manually or scan
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.addAction(UIAlertAction(title: "Create Group", style: .default, handler: { action in
-            
+            // push a new group controller
+            let controller = NewGroupController()
+            let navigationController = SJONavigationController(rootViewController: controller)
+            navigationController.transitioningDelegate = self
+            self.present(navigationController, animated: true, completion: nil)
         }))
         controller.addAction(UIAlertAction(title: "Enter Code", style: .default, handler: { action in
             // create a new enter join code controller

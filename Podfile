@@ -21,5 +21,6 @@ target 'CliqCard' do
   pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
   pod 'Hero'
   pod 'TweenKit'
+  pod 'SwiftSpinner'
 
 end

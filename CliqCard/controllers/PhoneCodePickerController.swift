@@ -79,7 +79,7 @@ class PhoneCodePickerController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Countries"
+            cell.label.text = "COUNTRIES"
             return cell
         }
         
@@ -97,9 +97,9 @@ class PhoneCodePickerController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 64
+            return 72
         }
-        return 56
+        return 64
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

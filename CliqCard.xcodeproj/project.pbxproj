@@ -73,6 +73,9 @@
 		797F0F2E20F6FCC4002E516D /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2D20F6FCC4002E516D /* GroupController.swift */; };
 		797F0F3020F73C3F002E516D /* PageOverAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */; };
 		797F0F3220F7BC3E002E516D /* SearchFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F3120F7BC3E002E516D /* SearchFieldCell.swift */; };
+		797F0F3420F7CF16002E516D /* NewGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F3320F7CF16002E516D /* NewGroupController.swift */; };
+		797F0F3620F7EA81002E516D /* InformationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F3520F7EA81002E516D /* InformationSelectView.swift */; };
+		797F0F3820F7EB76002E516D /* GroupSharingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F3720F7EB76002E516D /* GroupSharingController.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
@@ -168,6 +171,9 @@
 		797F0F2D20F6FCC4002E516D /* GroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageOverAnimator.swift; sourceTree = "<group>"; };
 		797F0F3120F7BC3E002E516D /* SearchFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldCell.swift; sourceTree = "<group>"; };
+		797F0F3320F7CF16002E516D /* NewGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupController.swift; sourceTree = "<group>"; };
+		797F0F3520F7EA81002E516D /* InformationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationSelectView.swift; sourceTree = "<group>"; };
+		797F0F3720F7EB76002E516D /* GroupSharingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSharingController.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 				797F0EF120F15EC9002E516D /* LargeActionButtonCell.swift */,
 				797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */,
 				797F0F3120F7BC3E002E516D /* SearchFieldCell.swift */,
+				797F0F3520F7EA81002E516D /* InformationSelectView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -285,6 +292,8 @@
 				797F0F0320F2AF92002E516D /* EnterJoinCodeController.swift */,
 				797F0F2920F6EC15002E516D /* ScanQRController.swift */,
 				797F0F2B20F6FB67002E516D /* HomeController.swift */,
+				797F0F3320F7CF16002E516D /* NewGroupController.swift */,
+				797F0F3720F7EB76002E516D /* GroupSharingController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -546,6 +555,7 @@
 				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TweenKit/TweenKit.framework",
 				"${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework",
@@ -563,6 +573,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSpinner.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweenKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIColor_Hex_Swift.framework",
@@ -590,10 +601,12 @@
 				799530C420D2A96D00EABAAF /* CCToken.m in Sources */,
 				797F0EC820F0F629002E516D /* CountryCodeCell.swift in Sources */,
 				799530A520D21BE700EABAAF /* PhoneVerificationController.swift in Sources */,
+				797F0F3620F7EA81002E516D /* InformationSelectView.swift in Sources */,
 				797F0ED820F12C9F002E516D /* GroupsController.swift in Sources */,
 				797F0EDA20F12DA1002E516D /* GroupHeaderCell.swift in Sources */,
 				797F0EE420F13A78002E516D /* GroupSettingsController.swift in Sources */,
 				797F0EFE20F2973F002E516D /* CCGroupPicture.m in Sources */,
+				797F0F3420F7CF16002E516D /* NewGroupController.swift in Sources */,
 				797F0F1020F6B0C8002E516D /* pop+SnapKit.swift in Sources */,
 				797F0EB520F0C655002E516D /* SubHeaderCell.swift in Sources */,
 				797F0ED320F125EC002E516D /* UITextField+Placeholders.swift in Sources */,
@@ -626,6 +639,7 @@
 				797F0EDC20F12F8B002E516D /* SingleLineLinkCell.swift in Sources */,
 				797F0EE020F13647002E516D /* SingleLineToggleCell.swift in Sources */,
 				797F0F2C20F6FB67002E516D /* HomeController.swift in Sources */,
+				797F0F3820F7EB76002E516D /* GroupSharingController.swift in Sources */,
 				797F0EAF20F0C05D002E516D /* UIViewController+ErrorDialogs.swift in Sources */,
 				797F0EC020F0E1A8002E516D /* PhoneCodePickerController.swift in Sources */,
 				797F0EC620F0F0AD002E516D /* Colors.swift in Sources */,

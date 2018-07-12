@@ -15,7 +15,7 @@ class GroupCell: SeparatorCell {
     lazy var groupImageView: UIImageView! = {
         let view = UIImageView()
         view.backgroundColor = Colors.lightGray
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 2
         view.layer.masksToBounds = true
         view.contentMode = .scaleAspectFill
         
@@ -25,7 +25,7 @@ class GroupCell: SeparatorCell {
     lazy var nameLabel: UILabel! = {
         let view = UILabel()
         view.backgroundColor = UIColor.clear
-        view.font = UIFont(name: "Lato-Regular", size: 18)
+        view.font = UIFont(name: "Lato-Bold", size: 18)
         view.textColor = Colors.darkestGray
         
         return view
@@ -64,14 +64,14 @@ class GroupCell: SeparatorCell {
         
         self.addSubview(groupImageView)
         groupImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
+            make.left.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(48)
+            make.width.height.equalTo(64)
         }
         
         self.addSubview(self.shareButton)
         self.shareButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-24)
+            make.right.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(40)
         }

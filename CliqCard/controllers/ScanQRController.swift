@@ -8,8 +8,9 @@
 
 import UIKit
 import AVFoundation
+import SwiftSpinner
 
-class ScanQRController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class ScanQRController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIViewControllerTransitioningDelegate {
     
     var callback: (CCGroup) -> Void
     
@@ -90,22 +91,41 @@ class ScanQRController: UIViewController, AVCaptureMetadataOutputObjectsDelegate
     }
     
     func join(_ code: String) {
-        CliqCardAPI.shared.joinGroup(code: code) { (group, error) in
-            if let group = group {
-                // call the callback
-                self.callback(group)
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                self.showError(title: "Error", message: "This is not a valid group code.") { () -> Void in
-                    self.dismiss(animated: true, completion: nil)
-                }
+        // get sharing details
+        let controller = GroupSharingController { (phoneIds, emailIds) in
+            self.dismiss(animated: false, completion: nil)
+            SwiftSpinner.show("Joining group...")
+            
+            CliqCardAPI.shared.joinGroup(code: code, phoneIds: phoneIds, emailIds: emailIds) { (group, error) in
+                SwiftSpinner.hide({
+                    if let group = group {
+                        // call the callback
+                        self.callback(group)
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.showError(title: "Error", message: "This is not a valid group code.") { () -> Void in
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                })
             }
         }
+        let navigationController = SJONavigationController(rootViewController: controller)
+        navigationController.transitioningDelegate = self
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     @objc func cancel() {
         self.captureSession.stopRunning()
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverPresentAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PageOverDismissAnimator()
     }
 
 }
