@@ -72,6 +72,7 @@
 		797F0F2C20F6FB67002E516D /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2B20F6FB67002E516D /* HomeController.swift */; };
 		797F0F2E20F6FCC4002E516D /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2D20F6FCC4002E516D /* GroupController.swift */; };
 		797F0F3020F73C3F002E516D /* PageOverAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */; };
+		797F0F3220F7BC3E002E516D /* SearchFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F0F3120F7BC3E002E516D /* SearchFieldCell.swift */; };
 		7995309120D20B3500EABAAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995309020D20B3500EABAAF /* AppDelegate.swift */; };
 		7995309820D20B3700EABAAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7995309720D20B3700EABAAF /* Assets.xcassets */; };
 		7995309B20D20B3700EABAAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7995309920D20B3700EABAAF /* LaunchScreen.storyboard */; };
@@ -166,6 +167,7 @@
 		797F0F2B20F6FB67002E516D /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		797F0F2D20F6FCC4002E516D /* GroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		797F0F2F20F73C3F002E516D /* PageOverAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageOverAnimator.swift; sourceTree = "<group>"; };
+		797F0F3120F7BC3E002E516D /* SearchFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldCell.swift; sourceTree = "<group>"; };
 		7995308D20D20B3500EABAAF /* CliqCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CliqCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7995309020D20B3500EABAAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7995309720D20B3700EABAAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				797F0EE920F14522002E516D /* EditNameCell.swift */,
 				797F0EF120F15EC9002E516D /* LargeActionButtonCell.swift */,
 				797F0EFF20F29A48002E516D /* UpdatePictureCell.swift */,
+				797F0F3120F7BC3E002E516D /* SearchFieldCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 				797F0EEA20F14522002E516D /* EditNameCell.swift in Sources */,
 				799530C920D2B89B00EABAAF /* CCGroup.m in Sources */,
 				797F0F0220F2A517002E516D /* ShareJoinCodeController.swift in Sources */,
+				797F0F3220F7BC3E002E516D /* SearchFieldCell.swift in Sources */,
 				797F0ED020F124F4002E516D /* SettingsController.swift in Sources */,
 				797F0ED520F1281A002E516D /* PhoneNumberTextField+Placeholders.swift in Sources */,
 				797F0F0420F2AF92002E516D /* EnterJoinCodeController.swift in Sources */,
