@@ -28,7 +28,7 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Colors.lightestGray
         
         self.tableView.register(ProfileHeaderCell.self, forCellReuseIdentifier: "ProfileHeaderCell")
         self.tableView.register(SubHeaderCell.self, forCellReuseIdentifier: "SubHeaderCell")
@@ -93,7 +93,7 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
         if indexPath.row == 1 {
             // header for phones
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Phones"
+            cell.label.text = "PHONES"
             cell.isHidden = self.contact.phones.count == 0
             return cell
         }
@@ -104,13 +104,15 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = phone.type.capitalized
             cell.valueLabel.text = Utils.formatPhoneNumber(phoneNumber: phone.number)
+            cell.isTopSeparatorHidden = indexPath.row == 2
+            cell.isBottomSeparatorHidden = indexPath.row == 1 + self.contact.phones.count
             return cell
         }
         
         if indexPath.row == 2 + self.contact.phones.count {
             // header for emails
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubHeaderCell", for: indexPath) as! SubHeaderCell
-            cell.label.text = "Emails"
+            cell.label.text = "EMAILS"
             cell.isHidden = self.contact.emails.count == 0
             return cell
         }
@@ -121,6 +123,8 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
             let cell = tableView.dequeueReusableCell(withIdentifier: "InlineDataCell", for: indexPath) as! InlineDataCell
             cell.keyLabel.text = email.type.capitalized
             cell.valueLabel.text = email.address
+            cell.isTopSeparatorHidden = indexPath.row == 3 + self.contact.phones.count
+            cell.isBottomSeparatorHidden = indexPath.row == 2 + self.contact.phones.count + self.contact.emails.count
             return cell
         }
         
@@ -131,7 +135,7 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             // profile header cell
-            return 168
+            return 192
         }
         
         if indexPath.row == 1 {
@@ -141,7 +145,7 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
         
         if indexPath.row < 2 + self.contact.phones.count {
             // phone
-            return 64
+            return 68
         }
         
         if indexPath.row == 2 + self.contact.phones.count {
@@ -151,7 +155,7 @@ class ContactController: UITableViewController, MFMailComposeViewControllerDeleg
         
         if indexPath.row < 3 + self.contact.phones.count + self.contact.emails.count {
             // email
-            return 64
+            return 68
         }
         
         // buffer cell

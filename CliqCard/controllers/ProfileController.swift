@@ -214,7 +214,7 @@ class ProfileController: UITableViewController, UITextFieldDelegate, UIImagePick
         }
         
         if indexPath.row == 2 || indexPath.row == 3 {
-            return 64
+            return 68
         }
         
         if indexPath.row == 4 {
