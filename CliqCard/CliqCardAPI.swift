@@ -756,6 +756,22 @@ final class CliqCardAPI {
         }
     }
     
+    func deleteGroup(group: CCGroup, responseHandler: @escaping (APIError?) -> Void) {
+        self._request("/groups/\(group.identifier)", method: .delete, parameters: nil) { (statusCode, json, error) in
+            switch statusCode {
+            case 204:
+                // return success
+                responseHandler(nil)
+            case 401:
+                // return unauthorized error (most likely not group admin)
+                responseHandler(APIError.UnauthorizedError())
+            default:
+                // send back an unknown error
+                responseHandler(APIError.UnknownError())
+            }
+        }
+    }
+    
     func uploadGroupPicture(groupId: Int, image: UIImage, responseHandler: @escaping (CCGroup?, APIError?) -> Void) {
         // make sure we have an access token
         guard let accessToken = self._token?.accessToken else {

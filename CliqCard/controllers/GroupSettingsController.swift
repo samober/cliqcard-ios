@@ -89,6 +89,9 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.group.isAdmin {
+            return 8
+        }
         return 7
     }
 
@@ -127,6 +130,12 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
             cell.buttonColor = Colors.carminePink
             cell.actionButton.addTarget(self, action: #selector(leaveGroup), for: .touchUpInside)
             return cell
+        case 7:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
+            cell.actionButton.setTitle("DELETE GROUP", for: .normal)
+            cell.buttonColor = Colors.carminePink
+            cell.actionButton.addTarget(self, action: #selector(deleteGroup), for: .touchUpInside)
+            return cell
         default:
             return UITableViewCell()
         }
@@ -147,6 +156,8 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
         case 5:
             return 72
         case 6:
+            return 72
+        case 7:
             return 72
         default:
             return 0
@@ -291,6 +302,25 @@ class GroupSettingsController: UITableViewController, UIImagePickerControllerDel
                 } else {
                     // pop two controllers back
 //                    self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.presentingViewController?.dismiss(animated: false, completion: nil)
+                    self.presentingViewController?.dismiss(animated: true, completion: nil)
+                }
+            })
+        }))
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    @objc func deleteGroup() {
+        // confirm
+        let controller = UIAlertController(title: "Are you sure?", message: "Everyone in this group will lose each other's contact information and the group will be permanently removed.", preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        controller.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+            // delete the group
+            CliqCardAPI.shared.deleteGroup(group: self.group, responseHandler: { (error) in
+                if error != nil {
+                    self.showError(title: "Error", message: "An unknown error occurred.")
+                } else {
+                    // pop two controllers back
                     self.presentingViewController?.dismiss(animated: false, completion: nil)
                     self.presentingViewController?.dismiss(animated: true, completion: nil)
                 }

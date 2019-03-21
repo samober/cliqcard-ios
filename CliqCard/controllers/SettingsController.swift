@@ -45,7 +45,7 @@ class SettingsController: UITableViewController {
         if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LargeActionButtonCell", for: indexPath) as! LargeActionButtonCell
             cell.buttonColor = Colors.carminePink
-            cell.actionButton.setTitle("Logout", for: .normal)
+            cell.actionButton.setTitle("LOGOUT", for: .normal)
             cell.actionButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
             return cell
         }
